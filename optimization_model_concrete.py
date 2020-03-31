@@ -318,9 +318,7 @@ model.El_balance_constr = Constraint(
 
 ## Solve PROBLEM
 model.solver=SolverFactory('glpk')
-model.solver.options['mipgap']=5/100
-#model.solver.options['MIPGap'] = 5/100 # min gap between solution and lower bound[%] . For other options see solver documentation
-results = model.solver.solve(model, tee=True) # tee=True to display solver output in console
+results = model.solver.solve(model, options={'mipgap':0.05}, tee=True) # tee=True to display solver output in console
 
 
 # Analizing and Plotting results
