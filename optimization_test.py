@@ -31,7 +31,7 @@ demands.columns = columns
 PV_output.columns = ['Sensor ID', 'Time', 'Irr', 'Temp', 'T cell', 'Eff cell', 'El output']
 
 # Change in matrix format
-Demands = demands.as_matrix()
+#Demands = demands.as_matrix()
 
 # Creating dictionary to collect demand profiles
 # Profiles are called with demands['good_name']

@@ -86,7 +86,6 @@ model.times = RangeSet( 0, T - 1 )
 
 # Set of all the machines
 model.Machines = Set( initialize = Machines_parameters.keys() )
-model.Storages = Set ( initialize= Storage_parameters.keys() )
 list_Machine_heat = []
 list_Machine_el = []
 list_Machine_diss=[]
@@ -102,6 +101,15 @@ for i in Machines_parameters.keys():
 model.Machines_heat = Set( within = model.Machines, initialize = list_Machine_heat )
 model.Machines_el = Set( within = model.Machines, initialize = list_Machine_el )
 model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
+
+# Set for storage
+model.Storages = Set ( initialize = Storage_parameters.keys() )
+
+# Set for machines places
+n_sites=3 # defined a priori
+model.Sites = RangeSet(0, n_sites-1) # let's assume only 3 sites available
+
+
 
 
 ## VARIABLES
@@ -139,6 +147,11 @@ model.l[('TES1',0)].fix(0)  # storage start level = 0
 model.power_in = Var (model.Storages, model.times, domain=Reals)
 model.power_out = Var (model.Storages, model.times, domain=Reals)
 
+# Variable to define if technology t is installed in  site s
+model.z_design = Var (model.Sites, model.Machines, domain=Binary)
+# Variable to define the size of the technology installed
+#model.x_desing = Var (model.Machines, domain= NonNegativeReals)
+
 
 
 ## OBJECTIVE FUNCTION
@@ -158,6 +171,37 @@ model.obj = Objective(
 # Machines range constraint
 # Machines on/off binary constraint
 # nota: li puoi aggregare in un unico vincolo
+
+# The same machine cannot be installed in more than one site
+def machines_perSite_rule( model, i):
+    return sum(model.z_design[s,i] for s in model.Sites) <= 1
+model.machines_perSite_constr=Constraint(model.Machines, rule=machines_perSite_rule)
+
+# The same site cannot be assigned to more than one machine
+def sites_perMachine_rule( model, s):
+    return sum(model.z_design[s,i] for i in model.Machines) <= 1
+model.sites_perMachine_constr=Constraint(model.Sites, rule=sites_perMachine_rule)
+
+
+# Simmetry breaking constraint on the site filling with machines
+model.cuts=ConstraintList()
+for k,i in enumerate(Machines_parameters.keys()):
+    for s in range(n_sites-1):
+        if s >= k:
+            model.cuts.add( model.z_design[s+1,i] <= model.z_design[s,i] )
+
+'''
+def sites_filling_rule( model, i, s):
+    if s >= n_sites-1:
+        return Constraint.Skip
+    return model.z_design[s+1,i] <= model.z_design[s,i]
+model.sites_filling_constr=Constraint(model.Machines, model.Sites, rule=sites_filling_rule)
+'''
+
+# Link between z design and z operational: if a machines is not installed it cannot be on in any timestep
+def z_link_rule( model, i):
+    return sum(model.z[i,t] for t in model.times) <= sum(model.z_design[s,i] for s in model.Sites)*(T)
+model.z_link_constr=Constraint(model.Machines, rule=z_link_rule)
 
 # Min/Max energy input constraint
 def machines_rule_min( model, i, j ):
@@ -339,7 +383,8 @@ power_in=[]
 power_out=[]
 delta_on=[]
 delta_off=[]
-var_list=[F_In ,z , delta_on, delta_off, Q_prod, El_prod, Q_us, El_us, Q_diss, el_purch, el_sold, stor_lev, power_in, power_out]
+z_design=[]
+var_list=[F_In ,z , delta_on, delta_off, Q_prod, El_prod, Q_us, El_us, Q_diss, el_purch, el_sold, stor_lev, power_in, power_out, z_design]
 
 i = 0
 for v in model.component_objects(Var, active=True):
