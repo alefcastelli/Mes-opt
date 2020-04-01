@@ -60,11 +60,10 @@ eta_target = 0.75
 Machines_parameters = {
     'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods':       ['Heat'],    'm_th': 0.976, 'q_th': -57.6,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  450, 'max_In': 1800, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1800, 'RDSD': 1800, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
     'Boiler2': { 'In':     'NG', 'fuel cost': Fuels['NG'], 'goods':       ['Heat'],    'm_th': 0.976, 'q_th': -57.6,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  450, 'max_In': 1800, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1800, 'RDSD': 1800, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.490, 'q_th': -201.72, 'm_el': 0.439, 'q_el': -106.2, 'min_In': 2144, 'max_In': 4288, 'RUlim': 4288, 'RDlim': 10000, 'RUSU': 4288, 'RDSD': 4288, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.490, 'q_th': -201.72, 'm_el': 0.439, 'q_el': -106.2, 'min_In':2144, 'max_In': 4288, 'RUlim': 4288, 'RDlim': 10000, 'RUSU': 4288, 'RDSD': 4288, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
     #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.490, 'q_th': -201.72, 'm_el': 0.439, 'q_el': -106.2, 'min_In': 2144, 'max_In': 4288, 'RUlim': 4288, 'RDlim': 10000, 'RUSU': 4288, 'RDSD': 4288, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
     # 'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     }
-
 Storage_parameters = {
      # thermal energy storage
      'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001 }
@@ -106,8 +105,8 @@ model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
 model.Storages = Set ( initialize = Storage_parameters.keys() )
 
 # Set for machines places
-n_sites=3 # defined a priori
-model.Sites = RangeSet(0, n_sites-1) # let's assume only 3 sites available
+n_slots=3 # defined a priori
+model.Slots = RangeSet(0, n_slots-1) # let's assume only 3 sites available
 
 
 
@@ -117,24 +116,24 @@ model.Sites = RangeSet(0, n_sites-1) # let's assume only 3 sites available
 # Machines Variables
 # Fuel as input of the machines related to the amout at the i-th time for the j-th machine
 # Fuel input as power [kW]
-model.fuel_In = Var( model.Machines, model.times, domain = NonNegativeReals)
+model.fuel_In = Var( model.Machines, model.Slots, model.times, domain = NonNegativeReals)
 
 # On/off variable
-model.z = Var( model.Machines, model.times, domain = Binary )
+model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
 # Delta on/off
-model.delta_on = Var (model.Machines, model.times, domain=Binary)
-model.delta_off = Var (model.Machines, model.times, domain=Binary)
+model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
+model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
 
 # Variable for Q and El produced
-model.Qprod = Var( model.Machines_heat, model.times, domain=NonNegativeReals)
-model.Elprod = Var( model.Machines_el, model.times, domain=NonNegativeReals)
+model.Qprod = Var( model.Machines_heat, model.Slots, model.times, domain=NonNegativeReals)
+model.Elprod = Var( model.Machines_el, model.Slots, model.times, domain=NonNegativeReals)
 
 # Useful variables
-model.Quseful = Var( model.Machines_heat, model.times, domain=NonNegativeReals)
-model.Eluseful= Var( model.Machines_el, model.times, domain=NonNegativeReals)
+model.Quseful = Var( model.Machines_heat, model.Slots, model.times, domain=NonNegativeReals)
+model.Eluseful= Var( model.Machines_el, model.Slots, model.times, domain=NonNegativeReals)
 
 # Variable for Q dissipated
-model.Qdiss = Var( model.Machines_diss, model.times, domain=NonNegativeReals)
+model.Qdiss = Var( model.Machines_diss, model.Slots, model.times, domain=NonNegativeReals)
 
 # Electricity purch/sold to the network at time t
 model.el_purch = Var ( model.times, domain=NonNegativeReals)
@@ -148,7 +147,7 @@ model.power_in = Var (model.Storages, model.times, domain=Reals)
 model.power_out = Var (model.Storages, model.times, domain=Reals)
 
 # Variable to define if technology t is installed in  site s
-model.z_design = Var (model.Sites, model.Machines, domain=Binary)
+model.z_design = Var (model.Machines, model.Slots, domain=Binary)
 # Variable to define the size of the technology installed
 #model.x_desing = Var (model.Machines, domain= NonNegativeReals)
 
@@ -156,8 +155,8 @@ model.z_design = Var (model.Sites, model.Machines, domain=Binary)
 
 ## OBJECTIVE FUNCTION
 def ObjFun( model ):
-    return sum(model.fuel_In[i,j]*Machines_parameters[i]['fuel cost']
-               for i in model.Machines for j in model.times) + sum(
+    return sum(model.fuel_In[i, s, j]*Machines_parameters[i]['fuel cost']
+               for i in model.Machines for s in model.Slots for j in model.times) + sum(
                        (model.el_purch[j]-model.el_sold[j]) for j in model.times)
 
 model.obj = Objective(
@@ -172,126 +171,126 @@ model.obj = Objective(
 # Machines on/off binary constraint
 # nota: li puoi aggregare in un unico vincolo
 
-# The same machine cannot be installed in more than one site
-def machines_perSite_rule( model, i):
-    return sum(model.z_design[s,i] for s in model.Sites) <= 1
-model.machines_perSite_constr=Constraint(model.Machines, rule=machines_perSite_rule)
-
 # The same site cannot be assigned to more than one machine
 def sites_perMachine_rule( model, s):
-    return sum(model.z_design[s,i] for i in model.Machines) <= 1
-model.sites_perMachine_constr=Constraint(model.Sites, rule=sites_perMachine_rule)
+    return sum(model.z_design[i,s] for i in model.Machines) <= 1
+model.sites_perMachine_constr=Constraint(model.Slots, rule=sites_perMachine_rule)
 
 
 # Simmetry breaking constraint on the site filling with machines
 model.cuts=ConstraintList()
 for k,i in enumerate(Machines_parameters.keys()):
-    for s in range(n_sites-1):
+    for s in range(n_slots-1):
         if s >= k:
-            model.cuts.add( model.z_design[s+1,i] <= model.z_design[s,i] )
+            model.cuts.add( model.z_design[i, s+1] <= model.z_design[i, s] )
 
 '''
 def sites_filling_rule( model, i, s):
     if s >= n_sites-1:
         return Constraint.Skip
-    return model.z_design[s+1,i] <= model.z_design[s,i]
-model.sites_filling_constr=Constraint(model.Machines, model.Sites, rule=sites_filling_rule)
+    return model.z_design[i, s+1] <= model.z_design[i, s]
+model.sites_filling_constr=Constraint(model.Machines, model.Slots, rule=sites_filling_rule)
 '''
 
 # Link between z design and z operational: if a machines is not installed it cannot be on in any timestep
+def z_link_rule( model, i, s, t):
+    return model.z[i, s, t]  <= model.z_design[i,s]
+model.z_link_constr=Constraint(model.Machines, model.Slots, model.times, rule=z_link_rule)
+'''
 def z_link_rule( model, i):
-    return sum(model.z[i,t] for t in model.times) <= sum(model.z_design[s,i] for s in model.Sites)*(T)
+    return sum(model.z[i,t] for t in model.times) <= sum(model.z_design[s,i] for s in model.Slots)*(T)
 model.z_link_constr=Constraint(model.Machines, rule=z_link_rule)
+'''
 
 # Min/Max energy input constraint
-def machines_rule_min( model, i, j ):
-    return  model.fuel_In[i,j] >= Machines_parameters[i]['min_In']*model.z[i,j]
-model.machine_constr_min=Constraint(model.Machines, model.times, rule=machines_rule_min)
-def machines_rule_max( model, i, j ):
-    return  model.fuel_In[i,j] <= Machines_parameters[i]['max_In']*model.z[i,j]
-model.machine_constr_max=Constraint(model.Machines, model.times, rule=machines_rule_max)
+def machines_rule_min( model, i, s, j ):
+    return  model.fuel_In[i, s, j] >= Machines_parameters[i]['min_In']*model.z[i, s, j]
+model.machine_constr_min=Constraint(model.Machines, model.Slots, model.times, rule=machines_rule_min)
+def machines_rule_max( model, i, s, j ):
+    return  model.fuel_In[i, s, j] <= Machines_parameters[i]['max_In']*model.z[i, s, j]
+model.machine_constr_max=Constraint(model.Machines, model.Slots, model.times, rule=machines_rule_max)
 
 # Rump Up/Down constraint
 # Set of all time excluding zero: model.times_not0=model.times-[0]
-def machines_RupLim_rule( model, i, j):
+def machines_RupLim_rule( model, i, s, j):
     if j==0:
         return Constraint.Skip
-    return model.fuel_In[i,j] - model.fuel_In[i, j-1] <= Machines_parameters[i]['RUlim']
-model.RupLim_constr=Constraint(model.Machines, model.times, rule=machines_RupLim_rule)
+    return model.fuel_In[i, s, j] - model.fuel_In[i, s, j-1] <= Machines_parameters[i]['RUlim']
+model.RupLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RupLim_rule)
 
-def machines_RdLim_rule( model, i, j):
+def machines_RdLim_rule( model, i, s, j):
     if j==0:
         return Constraint.Skip
-    return model.fuel_In[i,j-1] - model.fuel_In[i, j] <= Machines_parameters[i]['RDlim']
-model.RdLim_constr=Constraint(model.Machines, model.times, rule=machines_RdLim_rule)
+    return model.fuel_In[i, s, j-1] - model.fuel_In[i, s, j] <= Machines_parameters[i]['RDlim']
+model.RdLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RdLim_rule)
 
 # Delta on variable definition
-def delta_on_rule1( model, i, j):
+def delta_on_rule1( model, i, s, j):
     if j==0:
-        return model.delta_on[i,j]==0
-    return model.delta_on[i,j] >= (model.z[i,j]-model.z[i,j-1])
-model.delta_on_constr1=Constraint(model.Machines, model.times, rule=delta_on_rule1)
-def delta_on_rule2( model, i, j):
+        return model.delta_on[i, s, j]==0
+    return model.delta_on[i, s, j] >= (model.z[i, s, j]-model.z[i, s, j-1])
+model.delta_on_constr1=Constraint(model.Machines, model.Slots, model.times, rule=delta_on_rule1)
+def delta_on_rule2( model, i, s, j):
     if j==0:
         return Constraint.Skip
-    return model.delta_on[i,j] <= 1 - model.z[i,j-1]
-model.delta_on_constr2=Constraint(model.Machines, model.times, rule=delta_on_rule2)
-def delta_on_rule3( model, i, j):
-    return model.delta_on[i,j] <= model.z[i,j]
-model.delta_on_constr3=Constraint(model.Machines, model.times, rule=delta_on_rule3)
+    return model.delta_on[i, s, j] <= 1 - model.z[i, s, j-1]
+model.delta_on_constr2=Constraint(model.Machines, model.Slots, model.times, rule=delta_on_rule2)
+def delta_on_rule3( model, i, s, j):
+    return model.delta_on[i, s, j] <= model.z[i, s, j]
+model.delta_on_constr3=Constraint(model.Machines, model.Slots, model.times, rule=delta_on_rule3)
 
 # Delta off variable definition
-def delta_off_rule1( model, i, j):
+def delta_off_rule1( model, i, s, j):
     if j==0:
-        return model.delta_off[i,j]==0
-    return model.delta_off[i,j] >= (model.z[i,j-1]-model.z[i,j])
-model.delta_off_constr1=Constraint(model.Machines, model.times, rule=delta_off_rule1)
-def delta_off_rule2( model, i, j):
-    if j==0:
-        return Constraint.Skip
-    return model.delta_off[i,j] <= 1 - model.z[i,j]
-model.delta_off_constr2=Constraint(model.Machines, model.times, rule=delta_off_rule2)
-def delta_off_rule3( model, i, j):
+        return model.delta_off[i, s, j]==0
+    return model.delta_off[i, s, j] >= (model.z[i, s, j-1]-model.z[i, s, j])
+model.delta_off_constr1=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule1)
+def delta_off_rule2( model, i, s, j):
     if j==0:
         return Constraint.Skip
-    return model.delta_off[i,j] <=  model.z[i,j-1]
-model.delta_off_constr3=Constraint(model.Machines, model.times, rule=delta_off_rule3)
+    return model.delta_off[i, s, j] <= 1 - model.z[i, s, j]
+model.delta_off_constr2=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule2)
+def delta_off_rule3( model, i, s, j):
+    if j==0:
+        return Constraint.Skip
+    return model.delta_off[i, s, j] <=  model.z[i, s, j-1]
+model.delta_off_constr3=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule3)
 
 
 # Min UP/DOWN time constraint
-def min_up_rule(model, i, j):
+def min_up_rule(model, i, s, j):
     if j < Machines_parameters[i]['minUT']:
         return Constraint.Skip
-    return sum(model.z[i,t] for t in range(j-Machines_parameters[i]['minUT'], j)
-               ) >= Machines_parameters[i]['minUT']*model.delta_off[i,j]
-model.MinUT_constr=Constraint(model.Machines, model.times, rule=min_up_rule)
+    return sum(model.z[i, s, t] for t in range(j-Machines_parameters[i]['minUT'], j)
+               ) >= Machines_parameters[i]['minUT']*model.delta_off[i, s, j]
+model.MinUT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min_up_rule)
 
-def min_down_rule(model, i, j):
+def min_down_rule(model, i, s, j):
     if Machines_parameters[i]['minDT']==0:
         return Constraint.Skip
     if j < Machines_parameters[i]['minDT']:
         return Constraint.Skip
-    return sum((1-model.z[i,t]) for t in range(j-Machines_parameters[i]['minDT'], j)
-               ) >= Machines_parameters[i]['minDT']*model.delta_on[i,j]
-model.MinDT_constr=Constraint(model.Machines, model.times, rule=min_down_rule)
+    return sum((1-model.z[i, s, t]) for t in range(j-Machines_parameters[i]['minDT'], j)
+               ) >= Machines_parameters[i]['minDT']*model.delta_on[i, s, j]
+model.MinDT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min_down_rule)
 
 
 
 
 # Function to obtain heat/cold produced by machines
-def heat_production(model, i, j ):
-    return  model.fuel_In[i,j]*Machines_parameters[i]['m_th'] + model.z[i,j]*Machines_parameters[i]['q_th']
+def heat_production(model, i, s, j ):
+    return  model.fuel_In[i, s, j]*Machines_parameters[i]['m_th'] + model.z[i, s, j]*Machines_parameters[i]['q_th']
 # Function to obtain elecricity produced by machines
-def el_production(model, i, j ):
-    return  model.fuel_In[i,j]*Machines_parameters[i]['m_el'] + model.z[i,j]*Machines_parameters[i]['q_el']
+def el_production(model, i, s, j ):
+    return  model.fuel_In[i, s, j]*Machines_parameters[i]['m_el'] + model.z[i, s, j]*Machines_parameters[i]['q_el']
 
-def Qprod_rule(model, i, j):
-    return model.Qprod[i, j] == heat_production(model,i,j)
-model.Qprod_constr=Constraint(model.Machines_heat, model.times, rule=Qprod_rule)
+def Qprod_rule(model, i, s, j):
+    return model.Qprod[i, s, j] == heat_production(model, i, s, j)
+model.Qprod_constr=Constraint(model.Machines_heat, model.Slots, model.times, rule=Qprod_rule)
 
-def Elprod_rule(model, i, j):
-    return model.Elprod[i, j] == el_production(model,i,j)
-model.Elprod_constr=Constraint (model.Machines_el, model.times, rule=Elprod_rule)
+def Elprod_rule(model, i, s, j):
+    return model.Elprod[i, s, j] == el_production(model, i, s, j)
+model.Elprod_constr=Constraint (model.Machines_el, model.Slots, model.times, rule=Elprod_rule)
 
 '''
 # Q prod/useful constraint
@@ -301,17 +300,17 @@ model.Heat_us_constr = Constraint(model.Machines_heat, model.times, rule = heat_
 '''
 
 # El prod/useful constraint
-def el_us_rule( model, i, j ):
-    return model.Eluseful[i, j] == model.Elprod[i, j]
-model.el_us_constr = Constraint(model.Machines_el, model.times, rule = el_us_rule)
+def el_us_rule( model, i, s, j ):
+    return model.Eluseful[i, s, j] == model.Elprod[i, s, j]
+model.el_us_constr = Constraint(model.Machines_el, model.Slots, model.times, rule = el_us_rule)
 
 # Q useful constraint: useful heat if generated but not dissipated
 # A constraint that the system uses to define Q diss each time step
-def heat_diss_rule( model, i, j ):
+def heat_diss_rule( model, i, s, j ):
     if Machines_parameters[i]['Dissipable_Heat']:
-        return model.Quseful[i, j] == model.Qprod[i, j] - model.Qdiss[i, j]
-    return model.Quseful[i, j] == model.Qprod[i, j]
-model.Heat_diss_constr = Constraint(model.Machines_heat, model.times, rule = heat_diss_rule)
+        return model.Quseful[i, s, j] == model.Qprod[i, s, j] - model.Qdiss[i, s, j]
+    return model.Quseful[i, s, j] == model.Qprod[i, s, j]
+model.Heat_diss_constr = Constraint(model.Machines_heat, model.Slots, model.times, rule = heat_diss_rule)
 
 
 
@@ -340,19 +339,21 @@ model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 
 
 # Heat balance constraint rule
-def heat_balance_rule( model, j, s ):
+def heat_balance_rule( model, j, ss ):
     if j==0:
-        return sum( model.Quseful[i, j] for i in model.Machines_heat ) == Heat_demand[j]
-    return sum( model.Quseful[i, j] for i in model.Machines_heat ) -(model.l[s, j]-model.l[s, j-1]) == Heat_demand[j]
+        return sum( model.Quseful[i, s, j] for i in model.Machines_heat for s in model.Slots ) == Heat_demand[j]
+    return sum( model.Quseful[i, s, j] for i in model.Machines_heat for s in model.Slots ) - (model.l[ss, j]-model.l[ss, j-1]) == Heat_demand[j]
 # Heat Balance
 model.Heat_balance_constr = Constraint(
-    model.times, model.Storages,
+    model.times,
+    model.Storages,
     rule = heat_balance_rule
     )
 
 # Electricity balance constrint rule
 def el_balance_rule( model, j ):
-    return sum( model.Eluseful[i, j] for i in model.Machines_el ) + model.el_purch[j] - model.el_sold[j] +PV_gen[j]== EE_demand[j]
+    return sum( model.Eluseful[i, s, j] for i in model.Machines_el for s in model.Slots
+                ) + model.el_purch[j] - model.el_sold[j] + PV_gen[j] == EE_demand[j]
 # Electricity Balance
 model.El_balance_constr = Constraint(
     model.times,
@@ -394,22 +395,35 @@ for v in model.component_objects(Var, active=True):
         var_list[i].append(value(v[index]))
     i=i+1
 
-z_B1=np.array(z[0:T])
-z_B2=np.array(z[T:2*T])
-z_ICE1=np.array(z[2*T:3*T])
+d_res={}
+count=0
+for i in Machines_parameters.keys():
+    for j in range(n_slots):
+        d_res['z_{0}_s{1}'.format(i,j)]=np.array(z[count*T:T*(count+1)])
+        d_res['Qprod_{0}_s{1}'.format(i,j)]=np.array(Q_prod[count*T:T*(count+1)])
+        d_res['Qus_{0}_s{1}'.format(i, j)]= np.array(Q_us[count * T:T * (count + 1)])
+        if i=='ICE1':
+            d_res['Elprod_{0}_s{1}'.format(i, j)] = np.array(El_prod[j * T:T * (j + 1)])
+            d_res['Elus_{0}_s{1}'.format(i, j)] = np.array(El_us[j * T:T * (j + 1)])
+            d_res['Qdiss_{0}_s{1}'.format(i, j)] = np.array(Q_diss[j * T:T * (j + 1)])
+        count=count+1
 
-Q_prod_B1=np.array(Q_prod[0:T])
-Q_prod_B2=np.array(Q_prod[T:2*T])
-Q_prod_ICE1=np.array(Q_prod[2*T:3*T])
+Q_prod_B1, Q_prod_B2, Q_prod_ICE1, Q_us_B1, Q_us_B2, Q_us_ICE1, El_prod_ICE1, El_us_ICE1, Q_diss = np.zeros(9)
 
-Q_us_B1=np.array(Q_us[0:T])
-Q_us_B2=np.array(Q_us[T:2*T])
-Q_us_ICE1=np.array(Q_us[2*T:3*T])
+for j in range(n_slots):
+    Q_prod_B1 = Q_prod_B1+ d_res["Qprod_Boiler1_s{0}".format(j)]
+    Q_prod_B2 = Q_prod_B2 + d_res["Qprod_Boiler2_s{0}".format(j)]
+    Q_prod_ICE1 = Q_prod_ICE1 + d_res["Qprod_ICE1_s{0}".format(j)]
+    Q_us_B1 = Q_us_B1 + d_res["Qus_Boiler1_s{0}".format(j)]
+    Q_us_B2 = Q_us_B2 + d_res["Qus_Boiler2_s{0}".format(j)]
+    Q_us_ICE1 = Q_us_ICE1 + d_res["Qus_ICE1_s{0}".format(j)]
+    El_prod_ICE1 = El_prod_ICE1 + d_res["Elprod_ICE1_s{0}".format(j)]
+    El_us_ICE1 = El_us_ICE1 + d_res["Elus_ICE1_s{0}".format(j)]
+    Q_diss= Q_diss + d_res["Qdiss_ICE1_s{0}".format(j)]
 
-El_prod_ICE1=np.array(El_prod)
-El_us_ICE1=np.array(El_us)
 
 Q_diss=-np.array(Q_diss)
+
 el_purch=np.array(el_purch)
 el_sold=-np.array(el_sold)
 
