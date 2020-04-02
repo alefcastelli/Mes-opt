@@ -58,10 +58,12 @@ eta_target = 0.75
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods':       ['Heat'],    'm_th': 0.976, 'q_th': -57.6,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  450, 'max_In': 1800, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1800, 'RDSD': 1800, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    'Boiler2': { 'In':     'NG', 'fuel cost': Fuels['NG'], 'goods':       ['Heat'],    'm_th': 0.976, 'q_th': -57.6,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  450, 'max_In': 1800, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1800, 'RDSD': 1800, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.490, 'q_th': -201.72, 'm_el': 0.439, 'q_el': -106.2, 'min_In':2144, 'max_In': 4288, 'RUlim': 4288, 'RDlim': 10000, 'RUSU': 4288, 'RDSD': 4288, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
-    #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.490, 'q_th': -201.72, 'm_el': 0.439, 'q_el': -106.2, 'min_In': 2144, 'max_In': 4288, 'RUlim': 4288, 'RDlim': 10000, 'RUSU': 4288, 'RDSD': 4288, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
+    'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
+    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 2, 'Dissipable_Heat': False, 'Internal Consumer': False},
+    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -4891.82, 'm_el': 0.490, 'q_el': -1828.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat': True, 'Internal Consumer': False},
     # 'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     }
 Storage_parameters = {
@@ -364,120 +366,3 @@ model.El_balance_constr = Constraint(
 ## Solve PROBLEM
 model.solver=SolverFactory('glpk')
 results = model.solver.solve(model, options={'mipgap':0.05}, tee=True) # tee=True to display solver output in console
-
-
-# Analizing and Plotting results
-
-model.solutions.load_from(results)
-
-F_In=[]
-z=[]
-Q_prod=[]
-El_prod=[]
-Q_us=[]
-El_us=[]
-Q_diss=[]
-el_purch=[]
-el_sold=[]
-stor_lev=[]
-power_in=[]
-power_out=[]
-delta_on=[]
-delta_off=[]
-z_design=[]
-var_list=[F_In ,z , delta_on, delta_off, Q_prod, El_prod, Q_us, El_us, Q_diss, el_purch, el_sold, stor_lev, power_in, power_out, z_design]
-
-i = 0
-for v in model.component_objects(Var, active=True):
-    print ("Variable",v)
-    for index in v:
-        print('  ', index, value(v[index]))
-        var_list[i].append(value(v[index]))
-    i=i+1
-
-d_res={}
-count=0
-for i in Machines_parameters.keys():
-    for j in range(n_slots):
-        d_res['z_{0}_s{1}'.format(i,j)]=np.array(z[count*T:T*(count+1)])
-        d_res['Qprod_{0}_s{1}'.format(i,j)]=np.array(Q_prod[count*T:T*(count+1)])
-        d_res['Qus_{0}_s{1}'.format(i, j)]= np.array(Q_us[count * T:T * (count + 1)])
-        if i=='ICE1':
-            d_res['Elprod_{0}_s{1}'.format(i, j)] = np.array(El_prod[j * T:T * (j + 1)])
-            d_res['Elus_{0}_s{1}'.format(i, j)] = np.array(El_us[j * T:T * (j + 1)])
-            d_res['Qdiss_{0}_s{1}'.format(i, j)] = np.array(Q_diss[j * T:T * (j + 1)])
-        count=count+1
-
-Q_prod_B1, Q_prod_B2, Q_prod_ICE1, Q_us_B1, Q_us_B2, Q_us_ICE1, El_prod_ICE1, El_us_ICE1, Q_diss = np.zeros(9)
-
-for j in range(n_slots):
-    Q_prod_B1 = Q_prod_B1+ d_res["Qprod_Boiler1_s{0}".format(j)]
-    Q_prod_B2 = Q_prod_B2 + d_res["Qprod_Boiler2_s{0}".format(j)]
-    Q_prod_ICE1 = Q_prod_ICE1 + d_res["Qprod_ICE1_s{0}".format(j)]
-    Q_us_B1 = Q_us_B1 + d_res["Qus_Boiler1_s{0}".format(j)]
-    Q_us_B2 = Q_us_B2 + d_res["Qus_Boiler2_s{0}".format(j)]
-    Q_us_ICE1 = Q_us_ICE1 + d_res["Qus_ICE1_s{0}".format(j)]
-    El_prod_ICE1 = El_prod_ICE1 + d_res["Elprod_ICE1_s{0}".format(j)]
-    El_us_ICE1 = El_us_ICE1 + d_res["Elus_ICE1_s{0}".format(j)]
-    Q_diss= Q_diss + d_res["Qdiss_ICE1_s{0}".format(j)]
-
-
-Q_diss=-np.array(Q_diss)
-
-el_purch=np.array(el_purch)
-el_sold=-np.array(el_sold)
-
-Q_charge=[0]
-Q_discharge=[0]
-
-for i in range(1, len(stor_lev)):
-    diff=stor_lev[i]-stor_lev[i-1]
-    if diff >=0:
-        Q_charge.append(diff)
-        Q_discharge.append(0)
-    else:
-        Q_discharge.append(diff)
-        Q_charge.append(0)
-
-stor_l=np.array(stor_lev)
-Q_charge=-np.array(Q_charge)
-Q_discharge=-np.array(Q_discharge)
-
-
-H_day=24
-times_step=np.arange(H_day)
-#fig_Q, ax_Q = plt.subplots(121)
-#fig_Q=plt.figure()
-#plt.subplot(121)
-Fig_Q=plt.figure()
-plt.xticks(times_step, list(times_step))
-plt.ylabel("Heat [kWh]")
-plt.title("Q balance")
-plt.bar(times_step, Q_discharge[0:H_day], bottom=Q_prod_B1[0:H_day]+ Q_prod_B2[0:H_day] + Q_prod_ICE1[0:H_day], label='TES1 discharge')
-plt.bar(times_step, Q_prod_ICE1[0:H_day],  bottom=Q_prod_B1[0:H_day]+ Q_prod_B2[0:H_day], label='Q prod ICE')
-plt.bar(times_step, Q_prod_B1[0:H_day], bottom=Q_prod_B2[0:H_day], label='Q prod B1')
-plt.bar(times_step, Q_prod_B2[0:H_day], label='Q prod B2')
-plt.bar(times_step, Q_charge[0:H_day], label='TES1 charge')
-plt.bar(times_step, Q_diss[0:H_day], bottom=Q_charge[0:H_day], label='Q diss')
-
-
-plt.plot(times_step, np.array(Heat_demand[0:H_day]), 'k--', label='Q demand')
-plt.plot(times_step, stor_l[0:H_day], 'b--', label='Storage level')
-plt.legend()
-#plt.show()
-
-
-#fig_El, ax_El=plt.subplots()
-Fig_E=plt.figure()
-#plt.subplot(122)
-plt.xticks(times_step, list(times_step))
-plt.ylabel("Electric Energy [kWh]")
-plt.title("Electricity balance")
-plt.bar(times_step, el_purch[0:H_day], bottom=PV_gen[0:H_day]+El_us_ICE1[0:H_day], label='el purch')
-plt.bar(times_step, El_prod_ICE1[0:H_day], bottom=PV_gen[0:H_day], label='el prod ICE')
-plt.bar(times_step, PV_gen[0:H_day], label='PV output')
-plt.bar(times_step, el_sold[0:H_day], label='el sold')
-
-plt.plot(times_step, np.array(EE_demand[0:H_day]), 'r--', label='El demand')
-plt.legend()
-plt.show()
