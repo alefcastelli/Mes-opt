@@ -58,19 +58,22 @@ eta_target = 0.75
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 2, 'Dissipable_Heat': False, 'Internal Consumer': False},
-    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
-    'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
-    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -4891.82, 'm_el': 0.490, 'q_el': -1828.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat': True, 'Internal Consumer': False},
+    #'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
+    #'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
+    #'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 2, 'Dissipable_Heat': False, 'Internal Consumer': False},
+    #'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    #'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat': True, 'Internal Consumer': False},
+    'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True },
+    'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True },
+    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     # 'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     }
 Storage_parameters = {
      # thermal energy storage
      'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001 }
      }
-#1274
+
 # Time values
 # Number of time intervals
 T =t
@@ -87,10 +90,13 @@ model.times = RangeSet( 0, T - 1 )
 
 # Set of all the machines
 model.Machines = Set( initialize = Machines_parameters.keys() )
+list_Machine_int=[]
 list_Machine_heat = []
 list_Machine_el = []
 list_Machine_diss=[]
 for i in Machines_parameters.keys():
+    if Machines_parameters[i]['Internal Consumer']:
+        list_Machine_int.append(i)
     if Machines_parameters[i]['Dissipable_Heat']:
         list_Machine_diss.append(i)
     if 'Heat' in Machines_parameters[i]['goods']:                               # aggiungere qua le righe per anche Cold <--
@@ -102,12 +108,13 @@ for i in Machines_parameters.keys():
 model.Machines_heat = Set( within = model.Machines, initialize = list_Machine_heat )
 model.Machines_el = Set( within = model.Machines, initialize = list_Machine_el )
 model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
+model.Machines_int= Set( within=model.Machines, initialize=list_Machine_int)
 
 # Set for storage
 model.Storages = Set ( initialize = Storage_parameters.keys() )
 
 # Set for machines places
-n_slots=3 # defined a priori
+n_slots=5 # defined a priori
 model.Slots = RangeSet(0, n_slots-1) # let's assume only 3 sites available
 
 
@@ -118,10 +125,10 @@ model.Slots = RangeSet(0, n_slots-1) # let's assume only 3 sites available
 # Machines Variables
 # Fuel as input of the machines related to the amout at the i-th time for the j-th machine
 # Fuel input as power [kW]
-model.fuel_In = Var( model.Machines, model.Slots, model.times, domain = NonNegativeReals)
+model.fuel_In = Var( model.Machines, model.Slots, model.times, domain = NonNegativeReals, initialize=0)
 
 # On/off variable
-model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
+model.z = Var( model.Machines, model.Slots, model.times, domain = Binary, initialize=0 )
 # Delta on/off
 model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
 model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
@@ -133,6 +140,9 @@ model.Elprod = Var( model.Machines_el, model.Slots, model.times, domain=NonNegat
 # Useful variables
 model.Quseful = Var( model.Machines_heat, model.Slots, model.times, domain=NonNegativeReals)
 model.Eluseful= Var( model.Machines_el, model.Slots, model.times, domain=NonNegativeReals)
+
+# Electricity consumed by internal consumers (ex. HP)
+model.Elcons = Var( model.Machines_int, model.Slots, model.times, domain=NonNegativeReals)
 
 # Variable for Q dissipated
 model.Qdiss = Var( model.Machines_diss, model.Slots, model.times, domain=NonNegativeReals)
@@ -186,29 +196,21 @@ for k,i in enumerate(Machines_parameters.keys()):
         if s >= k:
             model.cuts.add( model.z_design[i, s+1] <= model.z_design[i, s] )
 
-'''
-def sites_filling_rule( model, i, s):
-    if s >= n_sites-1:
-        return Constraint.Skip
-    return model.z_design[i, s+1] <= model.z_design[i, s]
-model.sites_filling_constr=Constraint(model.Machines, model.Slots, rule=sites_filling_rule)
-'''
-
 # Link between z design and z operational: if a machines is not installed it cannot be on in any timestep
 def z_link_rule( model, i, s, t):
     return model.z[i, s, t]  <= model.z_design[i,s]
 model.z_link_constr=Constraint(model.Machines, model.Slots, model.times, rule=z_link_rule)
-'''
-def z_link_rule( model, i):
-    return sum(model.z[i,t] for t in model.times) <= sum(model.z_design[s,i] for s in model.Slots)*(T)
-model.z_link_constr=Constraint(model.Machines, rule=z_link_rule)
-'''
+
 
 # Min/Max energy input constraint
 def machines_rule_min( model, i, s, j ):
+    if Machines_parameters[i]['Internal Consumer']:
+        return model.Elcons[i, s, j] >= Machines_parameters[i]['min_In']*model.z[i, s, j]
     return  model.fuel_In[i, s, j] >= Machines_parameters[i]['min_In']*model.z[i, s, j]
 model.machine_constr_min=Constraint(model.Machines, model.Slots, model.times, rule=machines_rule_min)
 def machines_rule_max( model, i, s, j ):
+    if Machines_parameters[i]['Internal Consumer']:
+        return model.Elcons[i, s, j] <= Machines_parameters[i]['max_In']*model.z[i, s, j]
     return  model.fuel_In[i, s, j] <= Machines_parameters[i]['max_In']*model.z[i, s, j]
 model.machine_constr_max=Constraint(model.Machines, model.Slots, model.times, rule=machines_rule_max)
 
@@ -217,12 +219,16 @@ model.machine_constr_max=Constraint(model.Machines, model.Slots, model.times, ru
 def machines_RupLim_rule( model, i, s, j):
     if j==0:
         return Constraint.Skip
+    if Machines_parameters[i]['Internal Consumer']:
+        return model.Elcons[i, s, j] - model.Elcons[i, s, j-1] <= Machines_parameters[i]['RUlim']
     return model.fuel_In[i, s, j] - model.fuel_In[i, s, j-1] <= Machines_parameters[i]['RUlim']
 model.RupLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RupLim_rule)
 
 def machines_RdLim_rule( model, i, s, j):
     if j==0:
         return Constraint.Skip
+    if Machines_parameters[i]['Internal Consumer']:
+        return model.Elcons[i, s, j-1] - model.Elcons[i, s, j] <= Machines_parameters[i]['RDlim']
     return model.fuel_In[i, s, j-1] - model.fuel_In[i, s, j] <= Machines_parameters[i]['RDlim']
 model.RdLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RdLim_rule)
 
@@ -261,6 +267,8 @@ model.delta_off_constr3=Constraint(model.Machines, model.Slots, model.times, rul
 
 # Min UP/DOWN time constraint
 def min_up_rule(model, i, s, j):
+    if Machines_parameters[i]['minUT']==0:
+        return Constraint.Skip
     if j < Machines_parameters[i]['minUT']:
         return Constraint.Skip
     return sum(model.z[i, s, t] for t in range(j-Machines_parameters[i]['minUT'], j)
@@ -281,6 +289,8 @@ model.MinDT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min
 
 # Function to obtain heat/cold produced by machines
 def heat_production(model, i, s, j ):
+    if Machines_parameters[i]['Internal Consumer']:
+        return model.Elcons[i, s, j]*Machines_parameters[i]['m_th'] + model.z[i, s, j]*Machines_parameters[i]['q_th']
     return  model.fuel_In[i, s, j]*Machines_parameters[i]['m_th'] + model.z[i, s, j]*Machines_parameters[i]['q_th']
 # Function to obtain elecricity produced by machines
 def el_production(model, i, s, j ):
@@ -355,6 +365,7 @@ model.Heat_balance_constr = Constraint(
 # Electricity balance constrint rule
 def el_balance_rule( model, j ):
     return sum( model.Eluseful[i, s, j] for i in model.Machines_el for s in model.Slots
+                ) - sum( model.Elcons[i, s, j] for i in model.Machines_int for s in model.Slots
                 ) + model.el_purch[j] - model.el_sold[j] + PV_gen[j] == EE_demand[j]
 # Electricity Balance
 model.El_balance_constr = Constraint(
