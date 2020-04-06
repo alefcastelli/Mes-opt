@@ -21,8 +21,10 @@ power_out=[]
 delta_on=[]
 delta_off=[]
 z_design=[]
+PV_area=[]
+el_prod_PV=[]
 var_list=[F_In ,z , delta_on, delta_off, Q_prod, El_prod, Q_us, El_us, El_cons, Q_diss, \
-          el_purch, el_sold, stor_lev, power_in, power_out, z_design]
+          el_purch, el_sold, stor_lev, power_in, power_out, z_design, PV_area, el_prod_PV]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -87,6 +89,8 @@ Q_dissipated = - sum(Q_diss[:,])
 el_purch=np.array(el_purch)
 el_sold=-np.array(el_sold)
 
+el_prod_PV=np.array(el_prod_PV)
+
 Q_charge=[0]
 Q_discharge=[0]
 
@@ -104,7 +108,7 @@ Q_charge=-np.array(Q_charge)
 Q_discharge=-np.array(Q_discharge)
 
 
-H_day=24
+H_day=t
 times_step=np.arange(H_day)
 Fig_Q=plt.figure()
 plt.xticks(times_step, list(times_step))
@@ -121,7 +125,7 @@ plt.bar(times_step, res["Q_prod_ICE"][0:H_day],  bottom=res["Q_prod_HP"][0:H_day
 plt.bar(times_step, res["Q_prod_Boiler"][0:H_day], bottom=res["Q_prod_HP"][0:H_day], label='Q prod Boilers')
 plt.bar(times_step, res["Q_prod_HP"][0:H_day], label='Q prod HP')
 plt.bar(times_step, Q_charge[0:H_day], label='TES charge')
-#plt.bar(times_step, Q_dissipated[0:H_day], bottom=Q_charge[0:H_day], label='Q diss')
+plt.bar(times_step, Q_dissipated[0:H_day], bottom=Q_charge[0:H_day], label='Q diss')
 
 
 plt.plot(times_step, np.array(Heat_demand[0:H_day]), 'k--', label='Q demand')
@@ -132,12 +136,12 @@ Fig_E=plt.figure()
 plt.xticks(times_step, list(times_step))
 plt.ylabel("Electric Energy [kWh]")
 plt.title("Electricity balance")
-plt.bar(times_step, el_purch[0:H_day], bottom=PV_gen[0:H_day]+res["El_prod_ICE"][0:H_day], label='el purch')
-#plt.bar(times_step, res["El_prod_ICE1"][0:H_day], bottom=PV_gen[0:H_day]+ res["El_prod_ICE2"][0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE1')
-#plt.bar(times_step, res["El_prod_ICE2"][0:H_day], bottom=PV_gen[0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE2')
-#plt.bar(times_step, res["El_prod_ICE3"][0:H_day], bottom=PV_gen[0:H_day], label='el prod ICE3')
-plt.bar(times_step, res["El_prod_ICE"][0:H_day], bottom=PV_gen[0:H_day], label='el prod ICEs')
-plt.bar(times_step, PV_gen[0:H_day], label='PV output')
+plt.bar(times_step, el_purch[0:H_day], bottom=el_prod_PV[0:H_day]+res["El_prod_ICE"][0:H_day], label='el purch')
+#plt.bar(times_step, res["El_prod_ICE1"][0:H_day], bottom=el_prod_PV[0:H_day]+ res["El_prod_ICE2"][0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE1')
+#plt.bar(times_step, res["El_prod_ICE2"][0:H_day], bottom=el_prod_PV[0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE2')
+#plt.bar(times_step, res["El_prod_ICE3"][0:H_day], bottom=el_prod_PV[0:H_day], label='el prod ICE3')
+plt.bar(times_step, res["El_prod_ICE"][0:H_day], bottom=el_prod_PV[0:H_day], label='el prod ICEs')
+plt.bar(times_step, el_prod_PV[0:H_day], label='PV output')
 plt.bar(times_step, el_sold[0:H_day], label='el sold')
 plt.bar(times_step, El_consumed[0:H_day], label='el consumed')
 

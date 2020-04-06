@@ -27,8 +27,8 @@ Fuels = {
     }
 
 # Available area [m2] for PV panels
-PV_area=10
-PV_gen=PV_area*PV_output # kW
+Available_PV_area=10
+#PV_gen=PV_area*PV_output # kW
 
 # Electricity prices [€/kWh] # può essere usato anche un profilo <--
 El_price = 0.3
@@ -58,17 +58,20 @@ eta_target = 0.75
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    #'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    #'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer': False },
-    #'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 2, 'Dissipable_Heat': False, 'Internal Consumer': False},
-    #'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
-    #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat':  True, 'Internal Consumer': False },
-    #'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 19, 'Dissipable_Heat': True, 'Internal Consumer': False},
-    'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True },
-    'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True },
-    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
+    'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0503555, 'InvCost':173400,  'Dissipable_Heat': False, 'Internal Consumer': False },
+    'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False },
+    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 2, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False},
+    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'SUcost':0.076959, 'InvCost':1053670, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 19, 'SUcost':0.076959, 'InvCost':2945670, 'Dissipable_Heat':  True, 'Internal Consumer': False },
+    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 19, 'SUcost':0.076959, 'InvCost':4601170, 'Dissipable_Heat': True, 'Internal Consumer': False},
+    'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':452100, 'Dissipable_Heat': False, 'Internal Consumer':  True },
+    'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':595450, 'Dissipable_Heat': False, 'Internal Consumer':  True },
+    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':1060900, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     # 'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  2, 'Dissipable_Heat': False, 'Internal Consumer':  True }
     }
+PV_parameters = {
+    'PV': {'In': 'solar energy', 'fuel cost': 0, 'goods': ['El'],  'OM': 2, 'InvCost':300 , 'available area': 10}
+}
 Storage_parameters = {
      # thermal energy storage
      'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001 }
@@ -113,8 +116,11 @@ model.Machines_int= Set( within=model.Machines, initialize=list_Machine_int)
 # Set for storage
 model.Storages = Set ( initialize = Storage_parameters.keys() )
 
+# Set for PV
+model.PV_tech = Set( initialize= PV_parameters.keys())
+
 # Set for machines places
-n_slots=5 # defined a priori
+n_slots=10 # defined a priori
 model.Slots = RangeSet(0, n_slots-1) # let's assume only 3 sites available
 
 
@@ -160,20 +166,33 @@ model.power_out = Var (model.Storages, model.times, domain=Reals)
 
 # Variable to define if technology t is installed in  site s
 model.z_design = Var (model.Machines, model.Slots, domain=Binary)
-# Variable to define the size of the technology installed
-#model.x_desing = Var (model.Machines, domain= NonNegativeReals)
+
+# Variable to define the area of PV technology installed
+model.PVarea = Var (model.PV_tech, domain=NonNegativeReals)
+model.el_prod_PV = Var (model.PV_tech, model.times, domain=NonNegativeReals)
 
 
+int_rate=0.05
 
 ## OBJECTIVE FUNCTION
+'''
 def ObjFun( model ):
     return sum(model.fuel_In[i, s, j]*Machines_parameters[i]['fuel cost']
                for i in model.Machines for s in model.Slots for j in model.times) + sum(
                        (model.el_purch[j]-model.el_sold[j]) for j in model.times)
+'''
+def ObjFun( model ):
+    return - sum(model.z_design[i, s]*Machines_parameters[i]['InvCost'] for i in model.Machines for s in model.Slots) \
+           - sum(model.PVarea[r]*PV_parameters[r]['InvCost'] for r in model.PV_tech) + sum(
+            (          (model.el_sold[j]-model.el_purch[j]) - sum(model.fuel_In[i, s , j]*Machines_parameters[i]['fuel cost']
+                        for i in model.Machines for s in model.Slots) - sum(model.z[i, s, j]*Machines_parameters[i]['OM']
+                        for i in model.Machines for s in model.Slots) - sum(model.delta_on[i, s, j]*Machines_parameters[i]['SUcost']*Machines_parameters[i]['fuel cost']
+                        for i in model.Machines for s in model.Slots) - sum(model.delta_on[i, s, j]*Machines_parameters[i]['SUcost']*El_price
+                        for i in model.Machines_int for s in model.Slots))/((1+int_rate)**j) for j in model.times)
 
 model.obj = Objective(
     rule = ObjFun,
-    sense = minimize
+    sense = maximize
     )
 
 ## CONSTRAINTS
@@ -304,6 +323,14 @@ def Elprod_rule(model, i, s, j):
     return model.Elprod[i, s, j] == el_production(model, i, s, j)
 model.Elprod_constr=Constraint (model.Machines_el, model.Slots, model.times, rule=Elprod_rule)
 
+def ElprodPV_rule(model, r, j):
+    return model.el_prod_PV[r, j] <= PV_output[j]*model.PVarea[r]
+model.ElprodPV_constr=Constraint (model.PV_tech, model.times, rule=ElprodPV_rule)
+
+def Available_area_rule(model, r):
+    return model.PVarea[r] <= PV_parameters[r]["available area"]
+model.Available_area_constr=Constraint (model.PV_tech, rule=Available_area_rule)
+
 '''
 # Q prod/useful constraint
 def heat_us_rule( model, i, j ):
@@ -366,7 +393,7 @@ model.Heat_balance_constr = Constraint(
 def el_balance_rule( model, j ):
     return sum( model.Eluseful[i, s, j] for i in model.Machines_el for s in model.Slots
                 ) - sum( model.Elcons[i, s, j] for i in model.Machines_int for s in model.Slots
-                ) + model.el_purch[j] - model.el_sold[j] + PV_gen[j] == EE_demand[j]
+                ) + model.el_purch[j] - model.el_sold[j] + sum(model.el_prod_PV[r,j] for r in model.PV_tech)  == EE_demand[j]
 # Electricity Balance
 model.El_balance_constr = Constraint(
     model.times,
