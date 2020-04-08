@@ -8,6 +8,7 @@
 from pyomo.environ import *
 from optimization_test import *
 import numpy as np
+import pandas as pd
 from matplotlib.pyplot import *
 
 
@@ -120,7 +121,7 @@ model.Storages = Set ( initialize = Storage_parameters.keys() )
 model.PV_tech = Set( initialize= PV_parameters.keys())
 
 # Set for machines places
-n_slots=10 # defined a priori
+n_slots=3 # defined a priori
 model.Slots = RangeSet(0, n_slots-1) # let's assume only 3 sites available
 
 
@@ -157,9 +158,11 @@ model.Qdiss = Var( model.Machines_diss, model.Slots, model.times, domain=NonNega
 model.el_purch = Var ( model.times, domain=NonNegativeReals)
 model.el_sold = Var ( model.times, domain=NonNegativeReals)
 
-# Heat Storage level
+# Storage variables (level, charge/discharge)
 model.l = Var (model.Storages, model.times, domain=NonNegativeReals)
 model.l[('TES1',0)].fix(0)  # storage start level = 0
+model.store_charge = Var(model.Storages, model.times, domain=NonNegativeReals)
+model.store_discharge = Var(model.Storages, model.times, domain=NonNegativeReals)
 # Storage charge/discharge power
 model.power_in = Var (model.Storages, model.times, domain=Reals)
 model.power_out = Var (model.Storages, model.times, domain=Reals)
@@ -171,7 +174,7 @@ model.z_design = Var (model.Machines, model.Slots, domain=Binary)
 model.PVarea = Var (model.PV_tech, domain=NonNegativeReals)
 model.el_prod_PV = Var (model.PV_tech, model.times, domain=NonNegativeReals)
 
-
+# Interest rate for the NPV calculation
 int_rate=0.05
 
 ## OBJECTIVE FUNCTION
@@ -323,6 +326,7 @@ def Elprod_rule(model, i, s, j):
     return model.Elprod[i, s, j] == el_production(model, i, s, j)
 model.Elprod_constr=Constraint (model.Machines_el, model.Slots, model.times, rule=Elprod_rule)
 
+# PV panels production modelling
 def ElprodPV_rule(model, r, j):
     return model.el_prod_PV[r, j] <= PV_output[j]*model.PVarea[r]
 model.ElprodPV_constr=Constraint (model.PV_tech, model.times, rule=ElprodPV_rule)
@@ -370,6 +374,14 @@ def stor_powerOut_rule ( model, s, j):
     return model.power_out[s,j] == -(model.l[s,j]-model.l[s,j-1])/1  # kWh/h = kW
 model.stor_powerOut_constr = Constraint(model.Storages, model.times, rule=stor_powerOut_rule)
 
+# Link between storage level and charge/discharge
+def store_level(model, s, j):
+    if j == 0:
+        return model.l[s, j] == model.store_charge[s, j]-model.store_discharge[s, j]
+    else:
+        return (model.l[s, j] <= model.l[s, j-1]+model.store_charge[s, j]-model.store_discharge[s, j])
+model.store_level_constr = Constraint(model.Storages, model.times, rule=store_level)
+
 # Storage level link
 def stor_link_rule(model, s):
     return model.l[s,0]==model.l[s,T-1]
@@ -378,14 +390,12 @@ model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 
 
 # Heat balance constraint rule
-def heat_balance_rule( model, j, ss ):
-    if j==0:
-        return sum( model.Quseful[i, s, j] for i in model.Machines_heat for s in model.Slots ) == Heat_demand[j]
-    return sum( model.Quseful[i, s, j] for i in model.Machines_heat for s in model.Slots ) - (model.l[ss, j]-model.l[ss, j-1]) == Heat_demand[j]
+def heat_balance_rule( model, j ):
+    return sum( model.Quseful[i, s, j] for i in model.Machines_heat for s in model.Slots ) + sum(
+        model.store_discharge[ss, j] for ss in model.Storages) == Heat_demand[j] + sum(model.store_charge[ss, j] for ss in model.Storages)
 # Heat Balance
 model.Heat_balance_constr = Constraint(
     model.times,
-    model.Storages,
     rule = heat_balance_rule
     )
 
@@ -402,5 +412,5 @@ model.El_balance_constr = Constraint(
 
 
 ## Solve PROBLEM
-model.solver=SolverFactory('glpk')
-results = model.solver.solve(model, options={'mipgap':0.05}, tee=True) # tee=True to display solver output in console
+model.solver=SolverFactory('gurobi')
+results = model.solver.solve(model, options={'mipgap':0.01}, tee=True) # tee=True to display solver output in console

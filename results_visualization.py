@@ -16,6 +16,8 @@ Q_diss=[]
 el_purch=[]
 el_sold=[]
 stor_lev=[]
+stor_charge=[]
+stor_disch=[]
 power_in=[]
 power_out=[]
 delta_on=[]
@@ -24,7 +26,7 @@ z_design=[]
 PV_area=[]
 el_prod_PV=[]
 var_list=[F_In ,z , delta_on, delta_off, Q_prod, El_prod, Q_us, El_us, El_cons, Q_diss, \
-          el_purch, el_sold, stor_lev, power_in, power_out, z_design, PV_area, el_prod_PV]
+          el_purch, el_sold, stor_lev, stor_charge, stor_disch, power_in, power_out, z_design, PV_area, el_prod_PV]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -91,22 +93,9 @@ el_sold=-np.array(el_sold)
 
 el_prod_PV=np.array(el_prod_PV)
 
-Q_charge=[0]
-Q_discharge=[0]
-
-for i in range(1, len(stor_lev)):
-    diff=stor_lev[i]-stor_lev[i-1]
-    if diff >=0:
-        Q_charge.append(diff)
-        Q_discharge.append(0)
-    else:
-        Q_discharge.append(diff)
-        Q_charge.append(0)
-
 stor_l=np.array(stor_lev)
-Q_charge=-np.array(Q_charge)
-Q_discharge=-np.array(Q_discharge)
-
+Q_charge=-np.array(stor_charge)
+Q_discharge=np.array(stor_disch)
 
 H_day=t
 times_step=np.arange(H_day)
@@ -148,3 +137,31 @@ plt.bar(times_step, El_consumed[0:H_day], label='el consumed')
 plt.plot(times_step, np.array(EE_demand[0:H_day]), 'r--', label='El demand')
 plt.legend()
 plt.show()
+
+
+
+### PLOTS with Pandas ##
+
+df=pd.DataFrame.from_dict(res)
+df_Heat=df[["Q_prod_ICE", "Q_prod_Boiler", "Q_prod_HP"]]
+df_Heat["Q_diss"]=Q_dissipated
+df_Heat["stor_charge"]=Q_charge
+df_Heat["stor_discharge"]=Q_discharge
+df["Heat Demand"] = Heat_demand
+ax1 = df_Heat.plot(kind='bar', stacked=True, grid=True)
+df["Heat Demand"].plot(kind='line', ax=ax1)
+plt.xlabel("Timestep [h]")
+plt.ylabel("Energy[kWh]")
+plt.title("Heat Production")
+
+df_El=pd.DataFrame(res["El_prod_ICE"])
+df_El["El prod PV"]=el_prod_PV
+df_El["El_consumed"]=El_consumed
+df_El["El sold"]=el_sold
+df_El["El purch"]=el_purch
+df["El Demand"]=EE_demand
+ax2 = df_El.plot(kind='bar', stacked=True, grid=True)
+df["El Demand"].plot(kind='line', color='k', ax=ax2)
+plt.xlabel("Timestep [h]")
+plt.ylabel("Energy[kWh]")
+plt.title("Electricity Production")
