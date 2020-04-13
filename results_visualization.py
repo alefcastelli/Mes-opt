@@ -13,8 +13,11 @@ Heat_us=[]
 #El_us=[]
 El_In=[]
 Heat_diss=[]
-el_purch=[]
-el_sold=[]
+el_grid=[]
+El_tot=[]
+s=[]
+#el_purch=[]
+#el_sold=[]
 stor_lev=[]
 stor_charge=[]
 stor_disch=[]
@@ -24,9 +27,9 @@ delta_on=[]
 delta_off=[]
 z_design=[]
 PV_area=[]
-el_prod_PV=[]
+El_gen_Res=[]
 var_list=[z_design, z , delta_on, delta_off, fuel_In, El_In, Heat_gen, Cold_gen, El_gen, Heat_us, Heat_diss, \
-          el_purch, el_sold, stor_lev, stor_charge, stor_disch, PV_area, el_prod_PV]
+          el_grid, El_tot, s, stor_lev, stor_charge, stor_disch, PV_area, El_gen_Res]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -85,7 +88,7 @@ res["Cold_gen_CC"]=np.zeros(T)
 for k in res.keys():
     for i in model.Machines_el:
         if k == "El_gen_{0}".format(i):
-            res["El_gen_ICE"] += res[k]
+            res["El_gen_ICE".format(i)] += res[k]
     for j in range(1, len(model.Machines_heat)+1):
         if k == "Heat_gen_ICE{0}".format(j):
             res["Heat_gen_ICE"] += res[k]
@@ -102,10 +105,14 @@ for k in res.keys():
 El_consumed=- sum(El_In[:,])  #---> in teoria si potrebbe specificare consumata/dissipata da chi
 Q_dissipated = - sum(Heat_diss[:,])
 
-el_purch=np.array(el_purch)
-el_sold=-np.array(el_sold)
+el_grid=np.array(el_grid)
+s=np.array(s)
+#el_purch=np.array(el_purch)
+#el_sold=-np.array(el_sold)
+el_purch=el_grid*(1-s)
+el_sold =el_grid*s
 
-el_prod_PV=np.array(el_prod_PV)
+El_gen_PV=np.array(El_gen_Res)
 
 stor_l=np.array(stor_lev)
 Q_charge=-np.array(stor_charge)
@@ -173,7 +180,7 @@ plt.title("Heat Production")
 
 plt.figure()
 df_El=pd.DataFrame(res["El_gen_ICE"], columns=["El gen ICE"])
-df_El["El prod PV"]=el_prod_PV
+df_El["El gen PV"]=El_gen_PV
 df_El["El_consumed"]=El_consumed
 df_El["El sold"]=el_sold
 df_El["El purch"]=el_purch
