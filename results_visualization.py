@@ -3,7 +3,7 @@
 from optimization_model_concrete import *
 
 model.solutions.load_from(results)
-
+alpha=[]
 fuel_In=[]
 z=[]
 Heat_gen=[]
@@ -28,7 +28,7 @@ delta_off=[]
 z_design=[]
 PV_area=[]
 El_gen_Res=[]
-var_list=[z_design, z , delta_on, delta_off, fuel_In, El_In, Heat_gen, Cold_gen, El_gen, Heat_us, Heat_diss, \
+var_list=[z_design, alpha, z , delta_on, delta_off, fuel_In, El_In, Heat_gen, Cold_gen, El_gen, Heat_us, Heat_diss, \
           el_grid, El_tot, s, stor_lev, stor_charge, stor_disch, PV_area, El_gen_Res]
 
 i = 0
@@ -47,6 +47,8 @@ n_machines_el=len(model.Machines_el)
 #n_machines_int=len(model.Machines_int)
 n_machines_elIn=len(model.Machines_elIn)
 n_machines_diss=len(model.Machines_diss)
+
+alpha=np.array(alpha).reshape(n_slots*n_machines, T*2)
 
 z=np.array(z).reshape(n_slots*n_machines, T)
 Heat_gen=np.array(Heat_gen).reshape(n_slots*n_machines_heat, T)
