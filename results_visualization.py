@@ -3,33 +3,33 @@
 from optimization_model_concrete import *
 
 model.solutions.load_from(results)
-alpha=[]
 fuel_In=[]
 z=[]
 Heat_gen=[]
 Cold_gen=[]
 El_gen=[]
 Heat_us=[]
-#El_us=[]
 El_In=[]
 Heat_diss=[]
 el_grid=[]
 El_tot=[]
 s=[]
-#el_purch=[]
-#el_sold=[]
 stor_lev=[]
 stor_charge=[]
 stor_disch=[]
-#power_in=[]
-#power_out=[]
 delta_on=[]
 delta_off=[]
 z_design=[]
+x_design=[]
+gamma=[]
+b=[]
+Cinv=[]
+beta=[]
+psi=[]
 PV_area=[]
 El_gen_Res=[]
-var_list=[z_design, alpha, z , delta_on, delta_off, fuel_In, El_In, Heat_gen, Cold_gen, El_gen, Heat_us, Heat_diss, \
-          el_grid, El_tot, s, stor_lev, stor_charge, stor_disch, PV_area, El_gen_Res]
+var_list=[z_design, z , delta_on, delta_off, b, s, x_design, PV_area, beta, psi, fuel_In, El_In, Heat_gen, Cold_gen, \
+          El_gen, El_gen_Res, Heat_us, Heat_diss, el_grid, stor_lev, stor_charge, stor_disch, gamma, Cinv, El_tot]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -44,18 +44,16 @@ n_machines=len(model.Machines)
 n_machines_heat=len(model.Machines_heat)
 n_machines_cold=len(model.Machines_cold)
 n_machines_el=len(model.Machines_el)
-#n_machines_int=len(model.Machines_int)
 n_machines_elIn=len(model.Machines_elIn)
 n_machines_diss=len(model.Machines_diss)
 
-alpha=np.array(alpha).reshape(n_slots*n_machines, T*2)
+x_design=np.array(x_design).reshape(n_slots, n_machines)
 
 z=np.array(z).reshape(n_slots*n_machines, T)
 Heat_gen=np.array(Heat_gen).reshape(n_slots*n_machines_heat, T)
 Heat_us=np.array(Heat_us).reshape(n_slots*n_machines_heat, T)
 Cold_gen=np.array(Cold_gen).reshape(n_slots*n_machines_cold, T)
 El_gen=np.array(El_gen).reshape(n_slots*n_machines_el, T)
-#El_us=np.array(El_us).reshape(n_slots*n_machines_el, T)
 El_In=np.array(El_In).reshape(n_slots*n_machines_elIn, T)
 Heat_diss=np.array(Heat_diss).reshape(n_slots*n_machines_diss, T)
 
@@ -87,11 +85,12 @@ res["Heat_gen_ICE"]=np.zeros(T)
 res["Heat_gen_Boiler"]=np.zeros(T)
 res["Heat_gen_HP"]=np.zeros(T)
 res["Cold_gen_CC"]=np.zeros(T)
+N_machines_per_type=3
 for k in res.keys():
     for i in model.Machines_el:
         if k == "El_gen_{0}".format(i):
             res["El_gen_ICE".format(i)] += res[k]
-    for j in range(1, len(model.Machines_heat)+1):
+    for j in range(1, N_machines_per_type+1):
         if k == "Heat_gen_ICE{0}".format(j):
             res["Heat_gen_ICE"] += res[k]
         if k == "Heat_gen_Boiler{0}".format(j):
@@ -111,8 +110,8 @@ el_grid=np.array(el_grid)
 s=np.array(s)
 #el_purch=np.array(el_purch)
 #el_sold=-np.array(el_sold)
-el_purch=el_grid*(1-s)
-el_sold =el_grid*s
+#el_purch=el_grid*(1-s)
+#el_sold =-el_grid*s
 
 El_gen_PV=np.array(El_gen_Res)
 
@@ -184,8 +183,9 @@ plt.figure()
 df_El=pd.DataFrame(res["El_gen_ICE"], columns=["El gen ICE"])
 df_El["El gen PV"]=El_gen_PV
 df_El["El_consumed"]=El_consumed
-df_El["El sold"]=el_sold
-df_El["El purch"]=el_purch
+#df_El["El sold"]=el_sold
+#df_El["El purch"]=el_purch
+df_El["El grid"]=-el_grid
 df["El Demand"]=EE_demand
 ax2=df["El Demand"].plot(kind='line', color='g', linestyle='--', label='El demand', legend=True)
 df_El.plot(kind='bar', stacked=True, ax=ax2, legend=True)

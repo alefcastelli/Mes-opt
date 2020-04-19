@@ -13,7 +13,7 @@ from matplotlib.pyplot import *
 
 
 
-# Declaring parameters
+## Parameters
 t=24 # parameter to set the dimension of the problem
 # Demands profiles
 EE_demand   = typ_profiles[0:t, 0]
@@ -60,32 +60,31 @@ eta_target = 0.75
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  1, 'SUcost':0.0503555, 'InvCost':173400,  'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1 },
-    'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1},
-    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1 },
-    'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 14, 'SUcost':0.076959, 'InvCost':1053670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83 , 'KIn_min':0.54, 'KIn_max':1},
-    'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 16, 'SUcost':0.076959, 'InvCost':2945670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1},
-    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'InvCost':4601170, 'Dissipable_Heat': True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1},
-    'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  1, 'SUcost':0.1186441, 'InvCost':452100, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1  },
-    'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':595450, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0  , 'KIn_min':0.13, 'KIn_max':1},
-    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'InvCost':1060900, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1},
-    'CC1':      {'In': 'El', 'fuel cost':            0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM': 1, 'SUcost': 0.0, 'InvCost': 200000, 'Dissipable_Heat': False, 'Internal Consumer': True, 'K1Q': 11.10 , 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1},
-    'CC2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0, 'InvCost':500000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1},
-    'CC3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0, 'InvCost':1000000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1 },
-    #'PV':       {'In': 'SunIrradiance', 'fuel cost': 0, 'goods': ['El'],  'OM': 2, 'InvCost':300 , 'Dissipable_Heat': False, 'Internal Consumer':  False , 'available area': 10}
-    }
+    #'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  1, 'SUcost':0.0503555, 'InvCost':173400,  'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':250, 'XD_max':1000 },
+    #'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':625, 'XD_max':2500},
+    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
+    #'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 14, 'SUcost':0.076959, 'InvCost':1053670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83 , 'KIn_min':0.54, 'KIn_max':1, 'XD_min':1328, 'XD_max':38692},
+    #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 16, 'SUcost':0.076959, 'InvCost':2945670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':1328, 'XD_max':38692},
+    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'InvCost':4601170, 'Dissipable_Heat': True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
+    #'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  1, 'SUcost':0.1186441, 'InvCost':452100, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1 , 'XD_min':100, 'XD_max':10000 },
+    #'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':595450, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0  , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':100, 'XD_max':10000},
+    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'InvCost':1060900, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
+    #'CC1':      {'In': 'El', 'fuel cost':            0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM': 1, 'SUcost': 0.0, 'InvCost': 200000, 'Dissipable_Heat': False, 'Internal Consumer': True, 'K1Q': 11.10 , 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':165, 'XD_max':680},
+    #'CC2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0, 'InvCost':500000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':165, 'XD_max':680},
+    'CC3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0, 'InvCost':1000000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680},
+}
 Res_parameters = {
    'PV': {'In': 'SunIrradiance',  'goods': ['El'],  'OM': 10, 'InvCost':300 , 'available area': 10} # maintenance €/m2
 }
 Storage_parameters = {
      # thermal energy storage
-     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001 }
+     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500 }
      }
 
 # Time values
 # Number of time intervals
 T =t
-
+Dt=1 # hours each time step
 ######################################################################################################################################################################
 # Optimization Model #################################################################################################################################################
 
@@ -105,12 +104,10 @@ list_Machine_heat = []
 list_Machine_cold = []
 list_Machine_el = []
 list_Machine_diss=[]
-#list_Machine_RES=[]
+
 for i in Machines_parameters.keys():
     if 'NG' in Machines_parameters[i]['In']:
         list_Machine_fuelIn.append(i)
-   # if 'SunIrradiance' in Machines_parameters[i]['In']:
-    #    list_Machine_RES.append(i)
     if Machines_parameters[i]['Internal Consumer']:
         if "El" in Machines_parameters[i]['In']:
             list_Machine_elIn.append(i)
@@ -118,8 +115,6 @@ for i in Machines_parameters.keys():
         list_Machine_diss.append(i)
     if 'Heat' in Machines_parameters[i]['goods']:                               # aggiungere qua le righe per anche Cold <--
         list_Machine_heat.append(i)
-        #if 'El' in Machines_parameters[i]['goods']:
-        #    list_Machine_el.append(i)
     if 'Cold' in Machines_parameters[i]['goods']:
         list_Machine_cold.append(i)
     elif 'El' in Machines_parameters[i]['goods']:
@@ -130,7 +125,6 @@ model.Machines_heat = Set( within = model.Machines, initialize = list_Machine_he
 model.Machines_cold = Set( within= model.Machines, initialize= list_Machine_cold)
 model.Machines_el = Set( within = model.Machines, initialize = list_Machine_el )
 model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
-#modelMachines_RES= Set( within=model.Machines, initialize=list_Machine_RES)
 
 # Set for storage
 model.Storages = Set ( initialize = Storage_parameters.keys() )
@@ -143,7 +137,6 @@ n_slots=3 # defined a priori
 model.Slots = RangeSet(0, n_slots-1)
 
 # Set of vertex for the convex hull formulation (one-degree of freedom)
-n_vertex=2 # max and min
 model.v = Set(initialize=['Min', 'Max'])
 
 v={}
@@ -153,26 +146,44 @@ for i in Machines_parameters.keys():
 
 model.K_In=Param(model.Machines, model.v, initialize=v)
 
+n_bpt=5
+model.bins=RangeSet(0, n_bpt-1, ordered=True)
+x_bpts={#'HP1':[100, 500, 2000, 10000], 'Boiler1': [100, 1000, 10000, 50000], 'ICE1': [1328, 13783, 26237, 38692], 'CC1': [165, 337, 508, 680],
+        #'HP2':[100, 500, 2000, 10000], 'Boiler2': [100, 1000, 10000, 50000], 'ICE2': [1328, 13783, 26237, 38692], 'CC2': [165, 337, 508, 680],
+        'HP3':[0,100, 500, 2000, 10000], 'Boiler3': [0,100, 1000, 10000, 50000], 'ICE3': [0,1328, 13783, 26237, 38692], 'CC3': [0,165, 337, 508, 680]
+         }
+cost_bpts={#'HP1':[254, 778, 2039, 6239], 'Boiler1': [8, 69, 554, 2387], 'ICE1': [247, 2296, 4242, 6145], 'CC1': [248, 428, 587, 733],
+           #'HP2':[254, 778, 2039, 6239], 'Boiler2': [8, 69, 554, 2387], 'ICE2': [247, 2296, 4242, 6145], 'CC2': [248, 428, 587, 733],
+           'HP3':[0,254, 778, 2039, 6239], 'Boiler3': [0,8, 69, 554, 2387], 'ICE3': [0,247, 2296, 4242, 6145], 'CC3': [0,248, 428, 587, 733]
+           }
 
 
 ## VARIABLES
 
-# Machines Variables
+## Binary variables
 # Variable to define if technology t is installed in  site s
 model.z_design = Var (model.Machines, model.Slots, domain=Binary)
-
-# Variable to define the size of unit
-# model.x_design= Var (model.Machines, model.Slots, domain=NonNegativeReals)
-# Variable alpha for the convex hull formulation
-model.alpha = Var (model.Machines, model.Slots, model.times, model.v, domain=NonNegativeReals, bounds=(0,1))
-
 # On/off variable
 model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
 # Delta on/off
 model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
 model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
+# Active bin variable
+model.b = Var (model.Machines, model.Slots, model.bins, domain=Binary)
+# Binary variable to take into account if electricity is sold (1) or purchased (0)
+model.s = Var ( model.times, domain=Binary)
 
-# Fuel as input of the machines related to the amount at the i-th time for the j-th machine in the s-th slot
+## Continuous Variables
+# Variable to define the size of unit
+model.x_design= Var (model.Machines, model.Slots, domain=NonNegativeReals)
+# Variable to define the area of PV technology installed
+model.ResArea = Var (model.Machines_Res, domain=NonNegativeReals)
+
+# Convex hull operation control variable associated to vertex v of the performance map of machine m in site s at time t
+model.beta = Var (model.Machines, model.Slots, model.times, model.v, domain=NonNegativeReals)
+# Linearization variable of the product x_D[m,s] * z[m,s,t]
+model.psi = Var (model.Machines, model.Slots, model.times, domain=NonNegativeReals)
+
 # Fuel input as power [kW]
 model.fuel_In = Var( model.Machines_fuelIn, model.Slots, model.times, domain = NonNegativeReals)
 # Electricity consumed by internal consumers (ex. HP, CC) of electricity
@@ -182,48 +193,35 @@ model.el_In = Var( model.Machines_elIn, model.Slots, model.times, domain=NonNega
 model.Heat_gen = Var( model.Machines_heat, model.Slots, model.times, domain=NonNegativeReals)
 model.Cold_gen = Var( model.Machines_cold, model.Slots, model.times, domain=NonNegativeReals)
 model.El_gen = Var( model.Machines_el, model.Slots, model.times, domain=NonNegativeReals)
-
-# Useful variables (Heat useful = Heat gen - Heat diss)
+model.El_gen_Res = Var (model.Machines_Res, model.times, domain=NonNegativeReals)
+# Useful heat (Heat useful = Heat gen - Heat diss)
 model.Heat_useful = Var( model.Machines_heat, model.Slots, model.times, domain=NonNegativeReals)
-#model.El_useful= Var( model.Machines_el, model.Slots, model.times, domain=NonNegativeReals)
-
 # Variable for Q dissipated
 model.Heat_diss = Var( model.Machines_diss, model.Slots, model.times, domain=NonNegativeReals)
 
 # Electricity purch/sold to the network at time t
-#model.el_purch = Var ( model.times, domain=NonNegativeReals)
-#model.el_sold = Var ( model.times, domain=NonNegativeReals)
-model.el_grid = Var (model.times, domain=NonNegativeReals)
-model.El_tot = Var (model.times, domain=NonNegativeReals)
-# Binary variable to take into account if electricity is sold (1) or purchased (0)
-model.s = Var ( model.times, domain=Binary)
+model.el_grid = Var (model.times, domain=Reals)
 
 # Storage variables (level, charge/discharge)
 model.l = Var (model.Storages, model.times, domain=NonNegativeReals)
-model.l[('TES1',0)].fix(0)  # storage start level = 0
+model.l[('TES1',0)].fix(Storage_parameters['TES1']['Init%']*Storage_parameters['TES1']['maxC'])  # storage start level = 0
 model.store_charge = Var(model.Storages, model.times, domain=NonNegativeReals)
 model.store_discharge = Var(model.Storages, model.times, domain=NonNegativeReals)
-# Storage charge/discharge power
-#model.power_in = Var (model.Storages, model.times, domain=Reals)
-#model.power_out = Var (model.Storages, model.times, domain=Reals)
 
-# Variable to define the area of PV technology installed
-model.ResArea = Var (model.Machines_Res, domain=NonNegativeReals)
-model.El_gen_Res = Var (model.Machines_Res, model.times, domain=NonNegativeReals)
+# Variables to define the convex combination of the cost function linear approximation
+model.gamma = Var (model.Machines, model.Slots, model.bins , domain=NonNegativeReals, bounds=(0,1))
+# Investment cost associated to machine m in slot s
+model.Cinv=Var(model.Machines, model.Slots, domain=NonNegativeReals)
+# Revenues from the electricity (positive if sold, negative if purchased)
+model.El_tot = Var (model.times, domain=Reals)
 
 
 # Interest rate for the TAC calculation
 CCR=0.15
 
 ## OBJECTIVE FUNCTION
-'''
 def ObjFun( model ):
-    return sum(model.fuel_In[i, s, j]*Machines_parameters[i]['fuel cost']
-               for i in model.Machines for s in model.Slots for j in model.times) + sum(
-                       (model.el_purch[j]-model.el_sold[j]) for j in model.times)
-'''
-def ObjFun( model ):
-    return (sum(model.z_design[m, s]*Machines_parameters[m]['InvCost'] for m in (model.Machines) for s in model.Slots) \
+    return ( sum(model.Cinv[m, s] for m in (model.Machines) for s in model.Slots)*1000 \
             + sum(model.ResArea[r]*Res_parameters[r]['InvCost'] for r in model.Machines_Res))*CCR + sum(
             (           - model.El_tot[j] + sum(model.fuel_In[i, s , j]*Machines_parameters[i]['fuel cost']
                         for i in model.Machines_fuelIn for s in model.Slots) + sum(model.z[m, s, j]*Machines_parameters[m]['OM']
@@ -239,18 +237,12 @@ model.obj = Objective(
 
 ## CONSTRAINTS
 
-# Machines Constraints
-# Machines range constraint
-# Machines on/off binary constraint
-# nota: li puoi aggregare in un unico vincolo
-
-
-# The same site cannot be assigned to more than one machine: one machine per site
+## Investment Constraints
+# The same site cannot be assigned to more than one machine: N_max machine per site
+N_max=1
 def sites_perMachine_rule( model, s):
-    return sum(model.z_design[m,s] for m in (model.Machines)) <= 1
+    return sum(model.z_design[m,s] for m in (model.Machines)) <= N_max
 model.sites_perMachine_constr=Constraint(model.Slots, rule=sites_perMachine_rule)
-
-
 # Simmetry breaking constraint on the site filling with machines
 model.cuts=ConstraintList()
 for k,m in enumerate(Machines_parameters.keys()):
@@ -258,37 +250,86 @@ for k,m in enumerate(Machines_parameters.keys()):
             if s >= k:
                 model.cuts.add( model.z_design[m, s+1] <= model.z_design[m, s] )
 
-# Link between z design and z operational: if a machines is not installed it cannot be on in any timestep
+# Link between z design and z operational: only installed unit can be operated
 def z_link_rule( model, m, s, t):
     return model.z[m, s, t]  <= model.z_design[m,s]
 model.z_link_constr=Constraint(model.Machines, model.Slots, model.times, rule=z_link_rule)
 
 
-# Constraint on alpha
-def alpha_rule(model, m, s, j):
-    return sum(model.alpha[m, s, j, v] for v in model.v) == model.z[m, s, j]
-model.alpha_constr=Constraint(model.Machines, model.Slots, model.times, rule=alpha_rule)
-def fuel_In_rule(model, i, s, j):
-    return model.fuel_In[i, s, j] == sum( model.alpha[i, s, j, v] * model.K_In[i, v] * Machines_parameters[i]['max_In'] for v in model.v )
-model.fuel_In_constr=Constraint(model.Machines_fuelIn, model.Slots, model.times, rule=fuel_In_rule)
+# Design bound constraints
+def XD_max_rule(model, m, s):
+    return model.x_design[m, s] <= model.z_design[m, s]*Machines_parameters[m]['XD_max']
+def XD_min_rule(model, m, s):
+    return model.x_design[m, s] >= model.z_design[m, s]*Machines_parameters[m]['XD_min']
+def Available_area_rule(model, r):
+    return model.ResArea[r] <= Res_parameters[r]["available area"]
+model.XD_max_constr=Constraint(model.Machines, model.Slots, rule=XD_max_rule)
+model.XD_min_constr=Constraint(model.Machines, model.Slots, rule=XD_min_rule)
+model.Available_area_constr=Constraint (model.Machines_Res, rule=Available_area_rule)
 
+
+#def b_bound1(model, m, s):
+#    return model.b[m, s, 0] == 0
+def b_bound2(model, m, s):
+    return model.b[m, s, n_bpt-1]==0
+#model.b_bound1_constr=Constraint(model.Machines, model.Slots, rule=b_bound1)
+model.b_bound2_constr=Constraint(model.Machines, model.Slots, rule=b_bound2)
+
+def bin_active_rule(model, m, s, b):
+    if b==0:
+        return model.gamma[m,s,b] <= model.b[m,s,b]
+    return model.gamma[m,s,b] <= model.b[m,s,b-1] + model.b[m, s, b]
+model.bin_active_constr=Constraint(model.Machines, model.Slots, model.bins, rule=bin_active_rule)
+def b_zdesign_link(model, m, s):
+    return sum( model.b[m,s,b] for b in model.bins) == model.z_design[m,s]
+model.b_zdesing_link_constr=Constraint(model.Machines, model.Slots, rule=b_zdesign_link)
+def gamma_rule(model, m, s):
+    return sum( model.gamma[m, s, b] for b in model.bins) == model.z_design[m,s]
+model.gamma_constr=Constraint(model.Machines, model.Slots, rule=gamma_rule)
+# Convex hull formulation constraint for the size and cost of machine m in slot
+def x_convex_rule(model, m, s):
+    return model.x_design[m, s] == sum( model.gamma[m,s,b]*x_bpts[m][b] for b in model.bins)
+model.x_convex_constr=Constraint(model.Machines, model.Slots, rule=x_convex_rule)
+def cost_convex_rule(model, m, s):
+    return model.Cinv[m, s] == sum( model.gamma[m,s,b]*cost_bpts[m][b] for b in model.bins)
+model.Cinv_convex_constr=Constraint(model.Machines, model.Slots, rule=cost_convex_rule)
+
+# Machine part load performance expressed as a convex combination of its operating vertexes
+# Linearization of the bilinear term psi[m,s,t]=x_D[m,s]*z[m,s,t] and beta[m,s,t,v]=x_D[m,s]*alpha[m,s,t,v]
+def psiBeta_rule(model, m, s, j):
+    return model.psi[m,s,j]== sum( model.beta[m,s,j,v] for v in model.v)
+def psi_zeta_rule(model, m, s, j):
+    return model.psi[m,s,j] <= model.z[m,s,j] * Machines_parameters[m]['XD_max']
+def psi_x_design_rule(model, m, s, j):
+    return model.psi[m,s,j] <= model.x_design[m,s]
+def psi_link_rule(model, m, s, j):
+    return model.psi[m,s,j] >= model.x_design[m,s] - (1-model.z[m,s,j]) * Machines_parameters[m]['XD_max']
+model.psi_constr1=Constraint(model.Machines, model.Slots, model.times, rule=psiBeta_rule)
+model.psi_constr2=Constraint(model.Machines, model.Slots, model.times, rule=psi_zeta_rule)
+model.psi_constr3=Constraint(model.Machines, model.Slots, model.times, rule=psi_x_design_rule)
+model.psi_constr4=Constraint(model.Machines, model.Slots, model.times, rule=psi_link_rule)
+
+# Definition of variables fuel_In and el_In on the basis of Beta (convex hull/combination)
+def fuel_In_rule(model, i, s, j):
+    return model.fuel_In[i, s, j] == sum( model.beta[i, s, j, v] * model.K_In[i, v] for v in model.v )
+model.fuel_In_constr=Constraint(model.Machines_fuelIn, model.Slots, model.times, rule=fuel_In_rule)
 def el_In_rule(model, e, s, j):
-    return model.el_In[e, s, j] == sum( model.alpha[e, s, j, v] * model.K_In[e, v] * Machines_parameters[e]['max_In'] for v in model.v )
+    return model.el_In[e, s, j] == sum( model.beta[e, s, j, v] * model.K_In[e, v] for v in model.v )
 model.el_In_constr=Constraint(model.Machines_elIn, model.Slots, model.times, rule=el_In_rule)
 
 
 # Min/Max energy input constraint
 def machines_fuelIn_min( model, i, s, j ):
-    return  model.fuel_In[i, s, j] >= model.z[i, s, j] * Machines_parameters[i]['max_In'] * Machines_parameters[i]['KIn_min']
+    return  model.fuel_In[i, s, j] >= model.psi[i,s,j]* Machines_parameters[i]['KIn_min']
 model.machine_constr_minFuel=Constraint(model.Machines_fuelIn, model.Slots, model.times, rule=machines_fuelIn_min)
 def machines_elIn_min( model, e, s, j):
-    return model.el_In[e, s, j] >=  model.z[e, s, j] * Machines_parameters[e]['max_In'] * Machines_parameters[e]['KIn_min']
+    return model.el_In[e, s, j] >=  model.psi[e,s,j] * Machines_parameters[e]['KIn_min']
 model.machine_constr_minEl=Constraint(model.Machines_elIn, model.Slots, model.times, rule=machines_elIn_min)
 def machines_fuelIn_max( model, i, s, j ):
-    return  model.fuel_In[i, s, j] <= model.z[i, s, j] * Machines_parameters[i]['max_In'] * Machines_parameters[i]['KIn_max']
+    return  model.fuel_In[i, s, j] <= model.psi[i,s,j] * Machines_parameters[i]['KIn_max']
 model.machine_constr_maxFuel=Constraint(model.Machines_fuelIn, model.Slots, model.times, rule=machines_fuelIn_max)
 def machines_elIn_max( model, e, s, j):
-    return model.el_In[e, s, j] <= model.z[e, s, j] * Machines_parameters[e]['max_In'] * Machines_parameters[e]['KIn_max']
+    return model.el_In[e, s, j] <= model.psi[e,s,j] * Machines_parameters[e]['KIn_max']
 model.machine_constr_maxEl=Constraint(model.Machines_elIn, model.Slots, model.times, rule=machines_elIn_max)
 
 
@@ -348,7 +389,6 @@ def delta_off_rule3( model, m, s, j):
     return model.delta_off[m, s, j] <=  model.z[m, s, j-1]
 model.delta_off_constr3=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule3)
 
-
 # Min UP/DOWN time constraint
 def min_up_rule(model, m, s, j):
     if Machines_parameters[m]['minUT']==0:
@@ -372,33 +412,20 @@ model.MinDT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min
 def heat_production(model, h, s, j ):
     if Machines_parameters[h]['Internal Consumer']:
         if 'El' in Machines_parameters[h]['In']:
-            return model.el_In[h, s, j]*Machines_parameters[h]['K1Q'] + model.z[h, s, j]*Machines_parameters[h]['max_In']*Machines_parameters[h]['K2Q'] + model.z[h, s, j]*Machines_parameters[h]['K3Q']
+            return (  sum( model.beta[h, s, j, v]*(Machines_parameters[h]['K1Q']*model.K_In[h, v] +Machines_parameters[h]['K2Q'])
+                       for v in model.v ) + model.z[h, s, j]*Machines_parameters[h]['K3Q']  )
     if 'NG' in Machines_parameters[h]['In']:
-        return  model.fuel_In[h, s, j]*Machines_parameters[h]['K1Q'] +  model.z[h, s, j]*Machines_parameters[h]['max_In']*Machines_parameters[h]['K2Q'] + model.z[h, s, j]*Machines_parameters[h]['K3Q']
+        return  sum( model.beta[h, s, j, v]*(Machines_parameters[h]['K1Q']*model.K_In[h, v] +Machines_parameters[h]['K2Q'])
+                       for v in model.v ) + model.z[h, s, j]*Machines_parameters[h]['K3Q']
 def cold_production(model, c, s, j ):
     if Machines_parameters[c]['Internal Consumer']:
         if 'El' in Machines_parameters[c]['In']:
-            return model.el_In[c, s, j]*Machines_parameters[c]['K1Q'] + model.z[c, s, j] * Machines_parameters[c]['max_In'] * Machines_parameters[c]['K2Q'] + model.z[c, s, j]*Machines_parameters[c]['K3Q']
+            return sum( model.beta[c, s, j, v]*(Machines_parameters[c]['K1Q']*model.K_In[c, v] +Machines_parameters[c]['K2Q'])
+                       for v in model.v ) + model.z[c, s, j]*Machines_parameters[c]['K3Q']
 # Function to obtain elecricity produced by machines
 def el_production(model, p, s, j ):
-    return  model.fuel_In[p, s, j]*Machines_parameters[p]['K1P'] + model.z[p, s, j] * Machines_parameters[p]['max_In'] * Machines_parameters[p]['K2P'] + model.z[p, s, j]*Machines_parameters[p]['K3P']
-
-'''
-# Function to obtain heat/cold produced by machines
-def heat_production(model, h, s, j ):
-    if Machines_parameters[h]['Internal Consumer']:
-        if 'El' in Machines_parameters[h]['In']:
-            return model.el_In[h, s, j]*Machines_parameters[h]['m_th'] + model.z[h, s, j]*Machines_parameters[h]['q_th']
-    if 'NG' in Machines_parameters[h]['In']:
-        return  model.fuel_In[h, s, j]*Machines_parameters[h]['m_th'] + model.z[h, s, j]*Machines_parameters[h]['q_th']
-def cold_production(model, c, s, j ):
-    if Machines_parameters[c]['Internal Consumer']:
-        if 'El' in Machines_parameters[c]['In']:
-            return model.el_In[c, s, j]*Machines_parameters[c]['m_th'] + model.z[c, s, j]*Machines_parameters[c]['q_th']
-# Function to obtain elecricity produced by machines
-def el_production(model, p, s, j ):
-    return  model.fuel_In[p, s, j]*Machines_parameters[p]['m_el'] + model.z[p, s, j]*Machines_parameters[p]['q_el']
-'''
+    return  sum( model.beta[p, s, j, v]*(Machines_parameters[p]['K1Q']*model.K_In[p, v] +Machines_parameters[p]['K2Q'])
+                       for v in model.v ) + model.z[p, s, j]*Machines_parameters[p]['K3P']
 
 def el_production_PV(model, r, j):
     return PV_output[j]*model.ResArea[r]
@@ -414,19 +441,11 @@ model.Coldprod_constr=Constraint(model.Machines_cold, model.Slots, model.times, 
 def Elprod_rule(model, p, s, j):
     return model.El_gen[p, s, j] <= el_production(model, p, s, j) # se metto uguale diventa unfeasible perche??
 model.Elprod_constr=Constraint (model.Machines_el, model.Slots, model.times, rule=Elprod_rule)
+
 # PV panels electricity production modelling
 def El_genRes_rule(model, r, j):
     return model.El_gen_Res[r, j] == el_production_PV(model, r, j)
 model.ElgenRes_constr=Constraint(model.Machines_Res, model.times, rule=El_genRes_rule)
-
-def Available_area_rule(model, r):
-    return model.ResArea[r] <= Res_parameters[r]["available area"]
-model.Available_area_constr=Constraint (model.Machines_Res, rule=Available_area_rule)
-
-# El prod/useful constraint
-#def el_us_rule( model, i, s, j ):
-#    return model.Eluseful[i, s, j] == model.Elprod[i, s, j]
-#model.el_us_constr = Constraint(model.Machines_el, model.Slots, model.times, rule = el_us_rule)
 
 # Q useful constraint: useful heat if generated but not dissipated
 # A constraint that the system uses to define Q diss each time step
@@ -436,24 +455,23 @@ def heat_us_rule( model, h, s, j ):
     return model.Heat_useful[h, s, j] == model.Heat_gen[h, s, j]
 model.Heat_us_constr = Constraint(model.Machines_heat, model.Slots, model.times, rule = heat_us_rule)
 
-
 # Storage Capacity constraint
 def stor_capacity_rule( model, s, j):
     return model.l[s, j] <= Storage_parameters[s]['maxC']
 model.stor_capacity_constr = Constraint(model.Storages ,model.times, rule=stor_capacity_rule)
-'''
-# Storage Power constraint
+
+# Storage power limits constraint
 def stor_powerIn_rule ( model, s, j):
     if j==0:
-        return model.power_in[s,j] == model.l[s,j]/1
-    return model.power_in[s,j] == (model.l[s,j]-model.l[s,j-1])/1  # kWh/h = kW
+        return Constraint.Skip
+    return (model.l[s,j]-model.l[s,j-1]) <= Storage_parameters[s]['PmaxIn']*Dt  # kWh= kW*h
 model.stor_powerIn_constr = Constraint(model.Storages, model.times, rule=stor_powerIn_rule)
 def stor_powerOut_rule ( model, s, j):
     if j==0:
-        return model.power_out[s,j] == -model.l[s,j]/1
-    return model.power_out[s,j] == -(model.l[s,j]-model.l[s,j-1])/1  # kWh/h = kW
+        return Constraint.Skip
+    return (model.l[s,j-1]-model.l[s,j]) <= Storage_parameters[s]['PmaxOut']*Dt   # kWh/h = kW
 model.stor_powerOut_constr = Constraint(model.Storages, model.times, rule=stor_powerOut_rule)
-'''
+
 # Link between storage level and charge/discharge
 def store_level(model, s, j):
     if j == 0:
@@ -469,19 +487,19 @@ model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 
 # Set of constraint to establish wether the electricity is sold or purchased
 def el_grid_rule1( model, j):
-    return model.el_grid[j] >= (model.s[j]-1) * (EE_demand[j] + sum( Machines_parameters[e]['max_In'] for e in model.Machines_elIn)*n_slots) * 1.5
+    return model.el_grid[j] >= (model.s[j]-1) * (EE_demand[j] + sum( Machines_parameters[e]['XD_max'] for e in model.Machines_elIn)*n_slots) * 1.5
 def el_grid_rule2( model, j):
-    return model.el_grid[j] <= (model.s[j]) * (sum( Machines_parameters[p]['max_In'] for p in model.Machines_el)*n_slots) * 1.5
+    return model.el_grid[j] <= (model.s[j]) * (sum( Machines_parameters[p]['XD_max'] for p in model.Machines_el)*n_slots) * 1.5
 model.el_grid_constr1 = Constraint(model.times, rule=el_grid_rule1)
 model.el_grid_constr2 = Constraint(model.times, rule=el_grid_rule2)
 
 # Set of constraints to define El_tot
 def El_tot_ruel1( model, j):
     return model.El_tot[j] <= model.el_grid[j]*El_sold_price + (1-model.s[j]) * (EE_demand[j] + sum(
-        Machines_parameters[e]['max_In'] for e in model.Machines_elIn)*n_slots) * 1.5 * El_purch_price
+        Machines_parameters[e]['XD_max'] for e in model.Machines_elIn)*n_slots) * 1.5 * El_purch_price
 def El_tot_ruel2( model, j):
     return model.El_tot[j] <= model.el_grid[j]*El_purch_price + (model.s[j]) * (sum(
-        Machines_parameters[p]['max_In'] for p in model.Machines_el)*n_slots) * 1.5 * El_sold_price
+        Machines_parameters[p]['XD_max'] for p in model.Machines_el)*n_slots) * 1.5 * El_sold_price
 model.El_totConstr1 = Constraint(model.times, rule=El_tot_ruel1)
 model.El_totConstr2 = Constraint(model.times, rule=El_tot_ruel2)
 
@@ -494,6 +512,7 @@ model.Heat_balance_constr = Constraint(
     model.times,
     rule = heat_balance_rule
     )
+
 # Cold balance constraint rule
 def cold_balance_rule( model, j ):
     return sum( model.Cold_gen[c, s, j] for c in model.Machines_cold for s in model.Slots ) == Cold_demand[j]
@@ -515,8 +534,9 @@ model.El_balance_constr = Constraint(
     )
 
 
+
 ## Solve PROBLEM
 model.solver=SolverFactory('gurobi')
-results = model.solver.solve(model, options={'mipgap':0.01}, tee=True) # tee=True to display solver output in console
-
+results = model.solver.solve(model,  tee=True) # tee=True to display solver output in console
+#options={'mipgap':0.01},
 #model.pprint()
