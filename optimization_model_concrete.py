@@ -27,9 +27,6 @@ Fuels = {
     'Diesel':  1
     }
 
-# Available area [m2] for PV panels
-Available_PV_area=10
-
 # Electricity prices [€/kWh] # può essere usato anche un profilo <--
 #El_price = 0.3
 El_sold_price=0.1261
@@ -78,8 +75,9 @@ Res_parameters = {
 }
 Storage_parameters = {
      # thermal energy storage
-     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 0.995, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500 }
-     }
+     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
+     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
+}
 
 # Time values
 # Number of time intervals
@@ -128,6 +126,15 @@ model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
 
 # Set for storage
 model.Storages = Set ( initialize = Storage_parameters.keys() )
+list_TES=[]
+list_EES=[]
+for i in Storage_parameters.keys():
+    if "Heat" in Storage_parameters[i]['good']:
+        list_TES.append(i)
+    if "El" in Storage_parameters[i]['good']:
+        list_EES.append(i)
+model.Storages_TES = Set( within=model.Storages, initialize=list_TES)
+model.Storages_EES = Set( within=model.Storages, initialize=list_EES)
 
 # Set for RES
 model.Machines_Res = Set( initialize= Res_parameters.keys())
@@ -156,13 +163,15 @@ cost_bpts={#'HP1':[254, 778, 2039, 6239], 'Boiler1': [8, 69, 554, 2387], 'ICE1':
            #'HP2':[254, 778, 2039, 6239], 'Boiler2': [8, 69, 554, 2387], 'ICE2': [247, 2296, 4242, 6145], 'CC2': [248, 428, 587, 733],
            'HP3':[0,254, 778, 2039, 6239], 'Boiler3': [0,8, 69, 554, 2387], 'ICE3': [0,247, 2296, 4242, 6145], 'CC3': [0,248, 428, 587, 733]
            }
-
+stor_x_bpts={'TES1':[0,1,2000,5000,10000]}
+stor_cost_bpts={'TES1':[0,5, 626, 1131, 1770]}
 
 ## VARIABLES
 
 ## Binary variables
 # Variable to define if technology t is installed in  site s
 model.z_design = Var (model.Machines, model.Slots, domain=Binary)
+model.z_design_stor = Var (model.Storages, domain=Binary)
 # On/off variable
 model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
 # Delta on/off
@@ -170,12 +179,14 @@ model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
 model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
 # Active bin variable
 model.b = Var (model.Machines, model.Slots, model.bins, domain=Binary)
+model.b_stor= Var(model.Storages_TES, model.bins, domain=Binary)
 # Binary variable to take into account if electricity is sold (1) or purchased (0)
 model.s = Var ( model.times, domain=Binary)
 
 ## Continuous Variables
 # Variable to define the size of unit
 model.x_design= Var (model.Machines, model.Slots, domain=NonNegativeReals)
+model.x_design_stor= Var(model.Storages, domain=NonNegativeReals)
 # Variable to define the area of PV technology installed
 model.ResArea = Var (model.Machines_Res, domain=NonNegativeReals)
 
@@ -204,14 +215,17 @@ model.el_grid = Var (model.times, domain=Reals)
 
 # Storage variables (level, charge/discharge)
 model.l = Var (model.Storages, model.times, domain=NonNegativeReals)
-model.l[('TES1',0)].fix(Storage_parameters['TES1']['Init%']*Storage_parameters['TES1']['maxC'])  # storage start level = 0
+#model.l[('TES1',0)].fix(Storage_parameters['TES1']['Init%']*Storage_parameters['TES1']['maxC'])  # storage start level = 0
+#model.l[('EES1',0)].fix(Storage_parameters['EES1']['Init%']*Storage_parameters['EES1']['maxC'])  # storage start level = 0
 model.store_charge = Var(model.Storages, model.times, domain=NonNegativeReals)
 model.store_discharge = Var(model.Storages, model.times, domain=NonNegativeReals)
 
 # Variables to define the convex combination of the cost function linear approximation
 model.gamma = Var (model.Machines, model.Slots, model.bins , domain=NonNegativeReals, bounds=(0,1))
+model.gamma_stor = Var (model.Storages_TES, model.bins , domain=NonNegativeReals, bounds=(0,1))
 # Investment cost associated to machine m in slot s
 model.Cinv=Var(model.Machines, model.Slots, domain=NonNegativeReals)
+model.Cinv_stor=Var(model.Storages_TES, domain=NonNegativeReals)
 # Revenues from the electricity (positive if sold, negative if purchased)
 model.El_tot = Var (model.times, domain=Reals)
 
@@ -221,8 +235,10 @@ CCR=0.15
 
 ## OBJECTIVE FUNCTION
 def ObjFun( model ):
-    return ( sum(model.Cinv[m, s] for m in (model.Machines) for s in model.Slots)*1000 \
-            + sum(model.ResArea[r]*Res_parameters[r]['InvCost'] for r in model.Machines_Res))*CCR + sum(
+    return (  ( sum(model.Cinv[m, s] for m in model.Machines for s in model.Slots) + sum(
+            model.Cinv_stor[es] for es in model.Storages_TES )  )*1000 \
+            + sum(model.x_design_stor[es]*Storage_parameters[es]['InvCost'] for es in model.Storages_EES)
+            + sum(model.ResArea[r]*Res_parameters[r]['InvCost'] for r in model.Machines_Res)  )*CCR + sum(
             (           - model.El_tot[j] + sum(model.fuel_In[i, s , j]*Machines_parameters[i]['fuel cost']
                         for i in model.Machines_fuelIn for s in model.Slots) + sum(model.z[m, s, j]*Machines_parameters[m]['OM']
                         for m in model.Machines for s in model.Slots) + sum(model.ResArea[r]*Res_parameters[r]['OM'] for r in model.Machines_Res) + sum(
@@ -261,10 +277,17 @@ def XD_max_rule(model, m, s):
     return model.x_design[m, s] <= model.z_design[m, s]*Machines_parameters[m]['XD_max']
 def XD_min_rule(model, m, s):
     return model.x_design[m, s] >= model.z_design[m, s]*Machines_parameters[m]['XD_min']
+def XD_max_stor(model, es):
+    return model.x_design_stor[es]<= model.z_design_stor[es]*Storage_parameters[es]['XD_max']
+def XD_min_stor(model, es):
+    return model.x_design_stor[es] >= model.z_design_stor[es]*Storage_parameters[es]['XD_min']
 def Available_area_rule(model, r):
     return model.ResArea[r] <= Res_parameters[r]["available area"]
+
 model.XD_max_constr=Constraint(model.Machines, model.Slots, rule=XD_max_rule)
 model.XD_min_constr=Constraint(model.Machines, model.Slots, rule=XD_min_rule)
+model.XD_max_stor_constr=Constraint(model.Storages, rule=XD_max_stor)
+model.XD_min_stor_constr=Constraint(model.Storages, rule=XD_min_stor)
 model.Available_area_constr=Constraint (model.Machines_Res, rule=Available_area_rule)
 
 
@@ -293,6 +316,40 @@ model.x_convex_constr=Constraint(model.Machines, model.Slots, rule=x_convex_rule
 def cost_convex_rule(model, m, s):
     return model.Cinv[m, s] == sum( model.gamma[m,s,b]*cost_bpts[m][b] for b in model.bins)
 model.Cinv_convex_constr=Constraint(model.Machines, model.Slots, rule=cost_convex_rule)
+
+
+#### FOR STORAGES ANALOGOUS CONSTRAINTS ###
+def b_bound2_stor(model, es):
+    return model.b_stor[es, n_bpt-1]==0
+model.b_bound2_stor_constr=Constraint(model.Storages_TES, rule=b_bound2_stor)
+
+def bin_active_stor_rule(model, es, b):
+    if b==0:
+        return model.gamma_stor[es,b] <= model.b_stor[es,b]
+    return model.gamma_stor[es,b] <= model.b_stor[es,b-1] + model.b_stor[es, b]
+model.bin_active_stor_constr=Constraint(model.Storages_TES, model.bins, rule=bin_active_stor_rule)
+def b_zdesign_stor_link(model, es):
+    return sum( model.b_stor[es,b] for b in model.bins) == model.z_design_stor[es]
+model.b_zdesing_stor_link_constr=Constraint(model.Storages_TES, rule=b_zdesign_stor_link)
+def gamma_stor_rule(model, es):
+    return sum( model.gamma_stor[es, b] for b in model.bins) == model.z_design_stor[es]
+model.gamma_stor_constr=Constraint(model.Storages_TES, rule=gamma_stor_rule)
+# Convex hull formulation constraint for the size and cost of machine m in slot
+def x_convex_stor_rule(model, es):
+    return model.x_design_stor[es] == sum( model.gamma_stor[es,b]*stor_x_bpts[es][b] for b in model.bins)
+model.x_convex_stor_constr=Constraint(model.Storages_TES, rule=x_convex_stor_rule)
+def cost_convex_stor_rule(model, es):
+    return model.Cinv_stor[es] == sum( model.gamma_stor[es,b]*stor_cost_bpts[es][b] for b in model.bins)
+model.Cinv_convex_stor_constr=Constraint(model.Storages_TES, rule=cost_convex_stor_rule)
+
+def Stor_levelSize_link_rule(model, es, j):
+    return model.l[es,j] <= model.x_design_stor[es]
+model.Stor_levelSize_constr=Constraint(model.Storages, model.times, rule=Stor_levelSize_link_rule)
+def Stor_init_rule(model, es):
+    return model.l[es,0] == Storage_parameters[es]["Init%"]*model.x_design_stor[es]
+model.Stor_init_constr=Constraint(model.Storages, rule=Stor_init_rule)
+
+####
 
 # Machine part load performance expressed as a convex combination of its operating vertexes
 # Linearization of the bilinear term psi[m,s,t]=x_D[m,s]*z[m,s,t] and beta[m,s,t,v]=x_D[m,s]*alpha[m,s,t,v]
@@ -455,10 +512,12 @@ def heat_us_rule( model, h, s, j ):
     return model.Heat_useful[h, s, j] == model.Heat_gen[h, s, j]
 model.Heat_us_constr = Constraint(model.Machines_heat, model.Slots, model.times, rule = heat_us_rule)
 
+'''
 # Storage Capacity constraint
 def stor_capacity_rule( model, s, j):
     return model.l[s, j] <= Storage_parameters[s]['maxC']
 model.stor_capacity_constr = Constraint(model.Storages ,model.times, rule=stor_capacity_rule)
+'''
 
 # Storage power limits constraint
 def stor_powerIn_rule ( model, s, j):
@@ -475,9 +534,11 @@ model.stor_powerOut_constr = Constraint(model.Storages, model.times, rule=stor_p
 # Link between storage level and charge/discharge
 def store_level(model, s, j):
     if j == 0:
-        return (model.l[s, j] == model.store_charge[s, j]-model.store_discharge[s, j])
+        return (model.l[s, j] == model.store_charge[s, j]*Storage_parameters[s]['eta_ch'] -model.store_discharge[s, j]*Storage_parameters[s]['eta_disch'])
     else:
-        return (model.l[s, j] == model.l[s, j-1]+model.store_charge[s, j]-model.store_discharge[s, j])
+        return model.l[s, j] == model.l[s, j-1]*(1-Storage_parameters[s]['eta_sd']) \
+               + model.store_charge[s, j]*Storage_parameters[s]['eta_ch'] \
+               - model.store_discharge[s, j]*Storage_parameters[s]['eta_disch']
 model.store_level_constr = Constraint(model.Storages, model.times, rule=store_level)
 
 # Storage level link
@@ -506,7 +567,7 @@ model.El_totConstr2 = Constraint(model.times, rule=El_tot_ruel2)
 # Heat balance constraint rule
 def heat_balance_rule( model, j ):
     return sum( model.Heat_useful[h, s, j] for h in model.Machines_heat for s in model.Slots ) + sum(
-        model.store_discharge[ss, j] for ss in model.Storages)  == Heat_demand[j] + sum(model.store_charge[ss, j] for ss in model.Storages)
+        model.store_discharge[ss, j] for ss in model.Storages_TES)  == Heat_demand[j] + sum(model.store_charge[ss, j] for ss in model.Storages_TES)
 # Heat Balance
 model.Heat_balance_constr = Constraint(
     model.times,
@@ -526,7 +587,9 @@ model.Cold_balance_constr = Constraint(
 def el_balance_rule( model, j ):
     return sum( model.El_gen[p, s, j] for p in model.Machines_el for s in model.Slots
                 ) - sum( model.el_In[e, s, j] for e in model.Machines_elIn for s in model.Slots
-                ) -model.el_grid[j] + sum(model.El_gen_Res[r,j] for r in model.Machines_Res) >= EE_demand[j]
+                ) -model.el_grid[j] + sum(model.El_gen_Res[r,j] for r in model.Machines_Res) + sum(
+                model.store_discharge[ss, j] for ss in model.Storages_EES) - sum(
+                model.store_charge[ss, j] for ss in model.Storages_EES) >= EE_demand[j]
 # Electricity Balance
 model.El_balance_constr = Constraint(
     model.times,

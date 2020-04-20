@@ -20,16 +20,21 @@ stor_disch=[]
 delta_on=[]
 delta_off=[]
 z_design=[]
+z_design_stor=[]
 x_design=[]
+x_design_stor=[]
 gamma=[]
+gamma_stor=[]
 b=[]
+b_stor=[]
 Cinv=[]
+Cinv_stor=[]
 beta=[]
 psi=[]
 PV_area=[]
 El_gen_Res=[]
-var_list=[z_design, z , delta_on, delta_off, b, s, x_design, PV_area, beta, psi, fuel_In, El_In, Heat_gen, Cold_gen, \
-          El_gen, El_gen_Res, Heat_us, Heat_diss, el_grid, stor_lev, stor_charge, stor_disch, gamma, Cinv, El_tot]
+var_list=[z_design, z_design_stor, z , delta_on, delta_off, b, b_stor, s, x_design, x_design_stor, PV_area, beta, psi, fuel_In, El_In, Heat_gen, Cold_gen, \
+          El_gen, El_gen_Res, Heat_us, Heat_diss, el_grid, stor_lev, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, El_tot]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -115,9 +120,10 @@ s=np.array(s)
 
 El_gen_PV=np.array(El_gen_Res)
 
-stor_l=np.array(stor_lev)
-Q_charge=-np.array(stor_charge)
-Q_discharge=np.array(stor_disch)
+n_stor=len(model.Storages)
+stor_l=np.array(stor_lev).reshape(n_stor, T)
+stor_charge=-np.array(stor_charge).reshape(n_stor, T)
+stor_discharge=np.array(stor_disch).reshape(n_stor, T)
 
 '''
 H_day=t
@@ -168,12 +174,12 @@ plt.figure()
 df=pd.DataFrame.from_dict(res)
 df_Heat=df[["Heat_gen_ICE", "Heat_gen_Boiler", "Heat_gen_HP"]].copy()
 df_Heat["Heat_diss"]=Q_dissipated
-df_Heat["Stor_charge"]=Q_charge
-df_Heat["Stor_discharge"]=Q_discharge
+df_Heat["Stor_charge"]=stor_charge[0]
+df_Heat["Stor_discharge"]=stor_discharge[0]
 df["Heat Demand"] = Heat_demand
-df["Storage Level"]=stor_lev
+df["Storage Level TES"]=stor_l[0]
 ax1=df["Heat Demand"].plot(kind='line', color='r', linestyle='--', label='Heat demand', legend=True)
-df["Storage Level"].plot(kind='line', ax=ax1, color='k', linestyle='--', label='Storage level', legend=True)
+df["Storage Level TES"].plot(kind='line', ax=ax1, color='k', linestyle='--', label='Storage level', legend=True)
 df_Heat.plot(kind='bar', stacked=True, ax=ax1)
 plt.xlabel("Timestep [h]")
 plt.ylabel("Energy[kWh]")
@@ -186,8 +192,12 @@ df_El["El_consumed"]=El_consumed
 #df_El["El sold"]=el_sold
 #df_El["El purch"]=el_purch
 df_El["El grid"]=-el_grid
+df_El["Stor_charge"]=stor_charge[1]
+df_El["Stor_discharge"]=stor_discharge[1]
+df["Storage Level EES"]=stor_l[1]
 df["El Demand"]=EE_demand
 ax2=df["El Demand"].plot(kind='line', color='g', linestyle='--', label='El demand', legend=True)
+df["Storage Level EES"].plot(kind='line', ax=ax2, color='k', linestyle='--', label='Storage level', legend=True)
 df_El.plot(kind='bar', stacked=True, ax=ax2, legend=True)
 plt.xlabel("Timestep [h]")
 plt.ylabel("Energy[kWh]")
