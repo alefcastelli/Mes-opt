@@ -22,8 +22,8 @@ for i in range(0,options["n_clusters"]):
 
 ## Part One: Upload timetable and generate typical weeks
 # Read demand profiles from xlsx file (insert the folder path where file is located)
-demands = read_excel('/Users/Lorenzo/Desktop/Prova modello python/Book1.xlsx')
-PV_output = read_excel('/Users/Lorenzo/Desktop/Prova modello python/PVdata_2013.xlsx')
+demands = read_excel('C:/Users/Lorenzo/Documents/GitHub/Mes-opt/Book1.xlsx')
+PV_output = read_excel('C:/Users/Lorenzo/Documents/GitHub/Mes-opt/PVdata_2013.xlsx')
 
 # Change columns names
 columns = ['Q', 'EE', 'Cold', 'Time', 'TimeStep']

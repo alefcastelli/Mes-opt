@@ -125,49 +125,6 @@ stor_l=np.array(stor_lev).reshape(n_stor, T)
 stor_charge=-np.array(stor_charge).reshape(n_stor, T)
 stor_discharge=np.array(stor_disch).reshape(n_stor, T)
 
-'''
-H_day=t
-times_step=np.arange(H_day)
-Fig_Q=plt.figure()
-plt.xticks(times_step, list(times_step))
-plt.ylabel("Heat [kWh]")
-plt.title("Heat balance")
-plt.bar(times_step, Q_discharge[0:H_day], bottom=res["Heat_gen_HP"][0:H_day]+res["Heat_gen_Boiler"][0:H_day] + res["Heat_gen_ICE"][0:H_day], label='TES discharge')
-#plt.bar(times_step, res["Q_prod_ICE1"][0:H_day],  bottom=res["Q_prod_Boiler1"][0:H_day]+ res["Q_prod_Boiler2"][0:H_day] +res["Q_prod_Boiler3"][0:H_day]+ res["Q_prod_ICE2"][0:H_day] +res["Q_prod_ICE3"][0:H_day], label='Q prod ICE1')
-#plt.bar(times_step, res["Q_prod_ICE2"][0:H_day],  bottom=res["Q_prod_Boiler1"][0:H_day]+ res["Q_prod_Boiler2"][0:H_day] +res["Q_prod_Boiler3"][0:H_day] +res["Q_prod_ICE3"][0:H_day], label='Q prod ICE2')
-#plt.bar(times_step, res["Q_prod_ICE3"][0:H_day],  bottom=res["Q_prod_Boiler1"][0:H_day]+ res["Q_prod_Boiler2"][0:H_day] +res["Q_prod_Boiler3"][0:H_day], label='Q prod ICE3')
-plt.bar(times_step, res["Heat_gen_ICE"][0:H_day],  bottom=res["Heat_gen_HP"][0:H_day]+res["Heat_gen_Boiler"][0:H_day], label='Q prod ICEs')
-#plt.bar(times_step, res["Q_prod_Boiler1"][0:H_day], bottom=res["Q_prod_Boiler2"][0:H_day] +res["Q_prod_Boiler3"][0:H_day], label='Q prod Boiler1')
-#plt.bar(times_step, res["Q_prod_Boiler2"][0:H_day], bottom=res["Q_prod_Boiler3"][0:H_day], label='Q prod Boiler2')
-#plt.bar(times_step, res["Q_prod_Boiler3"][0:H_day], label='Q prod Boiler3')
-plt.bar(times_step, res["Heat_gen_Boiler"][0:H_day], bottom=res["Heat_gen_HP"][0:H_day], label='Heat gen Boilers')
-plt.bar(times_step, res["Heat_gen_HP"][0:H_day], label='Heat gen HP')
-plt.bar(times_step, Q_charge[0:H_day], label='TES charge')
-plt.bar(times_step, Q_dissipated[0:H_day], bottom=Q_charge[0:H_day], label='Heat diss')
-
-
-plt.plot(times_step, np.array(Heat_demand[0:H_day]), 'k--', label='Heat demand')
-plt.plot(times_step, stor_l[0:H_day], 'b--', label='Storage level')
-plt.legend()
-
-Fig_E=plt.figure()
-plt.xticks(times_step, list(times_step))
-plt.ylabel("Electric Energy [kWh]")
-plt.title("Electricity balance")
-plt.bar(times_step, el_purch[0:H_day], bottom=el_prod_PV[0:H_day]+res["El_gen_ICE"][0:H_day], label='el purch')
-#plt.bar(times_step, res["El_prod_ICE1"][0:H_day], bottom=el_prod_PV[0:H_day]+ res["El_prod_ICE2"][0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE1')
-#plt.bar(times_step, res["El_prod_ICE2"][0:H_day], bottom=el_prod_PV[0:H_day]+res["El_prod_ICE3"][0:H_day], label='el prod ICE2')
-#plt.bar(times_step, res["El_prod_ICE3"][0:H_day], bottom=el_prod_PV[0:H_day], label='el prod ICE3')
-plt.bar(times_step, res["El_gen_ICE"][0:H_day], bottom=el_prod_PV[0:H_day], label='El gen ICEs')
-plt.bar(times_step, el_prod_PV[0:H_day], label='PV output')
-plt.bar(times_step, el_sold[0:H_day], label='el sold')
-plt.bar(times_step, El_consumed[0:H_day], label='el consumed')
-
-plt.plot(times_step, np.array(EE_demand[0:H_day]), 'r--', label='El demand')
-plt.legend()
-plt.show()
-
-'''
 
 ### PLOTS with Pandas ##
 plt.figure()
