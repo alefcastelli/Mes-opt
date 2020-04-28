@@ -1,6 +1,6 @@
 # !!! To-Dos:
 # - sono da aggiungere tutti i riferimenti temporali.
-#   Per adesso si considera solo il caso in cui vi sia un tempo costante di un ora per intervallo.
+#   Per adesso si considera solo il caso in cui vi sia un tempo costante di un ora per intervallo.
 # - cambiare e mettere t per gli indici temporali
 
 
@@ -523,7 +523,7 @@ model.stor_powerOut_constr = Constraint(model.Storages, model.times, rule=stor_p
 # Link between storage level and charge/discharge
 def store_level(model, s, j):
     if j == 0:
-        return (model.l[s, j] == model.store_charge[s, j]*Storage_parameters[s]['eta_ch'] -model.store_discharge[s, j]*Storage_parameters[s]['eta_disch'])
+        return (model.l[s, j] == model.store_charge[s, j]*Storage_parameters[s]['eta_ch'] -model.store_discharge[s, j]/Storage_parameters[s]['eta_disch'])
     else:
         return model.l[s, j] == model.l[s, j-1]*(1-Storage_parameters[s]['eta_sd']) \
                + model.store_charge[s, j]*Storage_parameters[s]['eta_ch'] \
