@@ -46,17 +46,17 @@ var_pen = 8
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
-    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':0, 'Heat':-108.18, 'Cold':-128.83}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
-    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
-    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680},
+    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
+    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
+    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
+    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680}
 }
 Res_parameters = {
    'PV': {'In': 'SunIrradiance',  'goods': ['El'],  'OM': 10, 'InvCost':300 , 'available area': 10, 'El':PV_output, 'Heat':np.zeros(t), 'Cold':np.zeros(t)} # maintenance €/m2
 }
 Storage_parameters = {
-     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.05, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
-     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
+     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
+     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
 }
 
 Networks_parameters = {
@@ -346,7 +346,7 @@ model.machine_constr_maxIn=Constraint(model.Machines, model.Slots, model.times, 
 def machines_RupLim_rule( model, m, s, t):
     if t==0:
         return (model.In[m, s, t]) <= Machines_parameters[m]['RUlim']
-    return (model.In[m, s, t] - model.In[m, s, t-1]) <= model.z[m,s,t-1]*Machines_parameters[m]['RUlim'] + model.z[m,s,t-1]*Machines_parameters[m]['RUSU']
+    return (model.In[m, s, t] - model.In[m, s, t-1]) <= model.z[m,s,t-1]*Machines_parameters[m]['RUlim'] + (1-model.z[m,s,t-1])*Machines_parameters[m]['RUSU']
 model.RupLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RupLim_rule)
 # Rump Down/Max Shut Down constraint
 def machines_RdLim_rule( model, m, s, t):
@@ -457,7 +457,7 @@ model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 # Define the relevant parameters to limit the network operation
 for n in Networks_parameters.keys():
     Networks_parameters[n]['M1']=(max(EE_demand)+ sum(Machines_parameters[m]['XD_max']*n_slots for m in model.Machines_IntCons))
-    Networks_parameters[n]['M2']=Machines_parameters['ICE']['XD_max']*n_slots
+    Networks_parameters[n]['M2']=sum(Machines_parameters[m]['XD_max']*n_slots for m in Machines_parameters.keys() if 'El' in Machines_parameters[m]['goods'])
 
 # Set of constraint to establish wether the electricity is sold or purchased
 def Networks_rule1( model, n, t):
@@ -485,21 +485,21 @@ list_Machine_IntCons_cold=[i for i in Machines_parameters.keys() if Machines_par
 def energy_balance_rule( model, g, t ):
     if g=="El":
         return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots ) - \
-               sum( model.Out_diss[m, s, g, t] for m in model.Machines_diss for s in model.Slots ) + \
+               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots) + \
                sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
                sum( model.In[m, s, t] for m in list_Machine_IntCons_el for s in model.Slots) + \
                sum(model.store_net[es, t] for es in model.Storages_el) - \
                sum(model.Net_exch[n, t] for n in model.Networks_el)  == EE_demand[t]
     if g=='Heat':
-        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots ) - \
-               sum( model.Out_diss[m, s, g, t] for m in model.Machines_diss for s in model.Slots ) + \
+        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots )- \
+               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots) + \
                sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
                sum( model.In[m, s, t] for m in list_Machine_IntCons_heat for s in model.Slots) + \
                sum(model.store_net[es, t] for es in model.Storages_heat) - \
                sum(model.Net_exch[n, t] for n in model.Networks_heat)  == Heat_demand[t]
     if g=='Cold':
-        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots ) - \
-               sum( model.Out_diss[m, s, g, t] for m in model.Machines_diss for s in model.Slots ) + \
+        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots )- \
+               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots)  + \
                sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
                sum( model.In[m, s, t] for m in list_Machine_IntCons_cold for s in model.Slots) + \
                sum(model.store_net[es, t] for es in model.Storages_cold) - \

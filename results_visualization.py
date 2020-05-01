@@ -64,6 +64,11 @@ Heat_diss=np.array(Heat_diss).reshape(n_slots*n_machines_diss, T)
 
 #Dictionary containing the results to be plotted
 res={}
+res["El_gen_ICE"]=np.zeros(T)
+res["Heat_gen_ICE"]=np.zeros(T)
+res["Heat_gen_Boiler"]=np.zeros(T)
+res["Heat_gen_HP"]=np.zeros(T)
+res["Cold_gen_CC"]=np.zeros(T)
 count=0
 for i in model.Machines_heat:
     res["Heat_gen_{0}".format(i)]=0
@@ -85,6 +90,7 @@ for i in model.Machines_el:
         res["El_gen_{0}".format(i)] += El_gen[count+j, :]
     count+=n_slots
 
+'''
 res["El_gen_ICE"]=np.zeros(T)
 res["Heat_gen_ICE"]=np.zeros(T)
 res["Heat_gen_Boiler"]=np.zeros(T)
@@ -105,7 +111,7 @@ for k in res.keys():
     for i in model.Machines_cold:
         if k == "Cold_gen_{0}".format(i):
             res["Cold_gen_CC"] += res[k]
-
+'''
 
 
 El_consumed=- sum(El_In[:,])  #---> in teoria si potrebbe specificare consumata/dissipata da chi

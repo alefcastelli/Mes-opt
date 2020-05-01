@@ -34,7 +34,7 @@ psi=[]
 Res_area=[]
 
 var_list=[z_design, z_design_stor, z , delta_on, delta_off, b, b_stor, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
-          Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
+        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
 
 i = 0
 for v in model.component_objects(Var, active=True):
@@ -80,11 +80,14 @@ df_In=Results_to_DF(In, n_machines, n_slots, model.Machines)
 # MAKE OUTPUT TO DATAFRAME
 Out=np.array(Out).reshape(n_machines, n_slots, T*n_goods)
 df_Out=Results_to_DF(Out, n_machines, n_slots, model.Machines)
-Out_us=np.array(Out_us).reshape(n_machines_diss, n_slots, n_goods*T)
-df_Us=Results_to_DF(Out_us, n_machines_diss, n_slots, model.Machines_diss)
-Out_diss=np.array(Out_diss).reshape(n_machines_diss, n_slots, n_goods*T)
-df_Diss=Results_to_DF(Out_diss, n_machines_diss, n_slots, model.Machines_diss)
+
+if n_machines_diss > 0:
+    Out_us=np.array(Out_us).reshape(n_machines_diss, n_slots, n_goods*T)
+    df_Us=Results_to_DF(Out_us, n_machines_diss, n_slots, model.Machines_diss)
+    Out_diss=-np.array(Out_diss).reshape(n_machines_diss, n_slots, n_goods*T)
+    df_Diss=Results_to_DF(Out_diss, n_machines_diss, n_slots, model.Machines_diss)
 Out_Res=np.array(Out_Res).reshape(len(model.Machines_Res), T*n_goods)
+
 df_Res=pd.DataFrame(Out_Res.transpose(), columns=model.Machines_Res.keys())
 Net_exch=-np.array(Net_exch).reshape(len(model.Networks), T)
 df_Net=pd.DataFrame(Net_exch.transpose(), columns=model.Networks.keys())
@@ -93,10 +96,16 @@ df_Out_El=df_Out.iloc[0:t, :].reset_index(drop=True)
 df_Out_Heat=df_Out.iloc[t:2*t, :].reset_index(drop=True)
 df_Out_Cold=df_Out.iloc[2*t:3*t, :].reset_index(drop=True)
 
+# initializing the final dataframe for each good
+df_El=df_Out_El
+df_Heat=df_Out_Heat
+df_Cold=df_Out_Cold
+
 # joining diss column to each dataframe
-df_El=df_Out_El.join(df_Diss.iloc[0:t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
-df_Heat=df_Out_Heat.join(df_Diss.iloc[t:2*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
-df_Cold=df_Out_Cold.join(df_Diss.iloc[2*t:3*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+if n_machines_diss > 0:
+    df_El=df_El.join(df_Diss.iloc[0:t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+    df_Heat=df_Heat.join(df_Diss.iloc[t:2*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+    df_Cold=df_Cold.join(df_Diss.iloc[2*t:3*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
 
 df_El=df_El.join(df_Res.iloc[0:t, :].reset_index(drop=True))
 df_Heat=df_Heat.join(df_Res.iloc[t:2*t, :].reset_index(drop=True))

@@ -6,7 +6,7 @@
 
 # Importing pyomo module
 from pyomo.environ import *
-from optimization_test import *
+from optimization_test_campus import *
 import numpy as np
 import pandas as pd
 from matplotlib.pyplot import *
@@ -27,9 +27,10 @@ Fuels = {
 
 # Electricity prices [€/kWh] # può essere usato anche un profilo <--
 #El_price = 0.3
-El_sold_price=0.1261
-El_purch_price=0.1577
-
+#El_sold_price=0.1261
+#El_purch_price=0.1577
+El_sold_price=typ_profiles[0:t, 4]
+El_purch_price=typ_profiles[0:t, 5]
 # Variation penalty cost [€]
 var_pen = 8
 
@@ -49,26 +50,18 @@ var_pen = 8
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    #'Boiler1': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -32.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  250, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM':  1, 'SUcost':0.0503555, 'InvCost':173400,  'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':250, 'XD_max':1000 },
-    #'Boiler2': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -80.0,   'm_el':   0.0, 'q_el':    0.0, 'min_In':  625, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':625, 'XD_max':2500},
-    'Boiler3': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
-    #'ICE1':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -16.82, 'm_el': 0.490, 'q_el': -171.33, 'min_In':1250, 'max_In': 2500, 'RUlim': 2500, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 6, 'minDT': 0, 'OM': 14, 'SUcost':0.076959, 'InvCost':1053670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83 , 'KIn_min':0.54, 'KIn_max':1, 'XD_min':1328, 'XD_max':38692},
-    #'ICE2':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'],    'm_th': 0.439, 'q_th': -216.82, 'm_el': 0.490, 'q_el': -239.33, 'min_In': 3250, 'max_In': 6500, 'RUlim': 6500, 'RDlim': 10000, 'RUSU': 6500, 'RDSD': 6500, 'minUT': 6, 'minDT': 0, 'OM': 16, 'SUcost':0.076959, 'InvCost':2945670, 'Dissipable_Heat':  True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':1328, 'XD_max':38692},
-    'ICE3':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'InvCost':4601170, 'Dissipable_Heat': True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
-    #'HP1':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -8.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    13, 'max_In': 100, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  1, 'SUcost':0.1186441, 'InvCost':452100, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1 , 'XD_min':100, 'XD_max':10000 },
-    #'HP2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -4.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    65, 'max_In': 500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  2, 'SUcost':0.1186441, 'InvCost':595450, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0  , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':100, 'XD_max':10000},
-    'HP3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'InvCost':1060900, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
-    #'CC1':      {'In': 'El', 'fuel cost':            0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 1000, 'RDSD': 1000, 'minUT': 2, 'minDT': 0, 'OM': 1, 'SUcost': 0.0, 'InvCost': 200000, 'Dissipable_Heat': False, 'Internal Consumer': True, 'K1Q': 11.10 , 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':165, 'XD_max':680},
-    #'CC2':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 2500, 'RDSD': 2500, 'minUT': 2, 'minDT': 0, 'OM':  2, 'SUcost':0.0, 'InvCost':500000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':165, 'XD_max':680},
-    'CC3':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0, 'InvCost':1000000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680},
+    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],    'm_th': 0.976, 'q_th': -160.0,  'm_el':   0.0, 'q_el':    0.0, 'min_In': 1250, 'max_In': 5000, 'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'InvCost':173400, 'Dissipable_Heat': False, 'Internal Consumer': False, 'K1Q':0.976, 'K2Q':-0.032, 'K3Q': 4.338, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
+    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'm_th': 0.439, 'q_th': -391.82, 'm_el': 0.490, 'q_el': -298.83, 'min_In': 5000, 'max_In': 10000, 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'InvCost':4601170, 'Dissipable_Heat': True, 'Internal Consumer': False, 'K1Q':0.439, 'K2Q':-0.005, 'K3Q':-108.18 ,'K1P':0.49, 'K2P':-0.017, 'K3P': -128.83, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':100, 'XD_max':38692},
+    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'],    'm_th': 3.59, 'q_th':    -80.0, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    130, 'max_In': 1000, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'InvCost':1060900, 'Dissipable_Heat': False, 'Internal Consumer':  True , 'K1Q':3.59, 'K2Q':-0.08, 'K3Q':0 , 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
+    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],    'm_th': 3.500, 'q_th':    0.00, 'm_el': 0.000, 'q_el':    0.0, 'min_In':    0, 'max_In': 2500, 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0, 'InvCost':1000000,   'Dissipable_Heat': False, 'Internal Consumer':  True, 'K1Q': 11.10, 'K2Q': -0.324, 'K3Q':0, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680},
 }
 Res_parameters = {
    'PV': {'In': 'SunIrradiance',  'goods': ['El'],  'OM': 10, 'InvCost':300 , 'available area': 10} # maintenance €/m2
 }
 Storage_parameters = {
      # thermal energy storage
-     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
-     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 1, 'eta_disch': 1, 'eta_sd': 1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
+     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
+     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
 }
 
 # Time values
@@ -147,13 +140,9 @@ model.K_In=Param(model.Machines, model.v, initialize=v)
 
 n_bpt=5
 model.bins=RangeSet(0, n_bpt-1, ordered=True)
-x_bpts={#'HP1':[100, 500, 2000, 10000], 'Boiler1': [100, 1000, 10000, 50000], 'ICE1': [1328, 13783, 26237, 38692], 'CC1': [165, 337, 508, 680],
-        #'HP2':[100, 500, 2000, 10000], 'Boiler2': [100, 1000, 10000, 50000], 'ICE2': [1328, 13783, 26237, 38692], 'CC2': [165, 337, 508, 680],
-        'HP3':[0,100, 500, 2000, 10000], 'Boiler3': [0,100, 1000, 10000, 50000], 'ICE3': [0,1328, 13783, 26237, 38692], 'CC3': [0,165, 337, 508, 680]
+x_bpts={'HP':[0,100, 500, 2000, 10000], 'Boiler': [0,100, 1000, 10000, 50000], 'ICE': [0,1328, 13783, 26237, 38692], 'CC': [0,165, 337, 508, 680]
          }
-cost_bpts={#'HP1':[254, 778, 2039, 6239], 'Boiler1': [8, 69, 554, 2387], 'ICE1': [247, 2296, 4242, 6145], 'CC1': [248, 428, 587, 733],
-           #'HP2':[254, 778, 2039, 6239], 'Boiler2': [8, 69, 554, 2387], 'ICE2': [247, 2296, 4242, 6145], 'CC2': [248, 428, 587, 733],
-           'HP3':[0,254, 778, 2039, 6239], 'Boiler3': [0,8, 69, 554, 2387], 'ICE3': [0,247, 2296, 4242, 6145], 'CC3': [0,248, 428, 587, 733]
+cost_bpts={  'HP':[0,254, 778, 2039, 6239], 'Boiler': [0,8, 69, 554, 2387], 'ICE': [0,247, 2296, 4242, 6145], 'CC': [0,248, 428, 587, 733]
            }
 stor_x_bpts={'TES1':[0,1,2000,5000,10000]}
 stor_cost_bpts={'TES1':[0,5, 626, 1131, 1770]}
@@ -227,14 +216,14 @@ CCR=0.15
 def ObjFun( model ):
     return (  ( sum(model.Cinv[m, s] for m in model.Machines for s in model.Slots) + sum(
             model.Cinv_stor[es] for es in model.Storages_TES )  )*1000 \
-            + sum(model.x_design_stor[es]*Storage_parameters[es]['InvCost'] for es in model.Storages_EES)
+            + sum(model.x_design_stor[es]*Storage_parameters[es]['InvCost'] for es in model.Storages_EES)*1000
             + sum(model.ResArea[r]*Res_parameters[r]['InvCost'] for r in model.Machines_Res)  )*CCR + sum(
             (           - model.El_tot[j] + sum(model.fuel_In[i, s , j]*Machines_parameters[i]['fuel cost']
                         for i in model.Machines_fuelIn for s in model.Slots) + sum(model.z[m, s, j]*Machines_parameters[m]['OM']
                         for m in model.Machines for s in model.Slots) + sum(model.ResArea[r]*Res_parameters[r]['OM'] for r in model.Machines_Res) + sum(
                         model.delta_on[i, s, j]*Machines_parameters[i]['SUcost']*Machines_parameters[i]['fuel cost']
-                        for i in model.Machines_fuelIn for s in model.Slots) + sum(model.delta_on[e, s, j]*Machines_parameters[e]['SUcost']*El_purch_price
-                        for e in model.Machines_elIn for s in model.Slots)      ) for j in model.times )
+                        for i in model.Machines_fuelIn for s in model.Slots)     ) for j in model.times )
+
 
 model.obj = Objective(
     rule = ObjFun,
@@ -545,11 +534,11 @@ model.el_grid_constr2 = Constraint(model.times, rule=el_grid_rule2)
 
 # Set of constraints to define El_tot
 def El_tot_ruel1( model, j):
-    return model.El_tot[j] <= model.el_grid[j]*El_sold_price + (1-model.s[j]) * (EE_demand[j] + sum(
-        Machines_parameters[e]['XD_max'] for e in model.Machines_elIn)*n_slots) * 1.5 * El_purch_price
+    return model.El_tot[j] <= model.el_grid[j]*El_sold_price[j] + (1-model.s[j]) * (EE_demand[j] + sum(
+        Machines_parameters[e]['XD_max'] for e in model.Machines_elIn)*n_slots) * 1.5 * El_purch_price[j]
 def El_tot_ruel2( model, j):
-    return model.El_tot[j] <= model.el_grid[j]*El_purch_price + (model.s[j]) * (sum(
-        Machines_parameters[p]['XD_max'] for p in model.Machines_el)*n_slots) * 1.5 * El_sold_price
+    return model.El_tot[j] <= model.el_grid[j]*El_purch_price[j] + (model.s[j]) * (sum(
+        Machines_parameters[p]['XD_max'] for p in model.Machines_el)*n_slots) * 1.5 * El_sold_price[j]
 model.El_totConstr1 = Constraint(model.times, rule=El_tot_ruel1)
 model.El_totConstr2 = Constraint(model.times, rule=El_tot_ruel2)
 
