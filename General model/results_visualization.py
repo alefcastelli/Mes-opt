@@ -89,8 +89,8 @@ if n_machines_diss > 0:
 Out_Res=np.array(Out_Res).reshape(len(model.Machines_Res), T*n_goods)
 
 df_Res=pd.DataFrame(Out_Res.transpose(), columns=model.Machines_Res.keys())
-Net_exch=-np.array(Net_exch).reshape(len(model.Networks), T)
-df_Net=pd.DataFrame(Net_exch.transpose(), columns=model.Networks.keys())
+Net_exch=-np.array(Net_exch).reshape(n_goods, T)
+df_Net=pd.DataFrame(Net_exch.transpose(), columns=["El grid", "Heat net", "Cold net"]) #columns=list(model.Goods))
 
 df_Out_El=df_Out.iloc[0:t, :].reset_index(drop=True)
 df_Out_Heat=df_Out.iloc[t:2*t, :].reset_index(drop=True)
@@ -111,7 +111,9 @@ df_El=df_El.join(df_Res.iloc[0:t, :].reset_index(drop=True))
 df_Heat=df_Heat.join(df_Res.iloc[t:2*t, :].reset_index(drop=True))
 df_Cold=df_Cold.join(df_Res.iloc[2*t:3*t, :].reset_index(drop=True))
 
-df_El=df_El.join(df_Net)
+df_El=df_El.join(df_Net['El grid'])
+df_Heat=df_Heat.join(df_Net['Heat net'])
+df_Cold=df_Cold.join(df_Net['Cold net'])
 
 SOS=np.array(SOS).reshape(len(model.Storages), T)
 stor_net=np.array(stor_net).reshape(len(model.Storages), T)
@@ -122,16 +124,22 @@ df_storNet=pd.DataFrame(stor_net.transpose(), columns=model.Storages.keys())
 df_charge=pd.DataFrame(stor_charge.transpose(), columns=model.Storages.keys())
 df_disch=pd.DataFrame(stor_disch.transpose(), columns=model.Storages.keys())
 
-for el_stor in model.Storages_el.keys():
-    df_El=df_El.join(df_SOS[el_stor], rsuffix='_SOS')
-    df_El=df_El.join(df_storNet[el_stor], rsuffix='_net')
-    #df_El = df_El.join(df_charge[el_stor], rsuffix='_charge')
-    #df_El = df_El.join(df_disch[el_stor], rsuffix='_disch')
-for heat_stor in model.Storages_heat.keys():
-    df_Heat = df_Heat.join(df_SOS[heat_stor], rsuffix='_SOS')
-    df_Heat=df_Heat.join(df_storNet[heat_stor], rsuffix='_net')
-    #df_Heat = df_Heat.join(df_charge[heat_stor], rsuffix='_charge')
-    #df_Heat = df_Heat.join(df_disch[heat_stor], rsuffix='_disch')
+for stor in model.Storages.keys():
+    if 'El' in Storage_parameters[stor]['good']:
+        df_El=df_El.join(df_SOS[stor], rsuffix='_SOS')
+        df_El=df_El.join(df_storNet[stor], rsuffix='_net')
+        #df_El = df_El.join(df_charge[el_stor], rsuffix='_charge')
+        #df_El = df_El.join(df_disch[el_stor], rsuffix='_disch')
+    if 'Heat' in Storage_parameters[stor]['good']:
+        df_Heat=df_Heat.join(df_SOS[stor], rsuffix='_SOS')
+        df_Heat=df_Heat.join(df_storNet[stor], rsuffix='_net')
+        #df_Heat = df_Heat.join(df_charge[el_stor], rsuffix='_charge')
+        #df_Heat = df_Heat.join(df_disch[el_stor], rsuffix='_disch')
+    if 'Cold' in Storage_parameters[stor]['good']:
+        df_Cold=df_Cold.join(df_SOS[stor], rsuffix='_SOS')
+        df_Cold=df_Cold.join(df_storNet[stor], rsuffix='_net')
+        #df_Cold = df_Cold.join(df_charge[el_stor], rsuffix='_charge')
+        #df_Cold = df_Cold.join(df_disch[el_stor], rsuffix='_disch')
 
 # filter across internal consumer machines
 name_list = []
@@ -150,24 +158,24 @@ df_Demand["Cold Demand"]=Cold_demand
 
 plt.figure()
 ax1=df_Demand["El Demand"].plot(kind='line', color='g', linestyle='--', label='El demand', legend=True)
-df_El["EES1"].plot(kind='line', ax=ax1, color='k', linestyle='--', label='Storage level', legend=True)
+df_El["BESS"].plot(kind='line', ax=ax1, color='k', linestyle='--', label='Storage level', legend=True)
 df_El= df_El.loc[:, (df_El != 0).any(axis=0)]  #<-- removes the zero-columns
-if value(model.x_design_stor["EES1"]) == 0:
+if value(model.x_design_stor["BESS"]) == 0:
     df_El.plot(kind='bar', stacked=True, ax=ax1, rot=0, legend=True)
-if value(model.x_design_stor["EES1"]) > 0:
-    df_El.plot(kind='bar', y=df_El.columns.drop(["EES1"]), stacked=True, ax=ax1, rot=0, legend=True)
+if value(model.x_design_stor["BESS"]) > 0:
+    df_El.plot(kind='bar', y=df_El.columns.drop(["BESS"]), stacked=True, ax=ax1, rot=0, legend=True)
 plt.xlabel("Timestep [h]")
 plt.ylabel("Energy[kWh]")
 plt.title("Electricity Production")
 
 plt.figure()
 ax2=df_Demand["Heat Demand"].plot(kind='line', color='r', linestyle='--', label='Heat demand', legend=True)
-df_Heat["TES1"].plot(kind='line', ax=ax2, color='k', linestyle='--', label='Storage level', legend=True)
+df_Heat["TES"].plot(kind='line', ax=ax2, color='k', linestyle='--', label='Storage level', legend=True)
 df_Heat= df_Heat.loc[:, (df_Heat != 0).any(axis=0)]  #<-- removes the zero-columns
-if value(model.x_design_stor["TES1"]) == 0:
+if value(model.x_design_stor["TES"]) == 0:
     df_Heat.plot(kind='bar', stacked=True, ax=ax2, rot=0)
-if value(model.x_design_stor["TES1"]) > 0:
-    df_Heat.plot(kind='bar', y=df_Heat.columns.drop(["TES1"]), stacked=True, ax=ax2, rot=0)
+if value(model.x_design_stor["TES"]) > 0:
+    df_Heat.plot(kind='bar', y=df_Heat.columns.drop(["TES"]), stacked=True, ax=ax2, rot=0)
 plt.xlabel("Timestep [h]")
 plt.ylabel("Energy[kWh]")
 plt.title("Heat Production")

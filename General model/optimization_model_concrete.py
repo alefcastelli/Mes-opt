@@ -47,7 +47,7 @@ var_pen = 8
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
     'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
-    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
+    #'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
     'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
     'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680}
 }
@@ -55,12 +55,23 @@ Res_parameters = {
    'PV': {'In': 'SunIrradiance',  'goods': ['El'],  'OM': 10, 'InvCost':300 , 'available area': 10, 'El':PV_output, 'Heat':np.zeros(t), 'Cold':np.zeros(t)} # maintenance €/m2
 }
 Storage_parameters = {
-     'TES1': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
-     'EES1': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000} # €/kWh
+     'TES': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
+    'BESS': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000},
+     'CES': {'good': 'Cold', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min': 0, 'XD_max': 1000}
 }
 
 Networks_parameters = {
-    "El Grid": { 'good': 'El', 'sold_price': El_sold_price, 'purch_price':El_purch_price}
+    "Network": {
+        "El": {'sold_price': El_sold_price, 'purch_price':El_purch_price},
+        "Heat":{'sold_price': np.zeros(t), 'purch_price':np.ones(t)*1000},  # paramters set so that heat network is not considered in the solution
+        "Cold":{'sold_price': np.zeros(t), 'purch_price':np.ones(t)*1000}   # paramters set so that cold network is not considered in the solution
+    }
+}
+
+Loads_parameters = {
+    'El': {'demand': EE_demand},
+    'Heat': {'demand': Heat_demand},
+    'Cold': {'demand': Cold_demand}
 }
 
 # Time values
@@ -91,24 +102,10 @@ model.Machines_diss= Set( within=model.Machines, initialize=list_Machine_diss)
 model.Machines_Res = Set( initialize= Res_parameters.keys())
 
 # Set for storage
-list_stor_el=[i for i in Storage_parameters.keys() if "El" in Storage_parameters[i]['good']]
-list_stor_heat=[i for i in Storage_parameters.keys() if "Heat" in Storage_parameters[i]['good']]
-list_stor_cold=[i for i in Storage_parameters.keys() if "Cold" in Storage_parameters[i]['good']]
-
 model.Storages = Set ( initialize = Storage_parameters.keys() )
-model.Storages_heat = Set( within=model.Storages, initialize=list_stor_heat)
-model.Storages_el = Set( within=model.Storages, initialize=list_stor_el)
-model.Storages_cold = Set( within=model.Storages, initialize=list_stor_cold)
 
 # Set for networks
-list_net_el=[i for i in Networks_parameters.keys() if "El" in Networks_parameters[i]['good']]
-list_net_heat=[i for i in Networks_parameters.keys() if "Heat" in Networks_parameters[i]['good']]
-list_net_cold=[i for i in Networks_parameters.keys() if "Cold" in Networks_parameters[i]['good']]
-
 model.Networks = Set (initialize=Networks_parameters.keys())
-model.Networks_heat = Set( within=model.Networks, initialize=list_net_heat)
-model.Networks_el = Set( within=model.Networks, initialize=list_net_el)
-model.Networks_cold = Set( within=model.Networks, initialize=list_net_cold)
 
 # Set for MES goods
 model.Goods = Set (initialize=["El", "Heat", "Cold"])
@@ -131,8 +128,8 @@ n_bpt=5
 model.bins=RangeSet(0, n_bpt-1, ordered=True)
 x_bpts={'HP':[0,100, 500, 2000, 10000], 'Boiler': [0,100, 1000, 10000, 50000], 'ICE': [0,1328, 13783, 26237, 38692], 'CC': [0,165, 337, 508, 680]}
 cost_bpts={'HP':[0,254, 778, 2039, 6239], 'Boiler': [0,8, 69, 554, 2387], 'ICE': [0,247, 2296, 4242, 6145], 'CC': [0,248, 428, 587, 733]}
-stor_x_bpts={'TES1':[0,1,2000,5000,10000], "EES1":[0, 100, 250, 500, 1000]}
-stor_cost_bpts={'TES1':[0,5, 626, 1131, 1770], "EES1":[0, 50, 125, 250, 500]}
+stor_x_bpts={'TES':[0,1,2000,5000,10000], "BESS":[0, 100, 250, 500, 1000], "CES":[0, 100, 250, 500, 1000]}
+stor_cost_bpts={'TES':[0,5, 626, 1131, 1770], "BESS":[0, 50, 125, 250, 500], "CES":[0, 50, 125, 250, 500]}
 
 ## VARIABLES
 
@@ -151,7 +148,7 @@ model.b_stor= Var(model.Storages, model.bins, domain=Binary)
 # Binary variable to take into account if storage is charging (1) or discharging (0)
 model.c = Var ( model.Storages, model.times, domain=Binary)
 # Binary variable to take into account if electricity is sold (1) or purchased (0)
-model.s = Var ( model.Networks, model.times, domain=Binary)
+model.s = Var ( model.Networks, model.Goods, model.times, domain=Binary)
 
 ## Continuous Variables
 # Variable to define the size of unit
@@ -176,7 +173,8 @@ model.Out_us = Var( model.Machines_diss, model.Slots, model.Goods, model.times, 
 model.Out_Res = Var (model.Machines_Res, model.Goods, model.times, domain=NonNegativeReals)
 
 # Energy purch (negative) /sold (positive) to the network n at time t
-model.Net_exch = Var (model.Networks, model.times, domain=Reals)
+model.Net_exch = Var (model.Networks, model.Goods, model.times, domain=Reals)
+
 
 # Storage variables (state of charge (SOS), charge/discharge)
 model.SOS = Var (model.Storages, model.times, domain=NonNegativeReals)
@@ -191,7 +189,7 @@ model.gamma_stor = Var (model.Storages, model.bins , domain=NonNegativeReals, bo
 model.Cinv=Var(model.Machines, model.Slots, domain=NonNegativeReals)
 model.Cinv_stor=Var(model.Storages, domain=NonNegativeReals)
 # Net revenues from the exchange of good with the external networks (ex. electricity --> positive if sold, negative if purchased)
-model.Net_rev= Var (model.Networks, model.times, domain=Reals)
+model.Net_rev= Var (model.Networks, model.Goods, model.times, domain=Reals)
 
 
 ## OBJECTIVE FUNCTION
@@ -202,7 +200,7 @@ def ObjFun( model ):
     return (  ( sum(model.Cinv[m, s] for m in model.Machines for s in model.Slots) + sum(
             model.Cinv_stor[es] for es in model.Storages )  )*1000 \
             + sum(model.ResArea[r]*Res_parameters[r]['InvCost'] for r in model.Machines_Res)  )*CCR + sum (
-            (           - sum(model.Net_rev[n,t] for n in model.Networks) + sum(model.In[m, s , t]*Machines_parameters[m]['fuel cost']
+            (           - sum(model.Net_rev[n,g,t] for n in model.Networks for g in model.Goods) + sum(model.In[m, s , t]*Machines_parameters[m]['fuel cost']
                         for m in model.Machines_ExtCons for s in model.Slots) + sum(model.z[m, s, t]*Machines_parameters[m]['OM']
                         for m in model.Machines for s in model.Slots) + sum(model.ResArea[r]*Res_parameters[r]['OM'] for r in model.Machines_Res) + sum(
                         model.delta_on[m, s, t]*Machines_parameters[m]['SUcost']*Machines_parameters[m]['fuel cost']
@@ -456,54 +454,40 @@ model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 
 # Define the relevant parameters to limit the network operation
 for n in Networks_parameters.keys():
-    Networks_parameters[n]['M1']=(max(EE_demand)+ sum(Machines_parameters[m]['XD_max']*n_slots for m in model.Machines_IntCons))
-    Networks_parameters[n]['M2']=sum(Machines_parameters[m]['XD_max']*n_slots for m in Machines_parameters.keys() if 'El' in Machines_parameters[m]['goods'])
+    for g in model.Goods:
+        Networks_parameters[n][g]['M1']= (max(Loads_parameters[g]['demand']) + sum(Machines_parameters[m]['XD_max']*n_slots for m in model.Machines_IntCons if g in Machines_parameters[m]['In']) )
+        Networks_parameters[n][g]['M2']= sum(Machines_parameters[m]['XD_max']*n_slots for m in Machines_parameters.keys() if g in Machines_parameters[m]['goods'])
 
 # Set of constraint to establish wether the electricity is sold or purchased
-def Networks_rule1( model, n, t):
-    return model.Net_exch[n,t] >= (model.s[n, t]-1) * Networks_parameters[n]["M1"]
-def Networks_rule2( model, n, t):
-    return model.Net_exch[n,t] <= (model.s[n, t]) * Networks_parameters[n]["M2"]
-model.Networks_constr1 = Constraint(model.Networks, model.times, rule=Networks_rule1)
-model.Networks_constr2 = Constraint(model.Networks, model.times, rule=Networks_rule2)
+def Networks_rule1( model, n, g, t):
+    return model.Net_exch[n, g, t] >= (model.s[n, g, t]-1) * Networks_parameters[n][g]["M1"]
+def Networks_rule2( model, n, g, t):
+    return model.Net_exch[n, g, t] <= (model.s[n, g, t]) * Networks_parameters[n][g]["M2"]
+model.Networks_constr1 = Constraint(model.Networks, model.Goods, model.times, rule=Networks_rule1)
+model.Networks_constr2 = Constraint(model.Networks, model.Goods, model.times, rule=Networks_rule2)
+
+def Network_deactivate_rule( model, n, t):
+    return model.Net_exch[n, 'Heat', t]==0
+model.Network_deact_constr=Constraint(model.Networks, model.times, rule=Network_deactivate_rule)
 
 # Set of constraints to define El_tot
-def Networks_rev_rule1( model, n, t):
-    return model.Net_rev[n, t] <= model.Net_exch[n,t]*Networks_parameters[n]["sold_price"][t] + (1-model.s[n,t]) * Networks_parameters[n]["purch_price"][t]*Networks_parameters[n]["M1"]#[t]
-def Networks_rev_rule2( model, n, t):
-    return model.Net_rev[n,t] <= model.Net_exch[n,t]*Networks_parameters[n]["purch_price"][t] + (model.s[n,t]) *Networks_parameters[n]["sold_price"][t]* Networks_parameters[n]["M2"]#[t]
-model.Networks_rev_constr1 = Constraint(model.Networks, model.times, rule=Networks_rev_rule1)
-model.Networks_rev_constr2 = Constraint(model.Networks, model.times, rule=Networks_rev_rule2)
+def Networks_rev_rule1( model, n, g, t):
+    return model.Net_rev[n, g, t] <= model.Net_exch[n, g, t]*Networks_parameters[n][g]["sold_price"][t] + (1-model.s[n, g, t]) * Networks_parameters[n][g]["purch_price"][t]*Networks_parameters[n][g]["M1"]
+def Networks_rev_rule2( model, n, g, t):
+    return model.Net_rev[n, g, t] <= model.Net_exch[n, g, t]*Networks_parameters[n][g]["purch_price"][t] + (model.s[n, g, t]) *Networks_parameters[n][g]["sold_price"][t]* Networks_parameters[n][g]["M2"]
+model.Networks_rev_constr1 = Constraint(model.Networks, model.Goods, model.times, rule=Networks_rev_rule1)
+model.Networks_rev_constr2 = Constraint(model.Networks, model.Goods, model.times, rule=Networks_rev_rule2)
 
 
-# subset needed for the energy balance equation only
-list_Machine_IntCons_el=[i for i in Machines_parameters.keys() if Machines_parameters[i]["Internal Consumer"] if Machines_parameters[i]["In"]=="El"]
-list_Machine_IntCons_heat=[i for i in Machines_parameters.keys() if Machines_parameters[i]["Internal Consumer"] if Machines_parameters[i]["In"]=="Heat"]
-list_Machine_IntCons_cold=[i for i in Machines_parameters.keys() if Machines_parameters[i]["Internal Consumer"] if Machines_parameters[i]["In"]=="Cold"]
 
 # Energy balance constraint rule
 def energy_balance_rule( model, g, t ):
-    if g=="El":
-        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots ) - \
-               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots) + \
-               sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
-               sum( model.In[m, s, t] for m in list_Machine_IntCons_el for s in model.Slots) + \
-               sum(model.store_net[es, t] for es in model.Storages_el) - \
-               sum(model.Net_exch[n, t] for n in model.Networks_el)  == EE_demand[t]
-    if g=='Heat':
-        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots )- \
-               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots) + \
-               sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
-               sum( model.In[m, s, t] for m in list_Machine_IntCons_heat for s in model.Slots) + \
-               sum(model.store_net[es, t] for es in model.Storages_heat) - \
-               sum(model.Net_exch[n, t] for n in model.Networks_heat)  == Heat_demand[t]
-    if g=='Cold':
-        return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots )- \
-               sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots)  + \
-               sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
-               sum( model.In[m, s, t] for m in list_Machine_IntCons_cold for s in model.Slots) + \
-               sum(model.store_net[es, t] for es in model.Storages_cold) - \
-               sum(model.Net_exch[n, t] for n in model.Networks_cold)  == Cold_demand[t]
+    return sum( model.Out[m, s, g, t] for m in model.Machines for s in model.Slots ) - \
+           sum(model.Out_diss[m , s, g, t] for m in model.Machines_diss for s in model.Slots) + \
+           sum( model.Out_Res[r, g, t] for r in model.Machines_Res) - \
+           sum( model.In[m, s, t] for m in model.Machines_IntCons for s in model.Slots if g in Machines_parameters[m]['In']) + \
+           sum(model.store_net[es, t] for es in model.Storages if g in Storage_parameters[es]['good']) - \
+           sum(model.Net_exch[n, g, t] for n in model.Networks)  == Loads_parameters[g]['demand'][t]
 
 # Energy Balance
 model.Energy_balance_constr = Constraint(
