@@ -1,0 +1,230 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.26)  4 MAY 2020 18:49
+entering extended mode
+**./Model.tex
+(Model.tex
+LaTeX2e <2018-12-01>
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls
+"
+Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\size10.clo"
+File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/preprint\fullpag
+e.sty"
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip43
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsmath.
+sty"
+Package: amsmath 2018/12/01 v2.17b AMS math features
+\@mathmargin=\skip44
+
+For additional information on amsmath, use the `?' option.
+
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amstext.
+sty"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsgen.s
+ty"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsbsy.s
+ty"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen104
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsmath\amsopn.s
+ty"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count88
+LaTeX Info: Redefining \frac on input line 223.
+\uproot@=\count89
+\leftroot@=\count90
+LaTeX Info: Redefining \overline on input line 385.
+\classnum@=\count91
+\DOTSCASE@=\count92
+LaTeX Info: Redefining \ldots on input line 482.
+LaTeX Info: Redefining \dots on input line 485.
+LaTeX Info: Redefining \cdots on input line 606.
+\Mathstrutbox@=\box27
+\strutbox@=\box28
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
+\macc@depth=\count93
+\c@MaxMatrixCols=\count94
+\dotsspace@=\muskip10
+\c@parentequation=\count95
+\dspbrk@lvl=\count96
+\tag@help=\toks15
+\row@=\count97
+\column@=\count98
+\maxfields@=\count99
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip45
+\multlinetaggap=\skip46
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2844.
+LaTeX Info: Redefining \] on input line 2845.
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\amssymb
+.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\amsfont
+s.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/eurosym\eurosym.
+sty"
+Package: eurosym 1998/08/06 v1.1 European currency symbol ``Euro''
+\@eurobox=\box29
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\verbatim.s
+ty"
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks19
+\verbatim@line=\toks20
+\verbatim@in@stream=\read1
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ieeetrantools\IE
+EEtrantools.sty"
+Package: IEEEtrantools 2015/08/26 V1.5 by Michael Shell
+
+-- See the "IEEEtrantools_doc.txt" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/tools/
+\@IEEEtrantmpdimenA=\dimen112
+\@IEEEtrantmpdimenB=\dimen113
+\@IEEEtrantmpdimenC=\dimen114
+\@IEEEtrantmpcountA=\count100
+\@IEEEtrantmpcountB=\count101
+\@IEEEtrantmpcountC=\count102
+\@IEEEtrantmptoksA=\toks21
+\IEEEnormaljot=\dimen115
+\IEEEquantizedlength=\dimen116
+\IEEEquantizedlengthdiff=\dimen117
+\IEEEquantizedtextheightdiff=\dimen118
+\IEEEilabelindentA=\dimen119
+\IEEEilabelindentB=\dimen120
+\IEEEilabelindent=\dimen121
+\IEEEelabelindent=\dimen122
+\IEEEdlabelindent=\dimen123
+\IEEElabelindent=\dimen124
+\IEEEiednormlabelsep=\dimen125
+\IEEEiedmathlabelsep=\dimen126
+\IEEEiedtopsep=\skip47
+\c@IEEEsubequation=\count103
+\@IEEEeqnnumcols=\count104
+\@IEEEeqncolcnt=\count105
+\@IEEEsubeqnnumrollback=\count106
+\IEEEPARstartletwidth=\dimen127
+)
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/filecontents\fil
+econtents.sty"
+Package: filecontents 2019/09/20 v1.5 Create an external file from within a LaT
+eX document
+) (Model.aux)
+\openout1 = `Model.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
+
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd
+"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
+
+("C:\Users\Lorenzo\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd
+"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+{C:/Users/Lorenzo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+[2] [3]
+
+LaTeX Warning: Characters dropped after `\end{comment}' on input line 215.
+
+[4] [5] [6]
+
+LaTeX Warning: Overwriting file `./MODEL.bib'.
+
+\openout15 = `MODEL.bib'.
+
+
+LaTeX Warning: Tab has been converted to Blank Space.
+
+
+No file Model.bbl.
+[7] (Model.aux) )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 134 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 1740 strings out of 492895
+ 24871 string characters out of 3122801
+ 103386 words of memory out of 3000000
+ 5678 multiletter control sequences out of 15000+200000
+ 7878 words of font info for 31 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 27i,18n,27p,559b,352s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmbx12.pfb><C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Lorenzo/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Lorenzo/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/
+Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmmi7.pfb><C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Lorenzo/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Lorenzo/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Lor
+enzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
+b><C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/eurosy
+m/feymr10.pfb><C:/Users/Lorenzo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/symbols/msbm10.pfb>
+Output written on Model.pdf (7 pages, 173595 bytes).
+PDF statistics:
+ 74 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

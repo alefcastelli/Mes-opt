@@ -47,7 +47,7 @@ var_pen = 8
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
     'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
-    #'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
+    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
     'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
     'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680}
 }
@@ -176,8 +176,8 @@ model.Out_Res = Var (model.Machines_Res, model.Goods, model.times, domain=NonNeg
 model.Net_exch = Var (model.Networks, model.Goods, model.times, domain=Reals)
 
 
-# Storage variables (state of charge (SOS), charge/discharge)
-model.SOS = Var (model.Storages, model.times, domain=NonNegativeReals)
+# Storage variables (state of charge (SOC), charge/discharge)
+model.SOC = Var (model.Storages, model.times, domain=NonNegativeReals)
 model.store_net = Var(model.Storages, model.times, domain=Reals)
 model.store_char = Var(model.Storages, model.times, domain=NonNegativeReals)
 model.store_disch = Var(model.Storages, model.times, domain=NonNegativeReals)
@@ -303,10 +303,6 @@ def cost_convex_stor_rule(model, es):
     return model.Cinv_stor[es] == sum( model.gamma_stor[es,b]*stor_cost_bpts[es][b] for b in model.bins)
 model.Cinv_convex_stor_constr=Constraint(model.Storages, rule=cost_convex_stor_rule)
 
-def Stor_SOSSize_link_rule(model, es, t):
-    return model.SOS[es,t] <= model.x_design_stor[es]
-model.Stor_levelSize_constr=Constraint(model.Storages, model.times, rule=Stor_SOSSize_link_rule)
-
 ####
 
 # Machine part load performance expressed as a convex combination of its operating vertexes
@@ -420,6 +416,11 @@ def diss_rule( model, m, s, g, t ):
 model.diss_constr = Constraint(model.Machines_diss, model.Slots, model.Goods, model.times, rule = diss_rule)
 
 
+# Storage operation-investment constraints
+def Stor_SOCSize_link_rule(model, es, t):
+    return model.SOC[es,t] <= model.x_design_stor[es]
+model.Stor_levelSize_constr=Constraint(model.Storages, model.times, rule=Stor_SOCSize_link_rule)
+
 # Storage power limits constraint
 def stor_powerIn_rule ( model, s, t):
     return (model.store_char[s,t]) <= Storage_parameters[s]['PmaxIn']*model.c[s,t]  # kWh= kW*h
@@ -433,22 +434,22 @@ def stor_net_rule(model, s, t):
     return model.store_net[s, t] == model.store_disch[s, t]*Storage_parameters[s]['eta_disch'] - model.store_char[s, t]/Storage_parameters[s]['eta_ch']
 model.stor_net_constr = Constraint(model.Storages, model.times, rule=stor_net_rule)
 
-# Link between storage state of charge (SOS) and charge/discharge
-def storage_SOS(model, s, t):
+# Link between storage state of charge (SOC) and charge/discharge
+def storage_SOC(model, s, t):
     if t == 0:
-        return model.SOS[s, t] ==  (model.store_char[s, t] - model.store_disch[s, t])*Dt
+        return model.SOC[s, t] ==  (model.store_char[s, t] - model.store_disch[s, t])*Dt
     else:
-        return model.SOS[s, t] == model.SOS[s, t-1]*(1-Storage_parameters[s]['eta_sd']) + (model.store_char[s, t] - model.store_disch[s, t])*Dt
-model.storage_SOS_constr = Constraint(model.Storages, model.times, rule=storage_SOS)
+        return model.SOC[s, t] == model.SOC[s, t-1]*(1-Storage_parameters[s]['eta_sd']) + (model.store_char[s, t] - model.store_disch[s, t])*Dt
+model.storage_SOC_constr = Constraint(model.Storages, model.times, rule=storage_SOC)
 
 # Constraint to fix the storage initial level
 def Stor_init_rule(model, es):
-    return model.SOS[es,0] == Storage_parameters[es]["Init%"]*model.x_design_stor[es]
+    return model.SOC[es,0] == Storage_parameters[es]["Init%"]*model.x_design_stor[es]
 model.Stor_init_constr=Constraint(model.Storages, rule=Stor_init_rule)
 
 # Storage level link
 def stor_link_rule(model, s):
-    return model.SOS[s,0]==model.SOS[s,T-1]
+    return model.SOC[s,0]==model.SOC[s,T-1]
 model.stor_link_constr = Constraint(model.Storages, rule=stor_link_rule)
 
 
