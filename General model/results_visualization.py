@@ -33,9 +33,27 @@ beta=[]
 psi=[]
 Res_area=[]
 
-var_list=[z_design, z_design_stor, z , delta_on, delta_off, b, b_stor, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
-        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
-
+#var_list=[z_design, z_design_stor, z , delta_on, delta_off, b, b_stor, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
+#        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
+pws_Boiler_0=[]
+pws_Boiler_1=[]
+pws_Boiler_2=[]
+pws_ICE_0=[]
+pws_ICE_1=[]
+pws_ICE_2=[]
+pws_HP_0=[]
+pws_HP_1=[]
+pws_HP_2=[]
+pws_CC_0=[]
+pws_CC_1=[]
+pws_CC_2=[]
+pws_TES=[]
+pws_BESS=[]
+pws_CES=[]
+var_list=[z_design, z_design_stor, z , delta_on, delta_off, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
+        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, Cinv, Cinv_stor, Net_rev,
+          pws_Boiler_0, pws_Boiler_1, pws_Boiler_2, pws_ICE_0, pws_ICE_1, pws_ICE_2, pws_HP_0, pws_HP_1, pws_HP_2, pws_CC_0,
+          pws_CC_1, pws_CC_2, pws_TES, pws_BESS, pws_CES]
 i = 0
 for v in model.component_objects(Var, active=True):
     print ("Variable",v)

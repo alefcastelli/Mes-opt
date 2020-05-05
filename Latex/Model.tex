@@ -167,8 +167,10 @@ In order to include the size effect on the investment costs, a piece-wise approx
 The linearisation bin is activated by the binary variable $b_{m,s,w}$ while the variable $\gamma_{m,s,w} \in [0,1]$ is used to express the convex combination relationship in~\eqref{eq:Convex_xD} and~\eqref{eq:Convex_Cinv}. 
 At borders of the interpolations intervals $b_{m,s,w}$ takes the value of zero. Constraint~\eqref{eq:Gamma_b_link} imposes that the only $\gamma_{m,s,w}$ values different from zero can be $\gamma_{m,s,k}$ and $\gamma_{m,s,k+1}$. As usual, constraints~\eqref{eq:Active_b} and~\eqref{eq:Active_gamma} are necessary to activate these constrains only if the machines $m$ is installed in site $s$. For the energy storage technologies $es \in \cES$, analogous constraints are considered. 
 		\begin{align}
-		& \sum_{k \in \cW_m} b_{m,s,k} = z_{m,s}^D & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Active_b}\\
+		& \sum_{ k = 0 }^{N-1} b_{m,s,k} = z_{m,s}^D & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Active_b}\\
 		& \gamma_{m,s,w} \leq b_{m,s,w-1} + b_{m,s,w}  & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \quad \forall w \in \cW_m \label{eq:Gamma_b_link}\\
+		& \gamma_{m,s,0} \leq b_{m,s,0}  & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Gamma_b_zero}\\
+		& \gamma_{m,s,N} \leq b_{m,s,N-1}  & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Gamma_b_n}\\
 		& \sum_{k \in \cW_m} \gamma_{m,s,k} = z_{m,s}^D & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Active_gamma}\\
 		& x_{m,s}^D = \sum_{k \in \cW_m} \gamma_{m,s,k} \cdot \hat{X}_{m,k}^D & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Convex_xD}\\
 		& C_{m,s}^{inv} = \sum_{k \in \cW_m} \gamma_{m,s,k} \cdot C_{m}^{inv}(\hat{X}_{m,k}^D) & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Convex_Cinv}

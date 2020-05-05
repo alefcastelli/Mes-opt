@@ -46,18 +46,19 @@ var_pen = 8
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000 },
-    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692},
-    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000},
-    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680}
+    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000,'x_design_pws':[0,100, 1000, 10000, 50000], 'Cinv_pws':[0,8, 69, 554, 2387]},
+    'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692, 'x_design_pws':[0,1328, 13783, 26237, 38692], 'Cinv_pws':[0,247, 2296, 4242, 6145]},
+    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000, 'x_design_pws':[0,100, 500, 2000, 10000], 'Cinv_pws':[0,254, 778, 2039, 6239]},
+    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680, 'x_design_pws':[0,165, 337, 508, 680], 'Cinv_pws':[0,248, 428, 587, 733]}
 }
+
 Res_parameters = {
    'PV': {'In': 'SunIrradiance',  'goods': ['El'],  'OM': 10, 'InvCost':300 , 'available area': 10, 'El':PV_output, 'Heat':np.zeros(t), 'Cold':np.zeros(t)} # maintenance €/m2
 }
 Storage_parameters = {
-     'TES': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000 },
-    'BESS': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000},
-     'CES': {'good': 'Cold', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min': 0, 'XD_max': 1000}
+     'TES': { 'good': 'Heat', 'minC': 0, 'maxC': 1274, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 5000, 'PmaxOut': 5000, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':10000, 'x_stor_pws':[0,1,2000,5000,10000], 'Cinv_stor_pws':[0,5, 626, 1131, 1770] },
+    'BESS': {'good': 'El', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.99, 'eta_disch': 0.99, 'eta_sd': 0.01, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min':0, 'XD_max':1000, 'x_stor_pws':[0, 100, 250, 500, 1000], 'Cinv_stor_pws':[0, 50, 125, 250, 500]},
+     'CES': {'good': 'Cold', 'minC': 0, 'maxC': 1000, 'Init%': 0, 'eta_ch': 0.95, 'eta_disch': 0.95, 'eta_sd': 0.1, 'PmaxIn': 500, 'PmaxOut': 500, 'FinCval': 0.0001, 'OMxTP': 0.0001, 'InvCost': 500, 'XD_min': 0, 'XD_max': 1000, 'x_stor_pws':[0, 100, 250, 500, 1000], 'Cinv_stor_pws':[0, 50, 125, 250, 500]}
 }
 
 Networks_parameters = {
@@ -124,12 +125,18 @@ for i in Machines_parameters.keys():
 
 model.K_In=Param(model.Machines, model.v, initialize=v)
 
-n_bpt=5
-model.bins=RangeSet(0, n_bpt-1, ordered=True)
-x_bpts={'HP':[0,100, 500, 2000, 10000], 'Boiler': [0,100, 1000, 10000, 50000], 'ICE': [0,1328, 13783, 26237, 38692], 'CC': [0,165, 337, 508, 680]}
-cost_bpts={'HP':[0,254, 778, 2039, 6239], 'Boiler': [0,8, 69, 554, 2387], 'ICE': [0,247, 2296, 4242, 6145], 'CC': [0,248, 428, 587, 733]}
-stor_x_bpts={'TES':[0,1,2000,5000,10000], "BESS":[0, 100, 250, 500, 1000], "CES":[0, 100, 250, 500, 1000]}
-stor_cost_bpts={'TES':[0,5, 626, 1131, 1770], "BESS":[0, 50, 125, 250, 500], "CES":[0, 50, 125, 250, 500]}
+x_pws={}
+Cinv_pws={}
+for m in Machines_parameters.keys():
+    for s in model.Slots:
+        x_pws[(m,s)]=Machines_parameters[m]['x_design_pws']
+        Cinv_pws[(m,s)]=Machines_parameters[m]['Cinv_pws']
+
+x_stor_pws={}
+Cinv_stor_pws={}
+for es in Storage_parameters.keys():
+        x_stor_pws[es]=Storage_parameters[es]['x_stor_pws']
+        Cinv_stor_pws[es]=Storage_parameters[es]['Cinv_stor_pws']
 
 ## VARIABLES
 
@@ -142,9 +149,7 @@ model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
 # Delta on/off
 model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
 model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
-# Active bin variable
-model.b = Var (model.Machines, model.Slots, model.bins, domain=Binary)
-model.b_stor= Var(model.Storages, model.bins, domain=Binary)
+
 # Binary variable to take into account if storage is charging (1) or discharging (0)
 model.c = Var ( model.Storages, model.times, domain=Binary)
 # Binary variable to take into account if electricity is sold (1) or purchased (0)
@@ -175,16 +180,12 @@ model.Out_Res = Var (model.Machines_Res, model.Goods, model.times, domain=NonNeg
 # Energy purch (negative) /sold (positive) to the network n at time t
 model.Net_exch = Var (model.Networks, model.Goods, model.times, domain=Reals)
 
-
 # Storage variables (state of charge (SOC), charge/discharge)
 model.SOC = Var (model.Storages, model.times, domain=NonNegativeReals)
 model.store_net = Var(model.Storages, model.times, domain=Reals)
 model.store_char = Var(model.Storages, model.times, domain=NonNegativeReals)
 model.store_disch = Var(model.Storages, model.times, domain=NonNegativeReals)
 
-# Variables to define the convex combination of the cost function linear approximation
-model.gamma = Var (model.Machines, model.Slots, model.bins , domain=NonNegativeReals, bounds=(0,1))
-model.gamma_stor = Var (model.Storages, model.bins , domain=NonNegativeReals, bounds=(0,1))
 # Investment cost associated to machine m in slot s
 model.Cinv=Var(model.Machines, model.Slots, domain=NonNegativeReals)
 model.Cinv_stor=Var(model.Storages, domain=NonNegativeReals)
@@ -251,57 +252,19 @@ model.XD_max_stor_constr=Constraint(model.Storages, rule=XD_max_stor)
 model.XD_min_stor_constr=Constraint(model.Storages, rule=XD_min_stor)
 model.Available_area_constr=Constraint (model.Machines_Res, rule=Available_area_rule)
 
-
-#def b_bound1(model, m, s):
-#    return model.b[m, s, 0] == 0
-def b_bound2(model, m, s):
-    return model.b[m, s, n_bpt-1]==0
-#model.b_bound1_constr=Constraint(model.Machines, model.Slots, rule=b_bound1)
-model.b_bound2_constr=Constraint(model.Machines, model.Slots, rule=b_bound2)
-
-def bin_active_rule(model, m, s, b):
-    if b==0:
-        return model.gamma[m,s,b] <= model.b[m,s,b]
-    return model.gamma[m,s,b] <= model.b[m,s,b-1] + model.b[m, s, b]
-model.bin_active_constr=Constraint(model.Machines, model.Slots, model.bins, rule=bin_active_rule)
-def b_zdesign_link(model, m, s):
-    return sum( model.b[m,s,b] for b in model.bins) == model.z_design[m,s]
-model.b_zdesing_link_constr=Constraint(model.Machines, model.Slots, rule=b_zdesign_link)
-def gamma_rule(model, m, s):
-    return sum( model.gamma[m, s, b] for b in model.bins) == model.z_design[m,s]
-model.gamma_constr=Constraint(model.Machines, model.Slots, rule=gamma_rule)
-# Convex hull formulation constraint for the size and cost of machine m in slot
-def x_convex_rule(model, m, s):
-    return model.x_design[m, s] == sum( model.gamma[m,s,b]*x_bpts[m][b] for b in model.bins)
-model.x_convex_constr=Constraint(model.Machines, model.Slots, rule=x_convex_rule)
-def cost_convex_rule(model, m, s):
-    return model.Cinv[m, s] == sum( model.gamma[m,s,b]*cost_bpts[m][b] for b in model.bins)
-model.Cinv_convex_constr=Constraint(model.Machines, model.Slots, rule=cost_convex_rule)
-
-
-#### FOR STORAGES ANALOGOUS CONSTRAINTS ###
-def b_bound2_stor(model, es):
-    return model.b_stor[es, n_bpt-1]==0
-model.b_bound2_stor_constr=Constraint(model.Storages, rule=b_bound2_stor)
-
-def bin_active_stor_rule(model, es, b):
-    if b==0:
-        return model.gamma_stor[es,b] <= model.b_stor[es,b]
-    return model.gamma_stor[es,b] <= model.b_stor[es,b-1] + model.b_stor[es, b]
-model.bin_active_stor_constr=Constraint(model.Storages, model.bins, rule=bin_active_stor_rule)
-def b_zdesign_stor_link(model, es):
-    return sum( model.b_stor[es,b] for b in model.bins) == model.z_design_stor[es]
-model.b_zdesing_stor_link_constr=Constraint(model.Storages, rule=b_zdesign_stor_link)
-def gamma_stor_rule(model, es):
-    return sum( model.gamma_stor[es, b] for b in model.bins) == model.z_design_stor[es]
-model.gamma_stor_constr=Constraint(model.Storages, rule=gamma_stor_rule)
-# Convex hull formulation constraint for the size and cost of machine m in slot
-def x_convex_stor_rule(model, es):
-    return model.x_design_stor[es] == sum( model.gamma_stor[es,b]*stor_x_bpts[es][b] for b in model.bins)
-model.x_convex_stor_constr=Constraint(model.Storages, rule=x_convex_stor_rule)
-def cost_convex_stor_rule(model, es):
-    return model.Cinv_stor[es] == sum( model.gamma_stor[es,b]*stor_cost_bpts[es][b] for b in model.bins)
-model.Cinv_convex_stor_constr=Constraint(model.Storages, rule=cost_convex_stor_rule)
+# Constraint to enforce the piecewise interpolation
+model.Pws_constr = Piecewise(model.Machines, model.Slots, model.Cinv, model.x_design,
+                      pw_pts=x_pws,
+                      pw_constr_type='EQ',
+                      f_rule=Cinv_pws,
+                      pw_repn='SOS2',
+                      unbounded_domain_var=True)
+model.Pws_stor_constr = Piecewise(model.Storages, model.Cinv_stor, model.x_design_stor,
+                      pw_pts=x_stor_pws,
+                      pw_constr_type='EQ',
+                      f_rule=Cinv_stor_pws,
+                      pw_repn='SOS2',
+                      unbounded_domain_var=True)
 
 ####
 
