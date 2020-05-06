@@ -12,7 +12,7 @@ Out_Res=[]
 Net_exch=[]
 Net_rev=[]
 s=[]
-SOS=[]
+SOC=[]
 stor_net=[]
 stor_charge=[]
 stor_disch=[]
@@ -34,7 +34,7 @@ psi=[]
 Res_area=[]
 
 #var_list=[z_design, z_design_stor, z , delta_on, delta_off, b, b_stor, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
-#        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
+#        Out_diss, Out_us, Out_Res, Net_exch, SOC, stor_net, stor_charge, stor_disch, gamma, gamma_stor, Cinv, Cinv_stor, Net_rev]
 pws_Boiler_0=[]
 pws_Boiler_1=[]
 pws_Boiler_2=[]
@@ -51,7 +51,7 @@ pws_TES=[]
 pws_BESS=[]
 pws_CES=[]
 var_list=[z_design, z_design_stor, z , delta_on, delta_off, c, s, x_design, x_design_stor, Res_area, beta, psi, In, Out,
-        Out_diss, Out_us, Out_Res, Net_exch, SOS, stor_net, stor_charge, stor_disch, Cinv, Cinv_stor, Net_rev,
+        Out_diss, Out_us, Out_Res, Net_exch, SOC, stor_net, stor_charge, stor_disch, Cinv, Cinv_stor, Net_rev,
           pws_Boiler_0, pws_Boiler_1, pws_Boiler_2, pws_ICE_0, pws_ICE_1, pws_ICE_2, pws_HP_0, pws_HP_1, pws_HP_2, pws_CC_0,
           pws_CC_1, pws_CC_2, pws_TES, pws_BESS, pws_CES]
 i = 0
@@ -133,28 +133,28 @@ df_El=df_El.join(df_Net['El grid'])
 df_Heat=df_Heat.join(df_Net['Heat net'])
 df_Cold=df_Cold.join(df_Net['Cold net'])
 
-SOS=np.array(SOS).reshape(len(model.Storages), T)
+SOC=np.array(SOC).reshape(len(model.Storages), T)
 stor_net=np.array(stor_net).reshape(len(model.Storages), T)
 stor_charge=-np.array(stor_charge).reshape(len(model.Storages), T)
 stor_disch=np.array(stor_disch).reshape(len(model.Storages), T)
-df_SOS=pd.DataFrame(SOS.transpose(), columns=model.Storages.keys())
+df_SOC=pd.DataFrame(SOC.transpose(), columns=model.Storages.keys())
 df_storNet=pd.DataFrame(stor_net.transpose(), columns=model.Storages.keys())
 df_charge=pd.DataFrame(stor_charge.transpose(), columns=model.Storages.keys())
 df_disch=pd.DataFrame(stor_disch.transpose(), columns=model.Storages.keys())
 
 for stor in model.Storages.keys():
     if 'El' in Storage_parameters[stor]['good']:
-        df_El=df_El.join(df_SOS[stor], rsuffix='_SOS')
+        df_El=df_El.join(df_SOC[stor], rsuffix='_SOC')
         df_El=df_El.join(df_storNet[stor], rsuffix='_net')
         #df_El = df_El.join(df_charge[el_stor], rsuffix='_charge')
         #df_El = df_El.join(df_disch[el_stor], rsuffix='_disch')
     if 'Heat' in Storage_parameters[stor]['good']:
-        df_Heat=df_Heat.join(df_SOS[stor], rsuffix='_SOS')
+        df_Heat=df_Heat.join(df_SOC[stor], rsuffix='_SOC')
         df_Heat=df_Heat.join(df_storNet[stor], rsuffix='_net')
         #df_Heat = df_Heat.join(df_charge[el_stor], rsuffix='_charge')
         #df_Heat = df_Heat.join(df_disch[el_stor], rsuffix='_disch')
     if 'Cold' in Storage_parameters[stor]['good']:
-        df_Cold=df_Cold.join(df_SOS[stor], rsuffix='_SOS')
+        df_Cold=df_Cold.join(df_SOC[stor], rsuffix='_SOC')
         df_Cold=df_Cold.join(df_storNet[stor], rsuffix='_net')
         #df_Cold = df_Cold.join(df_charge[el_stor], rsuffix='_charge')
         #df_Cold = df_Cold.join(df_disch[el_stor], rsuffix='_disch')
