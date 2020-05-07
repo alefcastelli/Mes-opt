@@ -108,11 +108,11 @@ Out_Res=np.array(Out_Res).reshape(len(model.Machines_Res), T*n_goods)
 
 df_Res=pd.DataFrame(Out_Res.transpose(), columns=model.Machines_Res.keys())
 Net_exch=-np.array(Net_exch).reshape(n_goods, T)
-df_Net=pd.DataFrame(Net_exch.transpose(), columns=["El grid", "Heat net", "Cold net"]) #columns=list(model.Goods))
+df_Net=pd.DataFrame(Net_exch.transpose(), columns=["El grid", "Heat net"])#, "Cold net"]) #columns=list(model.Goods))
 
-df_Out_El=df_Out.iloc[0:t, :].reset_index(drop=True)
-df_Out_Heat=df_Out.iloc[t:2*t, :].reset_index(drop=True)
-df_Out_Cold=df_Out.iloc[2*t:3*t, :].reset_index(drop=True)
+df_Out_El=df_Out.iloc[0:T, :].reset_index(drop=True)
+df_Out_Heat=df_Out.iloc[T:2*T, :].reset_index(drop=True)
+df_Out_Cold=df_Out.iloc[2*T:3*T, :].reset_index(drop=True)
 
 # initializing the final dataframe for each good
 df_El=df_Out_El
@@ -121,17 +121,17 @@ df_Cold=df_Out_Cold
 
 # joining diss column to each dataframe
 if n_machines_diss > 0:
-    df_El=df_El.join(df_Diss.iloc[0:t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
-    df_Heat=df_Heat.join(df_Diss.iloc[t:2*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
-    df_Cold=df_Cold.join(df_Diss.iloc[2*t:3*t, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+    df_El=df_El.join(df_Diss.iloc[0:T, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+    df_Heat=df_Heat.join(df_Diss.iloc[T:2*T, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
+    df_Cold=df_Cold.join(df_Diss.iloc[2*T:3*T, :].reset_index(drop=True), lsuffix='_gen', rsuffix='_diss')
 
-df_El=df_El.join(df_Res.iloc[0:t, :].reset_index(drop=True))
-df_Heat=df_Heat.join(df_Res.iloc[t:2*t, :].reset_index(drop=True))
-df_Cold=df_Cold.join(df_Res.iloc[2*t:3*t, :].reset_index(drop=True))
+df_El=df_El.join(df_Res.iloc[0:T, :].reset_index(drop=True))
+df_Heat=df_Heat.join(df_Res.iloc[T:2*T, :].reset_index(drop=True))
+df_Cold=df_Cold.join(df_Res.iloc[2*T:3*T, :].reset_index(drop=True))
 
 df_El=df_El.join(df_Net['El grid'])
 df_Heat=df_Heat.join(df_Net['Heat net'])
-df_Cold=df_Cold.join(df_Net['Cold net'])
+#df_Cold=df_Cold.join(df_Net['Cold net'])
 
 SOC=np.array(SOC).reshape(len(model.Storages), T)
 stor_net=np.array(stor_net).reshape(len(model.Storages), T)

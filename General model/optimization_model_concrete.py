@@ -6,7 +6,7 @@ import pandas as pd
 from matplotlib.pyplot import *
 
 ## Parameters
-t=24*7*3 # parameter to set the dimension of the problem
+t=24*3 # parameter to set the dimension of the problem
 # Demands profiles
 EE_demand   = typ_profiles[0:t, 0]
 Heat_demand = typ_profiles[0:t, 1]
@@ -46,10 +46,10 @@ var_pen = 8
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000,'x_design_pws':[0,100, 1000, 10000, 50000], 'Cinv_pws':[0,8, 69, 554, 2387]},
+    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 4, 'minDT': 3, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000,'x_design_pws':[0,100, 1000, 10000, 50000], 'Cinv_pws':[0,8, 69, 554, 2387]},
     #'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692, 'x_design_pws':[0,1328, 13783, 26237, 38692], 'Cinv_pws':[0,247, 2296, 4242, 6145]},
-    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000, 'x_design_pws':[0,100, 500, 2000, 10000], 'Cinv_pws':[0,254, 778, 2039, 6239]},
-    'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680, 'x_design_pws':[0,165, 337, 508, 680], 'Cinv_pws':[0,248, 428, 587, 733]}
+    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 3, 'minDT': 2, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000, 'x_design_pws':[0,100, 500, 2000, 10000], 'Cinv_pws':[0,254, 778, 2039, 6239]},
+    #'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680, 'x_design_pws':[0,165, 337, 508, 680], 'Cinv_pws':[0,248, 428, 587, 733]}
 }
 
 Res_parameters = {
@@ -65,7 +65,7 @@ Networks_parameters = {
     "Network": {
         "El": {'sold_price': El_sold_price, 'purch_price':El_purch_price},
         "Heat":{'sold_price': np.zeros(t), 'purch_price':np.ones(t)*1000},  # paramters set so that heat network is not considered in the solution
-        "Cold":{'sold_price': np.zeros(t), 'purch_price':np.ones(t)*1000}   # paramters set so that cold network is not considered in the solution
+        #"Cold":{'sold_price': np.zeros(t), 'purch_price':np.ones(t)*1000}   # paramters set so that cold network is not considered in the solution
     }
 }
 
@@ -109,7 +109,7 @@ model.Storages = Set ( initialize = Storage_parameters.keys() )
 model.Networks = Set (initialize=Networks_parameters.keys())
 
 # Set for MES goods
-model.Goods = Set (initialize=["El", "Heat", "Cold"])
+model.Goods = Set (initialize=["El", "Heat"]) #"Cold"])
 
 # Set for machines slots
 n_slots=3 # defined a priori
@@ -141,11 +141,11 @@ for es in Storage_parameters.keys():
         Cinv_stor_pws[es]=Storage_parameters[es]['Cinv_stor_pws']
 
 # Initializing the index matrix for cycling constraints
-deltaT_cluster=24*7  # hours contained in a cluster --> one week
-index_matrix=np.zeros(options['n_clusters']*2).reshape(options['n_clusters'],2)
+deltaT_cluster=24  # hours contained in a cluster --> one week
+index_cluster=np.zeros(options['n_clusters'])
 for i in range(options['n_clusters']):
-    index_matrix[i][0]=deltaT_cluster*i
-    index_matrix[i][1]=deltaT_cluster*i+deltaT_cluster-1
+    index_cluster[i]=deltaT_cluster*i
+    #index_cluster[i][1]=deltaT_cluster*i+deltaT_cluster-1
 
 ## VARIABLES
 
@@ -158,8 +158,6 @@ model.z = Var( model.Machines, model.Slots, model.times, domain = Binary )
 # Delta on/off
 model.delta_on = Var (model.Machines, model.Slots, model.times, domain=Binary)
 model.delta_off = Var (model.Machines, model.Slots, model.times, domain=Binary)
-
-
 # Binary variable to take into account if storage is charging (1) or discharging (0)
 model.c = Var ( model.Storages, model.times, domain=Binary)
 # Binary variable to take into account if electricity is sold (1) or purchased (0)
@@ -232,11 +230,11 @@ def sites_perMachine_rule( model, s):
     return sum(model.z_design[m,s] for m in (model.Machines)) <= N_max
 model.sites_perMachine_constr=Constraint(model.Slots, rule=sites_perMachine_rule)
 # Simmetry breaking constraint on the site filling with machines
-model.cuts=ConstraintList()
+model.constr=ConstraintList()
 for k,m in enumerate(Machines_parameters.keys()):
         for s in range(n_slots-1):
             if s >= k:
-                model.cuts.add( model.z_design[m, s+1] <= model.z_design[m, s] )
+                model.constr.add( model.z_design[m, s+1] <= model.z_design[m, s] )
 
 # Link between z design and z operational: only installed unit can be operated
 def z_link_rule( model, m, s, t):
@@ -293,13 +291,6 @@ model.psi_constr2=Constraint(model.Machines, model.Slots, model.times, rule=psi_
 model.psi_constr3=Constraint(model.Machines, model.Slots, model.times, rule=psi_x_design_rule)
 model.psi_constr4=Constraint(model.Machines, model.Slots, model.times, rule=psi_link_rule)
 
-
-# Definition of variables In on the basis of Beta (convex hull/combination)
-def In_rule(model, m, s, t):
-    return model.In[m, s, t] == model.K_In[m,'Min']*model.psi[m,s,t] + sum( model.beta[m,s,t,v]*(model.K_In[m,v]-model.K_In[m, 'Min']) for v in model.v-['Min'])
-model.In_constr=Constraint(model.Machines, model.Slots, model.times, rule=In_rule)
-
-
 # Min/Max energy input constraint
 def machines_minIn( model, m, s, t ):
     return  model.In[m, s, t] >= model.psi[m,s,t]* Machines_parameters[m]['KIn_min']
@@ -308,63 +299,10 @@ def machines_maxIn( model, m, s, t ):
     return  model.In[m, s, t] <= model.psi[m,s,t] * Machines_parameters[m]['KIn_max']
 model.machine_constr_maxIn=Constraint(model.Machines, model.Slots, model.times, rule=machines_maxIn)
 
-
-# Rump Up/Max Start Up constraint
-def machines_RupLim_rule( model, m, s, t):
-    if t==0:
-        return (model.In[m, s, t]) <= Machines_parameters[m]['RUlim']
-    return (model.In[m, s, t] - model.In[m, s, t-1]) <= model.z[m,s,t-1]*Machines_parameters[m]['RUlim'] + (1-model.z[m,s,t-1])*Machines_parameters[m]['RUSU']
-model.RupLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RupLim_rule)
-# Rump Down/Max Shut Down constraint
-def machines_RdLim_rule( model, m, s, t):
-    if t==0:
-        return Constraint.Skip
-    return (model.In[m, s, t] - model.In[m, s, t-1]) >= -model.z[m,s,t]*Machines_parameters[m]['RDlim'] - (1-model.z[m,s,t])*Machines_parameters[m]["RDSD"]
-model.RdLim_constr=Constraint(model.Machines, model.Slots, model.times, rule=machines_RdLim_rule)
-
-# Delta on variable definition: (1) if machine m is turned on at time t, otherwise (0)
-def delta_on_rule1( model, m, s, t):
-    if t==0:
-        return model.delta_on[m, s, t] >= (model.z[m, s, t])
-    return model.delta_on[m, s, t] >= (model.z[m, s, t]-model.z[m, s, t-1])
-model.delta_on_constr1=Constraint(model.Machines, model.Slots, model.times, rule=delta_on_rule1)
-def delta_on_rule2( model, m, s, t):
-    if t==0:
-        return model.delta_on[m, s, t] <= (model.z[m, s, t] + 1)/2
-    return model.delta_on[m, s, t] <= (model.z[m, s, t] - model.z[m, s, t-1] + 1)/2
-model.delta_on_constr2=Constraint(model.Machines, model.Slots, model.times, rule=delta_on_rule2)
-
-# Delta on variable definition: (1) if machine m is turned on at time t, otherwise (0)
-def delta_off_rule1( model, m, s, t):
-    if t==0:
-        return model.delta_off[m, s, t] >= -( model.z[m, s, t] )
-    return model.delta_off[m, s, t] >= -(model.z[m, s, t]-model.z[m, s, t-1])
-model.delta_off_constr1=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule1)
-def delta_off_rule2( model, m, s, t):
-    if t==0:
-        return model.delta_off[m, s, t] <= (-model.z[m, s, t] + 1)/2
-    return model.delta_off[m, s, t] <=  (-model.z[m, s, t] + model.z[m, s, t-1] + 1)/2
-model.delta_off_constr2=Constraint(model.Machines, model.Slots, model.times, rule=delta_off_rule2)
-
-# Min UP/DOWN time constraint
-def min_up_rule(model, m, s, t):
-    if Machines_parameters[m]['minUT']==0:
-        return Constraint.Skip
-    if t > T - Machines_parameters[m]['minUT']:
-        return Constraint.Skip
-    return sum(model.z[m, s, t] for t in range(t, t+Machines_parameters[m]['minUT'])
-               ) >= Machines_parameters[m]['minUT']*model.delta_on[m, s, t]
-model.MinUT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min_up_rule)
-
-def min_down_rule(model, m, s, t):
-    if Machines_parameters[m]['minDT']==0:
-        return Constraint.Skip
-    if t > T - Machines_parameters[m]['minDT']:
-        return Constraint.Skip
-    return sum((1-model.z[m, s, t]) for t in range(t, t+Machines_parameters[m]['minDT'])
-               ) >= Machines_parameters[m]['minDT']*model.delta_off[m, s, t]
-model.MinDT_constr=Constraint(model.Machines, model.Slots, model.times, rule=min_down_rule)
-
+# Definition of variables In on the basis of Beta (convex hull/combination)
+def In_rule(model, m, s, t):
+    return model.In[m, s, t] == model.K_In[m,'Min']*model.psi[m,s,t] + sum( model.beta[m,s,t,v]*(model.K_In[m,v]-model.K_In[m, 'Min']) for v in model.v-['Min'])
+model.In_constr=Constraint(model.Machines, model.Slots, model.times, rule=In_rule)
 
 # Machine ouput definition
 def out_func(model, m, s, g, t):
@@ -407,14 +345,6 @@ def stor_net_rule(model, s, t):
     return model.store_net[s, t] == model.store_disch[s, t]*Storage_parameters[s]['eta_disch'] - model.store_char[s, t]/Storage_parameters[s]['eta_ch']
 model.stor_net_constr = Constraint(model.Storages, model.times, rule=stor_net_rule)
 
-# Link between storage state of charge (SOC) and charge/discharge
-def storage_SOC(model, s, t):
-    if t == 0:
-        return model.SOC[s, t] ==  (model.store_char[s, t] - model.store_disch[s, t])*Dt
-    else:
-        return model.SOC[s, t] == model.SOC[s, t-1]*(1-Storage_parameters[s]['eta_sd']) + (model.store_char[s, t] - model.store_disch[s, t])*Dt
-model.storage_SOC_constr = Constraint(model.Storages, model.times, rule=storage_SOC)
-
 # Constraint to fix the storage initial level
 def Stor_init_rule(model, es):
     return model.SOC[es,0] == Storage_parameters[es]["Init%"]*model.x_design_stor[es]
@@ -453,50 +383,51 @@ model.Networks_rev_constr1 = Constraint(model.Networks, model.Goods, model.times
 model.Networks_rev_constr2 = Constraint(model.Networks, model.Goods, model.times, rule=Networks_rev_rule2)
 
 ### Cycling constraints
-# Storage level
-for s in model.Storages:
-    for i in range(options['n_clusters']):
-        model.cuts.add(model.SOC[s, index_matrix[i][1]] == model.SOC[s, index_matrix[i][0]]*(1-Storage_parameters[s]['eta_sd']) + (model.store_char[s, index_matrix[i][1]] - model.store_disch[s, index_matrix[i][1]]))
-# Ramps limit and start up/shut down constraints
-for m in model.Machines:
-    for s in model.Slots:
-        for i in range(options['n_clusters']):
-            model.cuts.add((model.In[m, s, index_matrix[i][0]] - model.In[m, s, index_matrix[i][1]]) <= model.z[m,s,index_matrix[i][1]]*Machines_parameters[m]['RUlim'] + (1-model.z[m,s,index_matrix[i][1]])*Machines_parameters[m]['RUSU'])
-            model.cuts.add((model.In[m, s, index_matrix[i][0]] - model.In[m, s, index_matrix[i][1]]) >= -model.z[m,s,index_matrix[i][0]]*Machines_parameters[m]['RDlim'] - (1-model.z[m,s,index_matrix[i][0]])*Machines_parameters[m]["RDSD"])
-# Min UT/DT constraints
-for m in model.Machines:
-    if Machines_parameters[m]['minUT'] > 0:
-        up_matrix = np.zeros(options['n_clusters'] * (Machines_parameters[m]['minUT'] - 1) * 2).reshape(options['n_clusters'], (Machines_parameters[m]['minUT'] - 1) * 2)
-        for i in range(options['n_clusters']):
-            for j in range(Machines_parameters[m]['minUT'] - 1):
-                up_matrix[i, j] = deltaT_cluster * i + j
-                up_matrix[i, -1 - j] = deltaT_cluster * i + deltaT_cluster - 1 - j
-        print('Machine: ', m)
-        print('up_matrix: ', up_matrix)
-        for s in model.Slots:
-            for i in range(options['n_clusters']):
-                for j in range(Machines_parameters[m]['minUT']-1):
-                    for k in range(Machines_parameters[m]['minUT']):
-                        model.cuts.add( model.z[m,s,up_matrix[i][+j-k]] >= model.delta_on[m, s, up_matrix[i][-(Machines_parameters[m]['minUT']-1)+j]])
-                        print('z index: ', m,s,up_matrix[i][+j-k])
-                    print('delta on index: ',m, s, up_matrix[i][-(Machines_parameters[m]['minUT']-1)+j])
-for m in model.Machines:
-    if Machines_parameters[m]['minDT'] >0:
-        down_matrix = np.zeros(options['n_clusters'] * (Machines_parameters[m]['minDT'] - 1) * 2).reshape(options['n_clusters'], (Machines_parameters[m]['minDT'] - 1) * 2)
-        for i in range(options['n_clusters']):
-            for j in range(Machines_parameters[m]['minDT'] - 1):
-                down_matrix[i, j] = deltaT_cluster * i + j
-                down_matrix[i, -1 - j] = deltaT_cluster * i + deltaT_cluster - 1 - j
-        print('Machine: ', m)
-        print('down_matrix: ', down_matrix)
-        for s in model.Slots:
-            for i in range(options['n_clusters']):
-                for j in range(Machines_parameters[m]['minDT']-1):
-                    for k in range(Machines_parameters[m]['minDT']):
-                        model.cuts.add( (1-model.z[m,s,down_matrix[i][+j-k]]) >= model.delta_off[m, s, down_matrix[i][-(Machines_parameters[m]['minDT']-1)+j]])
-                        print('z index: ', m,s,down_matrix[i][+j-k])
-                    print('delta on index: ',m, s, down_matrix[i][-(Machines_parameters[m]['minDT']-1)+j])
 
+for i in range(options['n_clusters']):  #iterating over the number of clusters
+    if i < options['n_clusters']-1:  # index_cluster[i] represents the first timestep of each clusters
+        TT=index_cluster[i+1]-1   # getting the last timestep of the i-th cluster
+    else:
+        TT=T-1
+    for t in range(int(index_cluster[i]), int(TT+1)): # t going from t_start to t_end cluster
+        tt=np.arange(t, t+2)  # getting two consecutives timesteps (t, t+1)
+        tt[tt>TT]=tt[tt>TT]-TT+index_cluster[i]-1      # cycling constraint --> the end is linked with the cluster start
+        # Storage level constraint
+        for s in model.Storages:
+            model.constr.add( model.SOC[s, tt[1]] == model.SOC[s, tt[0]] * (1 - Storage_parameters[s]['eta_sd']) + (
+                            model.store_char[s, tt[1]] - model.store_disch[s, tt[1]]) )
+        # Machines constraints
+        for m in model.Machines:
+            for s in model.Slots:
+                # Ramps limit and start up/shut down constraints
+                model.constr.add((model.In[m, s, tt[1]] - model.In[m, s, tt[0]]) <= model.z[m,s,tt[0]]*Machines_parameters[m]['RUlim'] + (1-model.z[m,s,tt[0]])*Machines_parameters[m]['RUSU'])
+                model.constr.add((model.In[m, s, tt[1]] - model.In[m, s, tt[0]]) >= -model.z[m,s,tt[1]]*Machines_parameters[m]['RDlim'] - (1-model.z[m,s,tt[1]])*Machines_parameters[m]["RDSD"])
+                # Delta on constraint
+                model.constr.add( model.delta_on[m, s, tt[1]] >= (model.z[m, s, tt[1]]-model.z[m, s, tt[0]]) )
+                model.constr.add( model.delta_on[m, s, tt[1]] <= (model.z[m, s, tt[1]] - model.z[m, s, tt[0]] + 1)/2 )
+                #Delta off constraint
+                model.constr.add( model.delta_off[m, s, tt[1]] >= -(model.z[m, s, tt[1]]-model.z[m, s, tt[0]]) )
+                model.constr.add( model.delta_off[m, s, tt[1]] <=  (-model.z[m, s, tt[1]] + model.z[m, s, tt[0]] + 1)/2 )
+
+# Min UT/DT constraints
+for i in range(options['n_clusters']):  #iterating over the number of clusters
+    if i < options['n_clusters']-1:
+        TT=index_cluster[i+1]-1   # defining the last timestep of the i-th cluster
+    else:
+        TT=T-1
+    for m in model.Machines:
+        for s in model.Slots:
+            for t in range(int(index_cluster[i]), int(TT+1)): # t going from t_start to t_end cluster
+                tUT=np.arange(t, t+Machines_parameters[m]['minUT'])  # t_up timesteps definition
+                tDT=np.arange(t, t+Machines_parameters[m]['minDT'])  # t_down timesteps definition
+                tUT[tUT>TT]=tUT[tUT>TT]-TT+index_cluster[i]-1      # cycling constraint --> the end is linked with the cluster start
+                tDT[tDT > TT] = tDT[tDT > TT] - TT + index_cluster[i] - 1
+                for tt in tUT:
+                    model.constr.add(model.z[m,s,tt]>= model.delta_on[m,s,t])
+                    print('z index: ', m,s,tt)
+                print('delta_on index :', m,s,t)
+                for tt in tDT:
+                    model.constr.add((1-model.z[m, s, tt]) >= model.delta_off[m, s, t])
 
 
 # Energy balance constraint rule
@@ -517,7 +448,7 @@ model.Energy_balance_constr = Constraint(
 
 ## Solve PROBLEM
 model.solver=SolverFactory('gurobi')
-results = model.solver.solve(model, options={'mipgap':0.25},  tee=True) # tee=True to display solver output in console
+results = model.solver.solve(model, options={'mipgap':0.05},  tee=True) # tee=True to display solver output in console
 results.write() # display results summary in console
 #options={'mipgap':0.01},
 #model.pprint()
