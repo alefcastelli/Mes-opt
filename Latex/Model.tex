@@ -43,7 +43,7 @@
 
 \subsection{Indices and Sets}
 \begin{IEEEdescription}[\mydescriptionopt] 
-	\item[$t \in \cT$] Set of hourly time steps: $1, \ldots, T$, where $T$ = {\tt number of time periods}
+	\item[$t \in \cT$] Set of hourly timesteps: $1, \ldots, T$, where $T$ = {\tt number of time periods}
 	\item[$m \in \cM$] Set of machines (or controllable units)
 %	\item[$m \in \cP^+$] Subset of machines producing electrical power, $\subseteq \cM$
 %	\item[$m \in \cQ^+$] Subset of machines producing thermal power, $\subseteq \cM$
@@ -128,7 +128,7 @@
 \end{IEEEdescription}
 
 
-\section{Model Description}
+\section{MILP model formulation}
 \subsection{Objective Function}
 The objective of the Unit Commitment (UC) problem is to minimize the Total Annual Cost ($TAC=Capex \cdot ccr + Opex$). So, the objective function of the UC problem can then be written as:
 {\allowdisplaybreaks
@@ -164,8 +164,9 @@ The constraints below ensures that the size $x_{m,s,t}^D$ of machine $m$ install
 		& x_r^{res, D} \leq \hat{A}_r^{max} & \forall r \in \cR \label{eq:MaxArea_available}
 		\end{align}
 In order to include the size effect on the investment costs, a piece-wise approximation of the exponential economy of scale law has been adopted in the MILP formulation. The investment cost function $C_{m,s}^{inv}$ for machine $m$ installed in site $s$ is approximated by the convex combination of the cost function evaluated at the extremes of the piece-wise interval corresponding to the machine size ($C_{m}^{inv}(X_{m,k}^D)$ and $C_{m}^{inv}(X_{m,k+1}^D)$). 
-The linearisation bin is activated by the binary variable $b_{m,s,w}$ while the variable $\gamma_{m,s,w} \in [0,1]$ is used to express the convex combination relationship in~\eqref{eq:Convex_xD} and~\eqref{eq:Convex_Cinv}. 
-At borders of the interpolations intervals $b_{m,s,w}$ takes the value of zero. Constraint~\eqref{eq:Gamma_b_link} imposes that the only $\gamma_{m,s,w}$ values different from zero can be $\gamma_{m,s,k}$ and $\gamma_{m,s,k+1}$. As usual, constraints~\eqref{eq:Active_b} and~\eqref{eq:Active_gamma} are necessary to activate these constrains only if the machines $m$ is installed in site $s$. For the energy storage technologies $es \in \cES$, analogous constraints are considered. 
+The linearisation bin is activated by the binary variable $b_{m,s,w}$ while the variable $\gamma_{m,s,w} \in [0,1]$ is used to express the convex combination relationship in~\eqref{eq:Convex_xD} and~\eqref{eq:Convex_Cinv}. \\
+At borders of the interpolations intervals $b_{m,s,w}$ takes the value of zero. Constraint~\eqref{eq:Gamma_b_link} imposes that the only $\gamma_{m,s,w}$ values different from zero can be $\gamma_{m,s,k}$ and $\gamma_{m,s,k+1}$. As usual, constraints~\eqref{eq:Active_b} and~\eqref{eq:Active_gamma} are necessary to activate these constrains only if the machines $m$ is installed in site $s$. \\
+For the energy storage technologies $es \in \cES$, analogous constraints are considered. 
 		\begin{align}
 		& \sum_{ k = 0 }^{N-1} b_{m,s,k} = z_{m,s}^D & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \label{eq:Active_b}\\
 		& \gamma_{m,s,w} \leq b_{m,s,w-1} + b_{m,s,w}  & \hspace{5cm} \forall m \in \cM \quad \forall s \in \cS \quad \forall w \in \cW_m \label{eq:Gamma_b_link}\\
@@ -190,7 +191,7 @@ The demand-production balance for each good $g \in \cG$ is enforced at each time
 		\end{align}
 		while the power output from non-controllable units is defined at each timestep by their generation profile ($\hat{out}_{r,g,t}^{res}$):
 		\begin{align}
-		& out_{r,g,t}^{res} = \hat{out}_{r,g,t}^{res}& \hspace{4cm} \forall r \in \cR \quad \forall g \in \cG \quad \forall t \in \cT \label{eq:En_res}
+		& out_{r,g,t}^{res} = \hat{out}_{r,g,t}^{res}& \hspace{8cm} \forall r \in \cR \quad \forall g \in \cG \quad \forall t \in \cT \label{eq:En_res}
 		\end{align}
 Even in this case to simulate the part load performance a convex combination is used. In particular the operating point of the machine $m$ in  site $s$ at time $t$ is computed as the convex combination of the vertexes of its feasible operational region.  
 Two variables are used to perform the convex combination: $\beta_{m,s,t,v}$ and $\xi_{m,s,t}$ corresponding to $x_{m,s}^D$ when the machine is on. The set of constraints is the follow: 		
@@ -257,18 +258,18 @@ The set of constraints here above is used to establish if machine $m$ in slot $s
 \end{comment}
 These variable are important in order to account for the cost of an extra energy in input when the machines is turned on but mostly to write down constraints~\eqref{eq:MinUT} and~\eqref{eq:MinDT} regarding the minimum up and down time respectively.	
 		\begin{align}
-		& \sum_{ i = t - \hat{t}_{min, UT} }^{t} z_{m,s,i} \geq \hat{t}_{min,UT} \cdot \delta_{m,s,t}^{off} & \hspace{3cm} \forall m \in \cM \quad \forall s \in \cS \quad \forall t \geq \hat{t}_{min, UT} \in \cT \label{eq:MinUT}\\
-		& \sum_{ i = t - \hat{t}_{min, DT} }^{t} z_{m,s,i} \geq \hat{t}_{min,DT} \cdot \delta_{m,s,t}^{on} & \forall m \in \cM \quad \forall s \in \cS \quad \forall t \geq \hat{t}_{min, DT} \in \cT \label{eq:MinDT}
+		& z_{m,s,\tau} \geq \delta_{m,s,t}^{on} & \hspace{4cm} \forall m \in \cM \quad \forall s \in \cS \quad \forall t  \in \cT \quad \forall \tau \in [t\ .. \ t + \hat{t}_{min,UT}] \label{eq:MinUT}\\
+		& (1 - z_{m,s,\tau}) \geq \delta_{m,s,t}^{off} & \forall m \in \cM \quad \forall s \in \cS \quad \forall t \in \cT \quad \forall \tau \in [t\ .. \ t + \hat{t}_{min,DT}] \label{eq:MinDT}
 		\end{align}
-Equation~\eqref{eq:Soc} express the storage management constraint which defines, at each time-step, the power entering ($sp_{es,t}^{ch}$) and exiting ($sp_{es,t}^{disch}$) the energy storage system with the corresponding input/output efficiencies ($\hat{\eta}_{es}^{ch}$ and $\hat{\eta}_{es}^{disch}$) for each $es \in \cES$. To consider the hourly loss inside the storage system the self-discharge parameter $\hat{\lambda}_{es}$ has been also introduced. 
-The level or State of Charge (SoC) of the energy stored in the storage system should not overcame the storage capacity which is given by the variable denoting its size ($x_{es}^{stor, D}$) for each $es \in \cES$ and also the power input and output should fall into a defined range~\eqref{eq:Stor_capacity}, as stated by equations~\eqref{eq:Stor_maxCharge} and~\eqref{eq:Stor_maxDisch}. A storage status variable $s_{es,t}$ has been introduced to prevent charge/discharge components to be different from zero at the same time. 
+Equation~\eqref{eq:Soc} express the storage management constraint which defines, at each time-step, the power entering ($sp_{es,t}^{ch}$) and exiting ($sp_{es,t}^{disch}$) the energy storage system with the corresponding input/output efficiencies ($\hat{\eta}_{es}^{ch}$ and $\hat{\eta}_{es}^{disch}$) for each $es \in \cES$. To consider the hourly loss inside the storage system the self-discharge parameter $\hat{\lambda}_{es}$ has been also introduced. \\
+The level or State of Charge (SoC) of the energy stored in the storage system should not overcame the storage capacity which is given by the variable denoting its size ($x_{es}^{stor, D}$) for each $es \in \cES$ and also the power input and output should fall into a defined range~\eqref{eq:Stor_capacity}, as stated by equations~\eqref{eq:Stor_maxCharge} and~\eqref{eq:Stor_maxDisch}. A storage status variable $s_{es,t}$ has been introduced to prevent charge/discharge components to be different from zero at the same time. \\
 Finally the level of the storage is conserved by fixing the storage level at time $T$ to be equal to the storage level at the beginning of the period ($\hat{L}_{es}^{stor,0}$). 
 		\begin{align}
-		& soc_{es,t} = soc_{es,t-1} \cdot (1-\hat{\lambda}_{es}) + (sp_{es,t}^{ch} - sp_{es,t}^{disch}) \cdot \hat{\Delta t}  & \hspace{4cm} \forall es \in \cES \quad \forall t \in \cT \label{eq:Soc}\\
+		& soc_{es,t} = soc_{es,t-1} \cdot (1-\hat{\lambda}_{es}) + (sp_{es,t}^{ch} - sp_{es,t}^{disch}) \cdot \hat{\Delta t}  & \hspace{3cm} \forall es \in \cES \quad \forall t \setminus\{1\} \in \cT \label{eq:Soc}\\
 		& sp_{es,t}^{net} = sp_{es,t}^{ch} \cdot \hat{\eta}_{es}^{ch} - \frac{sp_{es,t}^{disch}}{\hat{\eta}_{es}^{disch}} & \hspace{4cm} \forall es \in \cES \quad \forall t \in \cT \label{eq:sp_net}\\
 		& soc_{es,t} \leq x_{es}^{stor, D} &\hspace{1cm} \forall es \in \cES \quad \forall t \in \cT \label{eq:Stor_capacity}\\
-		& sp_{es,t}^{ch} \leq \hat{P}_{es}^{max, charge} \cdot c_{es,t} & \forall es \in \cES \quad \forall t \setminus\{1\} \in \cT \label{eq:Stor_maxCharge}\\
-		& sp_{es,t}^{disch} \leq \hat{P}_{es}^{max, disch} \cdot (1-c_{es,t}) & \forall es \in \cES \quad \forall t \setminus\{1\} \in \cT \label{eq:Stor_maxDisch}\\
+		& sp_{es,t}^{ch} \leq \hat{P}_{es}^{max, charge} \cdot c_{es,t} & \forall es \in \cES \quad \forall t \in \cT \label{eq:Stor_maxCharge}\\
+		& sp_{es,t}^{disch} \leq \hat{P}_{es}^{max, disch} \cdot (1-c_{es,t}) & \forall es \in \cES \quad \forall t \in \cT \label{eq:Stor_maxDisch}\\
 		& soc_{es,0} = \hat{L}_{es}^{stor,0} \cdot x_{es}^{stor, D} &\forall es \in \cES \label{eq: Stor_init}\\
 		& soc_{es,0} = soc_{es, T} &\forall es \in \cES \label{eq:Stor_boundaries}
 		\end{align}
@@ -282,7 +283,7 @@ Finally the level of the storage is conserved by fixing the storage level at tim
 		& l_{es,0}^{stor} = l_{es, T}^{stor} &\forall es \in \cES \label{eq:Stor_boundaries}
 		\end{align}
 \end{comment}
-Since goods traded with networks connected to the MES can be either sold or purchased from the grid at two different prices, the binary variable $s_{n,g,t}$ is used as a flag to denote if the good $n \in \cN$ is flowing into the network hub $n \in \cN$ or it's withdraw from it. The amount of energy purchased or sold is stored in the real variable $s_{n,g,t}$ which can take values either positive or negative. 
+Since goods traded with networks connected to the MES can be either sold or purchased from the grid at two different prices, the binary variable $s_{n,g,t}$ is used as a flag to denote if the good $n \in \cN$ is flowing into the network hub $n \in \cN$ or it's withdraw from it. The amount of energy purchased or sold is stored in the real variable $s_{n,g,t}$ which can take values either positive or negative. \\
 The variable $Rev_{n,g,t}^{net}$ takes into account the cost of energy sold/purchased in the objective function and it's assume positive values when the good is sold and negative values when bought from the network. In modeling following set of constrain a standard "big M" formulation was adopted.  
 		\begin{align}
 		& net_{n,g,t} \geq (s_{n,g,t} - 1) \cdot M_{4}& \hspace{4cm} \forall n \in \cN \quad \forall g \in \cG \quad \forall t \in \cT \label{eq:Net_1}\\
@@ -315,6 +316,18 @@ The variable $Rev_{n,g,t}^{net}$ takes into account the cost of energy sold/purc
 The parameters $\hat{out}_{m,s,g,t}^{max}$ and $\hat{in}_{m,s,t}^{max}$ represent the maximum power that can be respectively generated or consumed by machine $m$ in slot $s$ at time $t$. 
 
 
+\subsection{Cycling constraints}
+Since the model is solve only for n-typical days instead of the full time space (one year) of operation, it's important to make those constraints which entails more than a temporal step (for ex. the storage~\eqref{eq:Soc} or the machines~\eqref{eq:RUlim} -~\eqref{eq:DeltaOff} constraints) consistent. To this purpose, these constrains are treated as "cycling constraints" and they are written for each cluster separately. This means that the n-timesteps that the constraint "see" at the end of the clusters are the ones of the beginning of the cluster. \\
+For example, if all the days in a year is represented by three typical days with three clusters, the minimum up time constraint ($\hat{t}_{min,UT} = 4$) at time $t=24$ (end of the first cluster) will holds also for the three first timesteps at the beginning of the cluster and will be written in the following way: 
+	\begin{align}
+	& z_{m,s,24} \geq \delta_{m,s,24}^{on} \hspace{12cm} \\
+	& z_{m,s,1} \geq \delta_{m,s,24}^{on} \\
+	& z_{m,s,2} \geq \delta_{m,s,24}^{on} \\
+	& z_{m,s,3} \geq \delta_{m,s,24}^{on} 
+	\end{align}
+
+
+\section{Machines part load performances and size effect modeling}
 \subsection{Convex Hull formulation}
 In the problem statement a set of two coefficients has been used to linearise the correlation between the size and the minimum-maximum load range ($\hat{K}_{m,0}^{IN}$ and $\hat{K}_{m,1}^{IN}$) representing respectively the minimum ($v=0=min$) and the maximum ($v=1=max$) input as a fraction of the machine size.
 A set of three coefficient, instead, has been used to linearise the input-output correlations of each machine and to model the size and load effect on machines efficiency ($\hat{K}_{m}^{1}$, $\hat{K}_{m}^{2}$ and $\hat{K}_{m}^{3}$). 
