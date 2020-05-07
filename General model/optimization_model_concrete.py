@@ -46,10 +46,10 @@ var_pen = 8
 
 # --> in futuro aggiungere anche il tipo di macchina e il numero di priorità
 Machines_parameters = {
-    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':0, 'XD_max':50000,'x_design_pws':[0,100, 1000, 10000, 50000], 'Cinv_pws':[0,8, 69, 554, 2387]},
-    #'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':0, 'XD_max':38692, 'x_design_pws':[0,1328, 13783, 26237, 38692], 'Cinv_pws':[0,247, 2296, 4242, 6145]},
-    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':10000, 'x_design_pws':[0,100, 500, 2000, 10000], 'Cinv_pws':[0,254, 778, 2039, 6239]},
-    #'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':0, 'XD_max':680, 'x_design_pws':[0,165, 337, 508, 680], 'Cinv_pws':[0,248, 428, 587, 733]}
+    'Boiler': { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat'],  'RUlim': 1000, 'RDlim': 10000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM': 3, 'SUcost':0.0503555, 'Dissipable_Heat': False, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0, 'Heat':0.976, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.032, 'Cold':0}, 'K3':{'El':0, 'Heat':4.338, 'Cold':0}, 'KIn_min':0.25, 'KIn_max':1, 'XD_min':100, 'XD_max':50000,'x_design_pws':[0,100, 1000, 10000, 50000], 'Cinv_pws':[0,8, 69, 554, 2387], 'StartLoss':{'El':0, 'Heat':0.2, 'Cold':0},'DeltaT_loss':0.25},
+    #'ICE':    { 'In': 'NG', 'fuel cost': Fuels['NG'], 'goods': ['Heat', 'El'], 'RUlim': 10000, 'RDlim': 10000, 'RUSU': 10000, 'RDSD': 10000, 'minUT': 6, 'minDT': 0, 'OM': 18, 'SUcost':0.076959, 'Dissipable_Heat': True, 'External Consumer':True, 'Internal Consumer': False, 'K1':{'El':0.49, 'Heat':0.439, 'Cold':0}, 'K2':{'El':-0.017, 'Heat':-0.005, 'Cold':0}, 'K3':{'El':-128.8, 'Heat':108.18, 'Cold':0}, 'KIn_min':0.54, 'KIn_max':1, 'XD_min':1328, 'XD_max':38692, 'x_design_pws':[0,1328, 13783, 26237, 38692], 'Cinv_pws':[0,247, 2296, 4242, 6145], 'StartLoss':{'El':0.2, 'Heat':0.2, 'Cold':0}, 'DeltaT_loss':0.25},
+    'HP':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Heat'], 'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 0, 'minDT': 0, 'OM':  3, 'SUcost':0.1186441, 'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True , 'K1':{'El':0, 'Heat':3.59, 'Cold':0}, 'K2':{'El':0, 'Heat':-0.08, 'Cold':0}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':100, 'XD_max':10000, 'x_design_pws':[0,100, 500, 2000, 10000], 'Cinv_pws':[0,254, 778, 2039, 6239], 'StartLoss':{'El':0, 'Heat':0, 'Cold':0}, 'DeltaT_loss':0.25},
+    #'CC':      { 'In': 'El', 'fuel cost':           0, 'goods':       ['Cold'],  'RUlim': 1000, 'RDlim': 1000, 'RUSU': 5000, 'RDSD': 5000, 'minUT': 2, 'minDT': 0, 'OM':  3, 'SUcost':0.0,  'Dissipable_Heat': False, 'External Consumer':False, 'Internal Consumer':  True, 'K1':{'El':0, 'Heat':0, 'Cold':11.10}, 'K2':{'El':0, 'Heat':0, 'Cold':-0.324}, 'K3':{'El':0, 'Heat':0, 'Cold':0}, 'KIn_min':0.13, 'KIn_max':1, 'XD_min':165, 'XD_max':680, 'x_design_pws':[0,165, 337, 508, 680], 'Cinv_pws':[0,248, 428, 587, 733], 'StartLoss':{'El':0, 'Heat':0, 'Cold':0}, 'DeltaT_loss':0.25}
 }
 
 Res_parameters = {
@@ -141,11 +141,10 @@ for es in Storage_parameters.keys():
         Cinv_stor_pws[es]=Storage_parameters[es]['Cinv_stor_pws']
 
 # Initializing the index matrix for cycling constraints
-deltaT_cluster=24*7  # hours contained in a cluster --> one week
+deltaT_cluster=24*7 # hours contained in a cluster --> one week
 index_cluster=np.zeros(options['n_clusters'])
 for i in range(options['n_clusters']):
     index_cluster[i]=deltaT_cluster*i
-    #index_cluster[i][1]=deltaT_cluster*i+deltaT_cluster-1
 
 ## VARIABLES
 
@@ -174,6 +173,8 @@ model.ResArea = Var (model.Machines_Res, domain=NonNegativeReals)
 model.beta = Var (model.Machines, model.Slots, model.times, model.v-['Min'], domain=NonNegativeReals)
 # Linearization variable of the product x_D[m,s] * z[m,s,t]
 model.psi = Var (model.Machines, model.Slots, model.times, domain=NonNegativeReals)
+# Linearization variable of the product x_D[m,s] * delta_on[m,s,t]
+model.eps_on = Var (model.Machines, model.Slots, model.times, domain=NonNegativeReals)
 
 # Variable for input (fuel, el, heat, cold, etc.) [kW]
 model.In = Var( model.Machines, model.Slots, model.times, domain=NonNegativeReals)
@@ -280,16 +281,27 @@ model.Pws_stor_constr = Piecewise(model.Storages, model.Cinv_stor, model.x_desig
 # Linearization of the bilinear term psi[m,s,t]=x_D[m,s]*z[m,s,t] and beta[m,s,t,v]=x_D[m,s]*alpha[m,s,t,v]
 def psiBeta_rule(model, m, s, t):
     return sum( model.beta[m,s,t,v] for v in model.v-['Min']) <= model.psi[m,s,t]
-def psi_zeta_rule(model, m, s, t):
+def psi_rule1(model, m, s, t):
     return model.psi[m,s,t] <= model.z[m,s,t] * Machines_parameters[m]['XD_max']
-def psi_x_design_rule(model, m, s, t):
+def psi_rule2(model, m, s, t):
     return model.psi[m,s,t] <= model.x_design[m,s]
-def psi_link_rule(model, m, s, t):
+def psi_rule3(model, m, s, t):
     return model.psi[m,s,t] >= model.x_design[m,s] - (1-model.z[m,s,t]) * Machines_parameters[m]['XD_max']
 model.psi_constr1=Constraint(model.Machines, model.Slots, model.times, rule=psiBeta_rule)
-model.psi_constr2=Constraint(model.Machines, model.Slots, model.times, rule=psi_zeta_rule)
-model.psi_constr3=Constraint(model.Machines, model.Slots, model.times, rule=psi_x_design_rule)
-model.psi_constr4=Constraint(model.Machines, model.Slots, model.times, rule=psi_link_rule)
+model.psi_constr2=Constraint(model.Machines, model.Slots, model.times, rule=psi_rule1)
+model.psi_constr3=Constraint(model.Machines, model.Slots, model.times, rule=psi_rule2)
+model.psi_constr4=Constraint(model.Machines, model.Slots, model.times, rule=psi_rule3)
+
+# Linearization of the bilinear term eps_on[m,s,t]=x_D[m,s]*delta_on[m,s,t]
+def eps_on_rule1(model, m, s, t):
+    return model.eps_on[m,s,t] <= model.delta_on[m,s,t] * Machines_parameters[m]['XD_max']
+def eps_on_rule2(model, m, s, t):
+    return model.eps_on[m,s,t] <= model.x_design[m,s]
+def eps_on_rule3(model, m, s, t):
+    return model.eps_on[m,s,t] >= model.x_design[m,s] - (1-model.delta_on[m,s,t]) * Machines_parameters[m]['XD_max']
+model.eps_on_constr2=Constraint(model.Machines, model.Slots, model.times, rule=eps_on_rule1)
+model.eps_on_constr3=Constraint(model.Machines, model.Slots, model.times, rule=eps_on_rule2)
+model.eps_on_constr4=Constraint(model.Machines, model.Slots, model.times, rule=eps_on_rule3)
 
 # Min/Max energy input constraint
 def machines_minIn( model, m, s, t ):
@@ -308,7 +320,7 @@ model.In_constr=Constraint(model.Machines, model.Slots, model.times, rule=In_rul
 def out_func(model, m, s, g, t):
     return model.psi[m,s,t]*(model.K_In[m,'Min']*Machines_parameters[m]['K1'][g] +Machines_parameters[m]['K2'][g]) + sum(
             Machines_parameters[m]['K1'][g]*(model.K_In[m,v]-model.K_In[m,'Min'])*model.beta[m,s,t,v] for v in model.v-['Min']) \
-           + Machines_parameters[m]['K3'][g]*model.z[m,s,t]
+           + Machines_parameters[m]['K3'][g]*model.z[m,s,t] - Machines_parameters[m]['StartLoss'][g]*model.eps_on[m,s,t]*Machines_parameters[m]['DeltaT_loss']
 def Output_rule(model, m, s, g, t):
     return model.Out[m, s, g, t] == out_func(model, m, s, g, t)
 model.Output_constr=Constraint(model.Machines, model.Slots, model.Goods, model.times, rule=Output_rule)
@@ -424,8 +436,6 @@ for i in range(options['n_clusters']):  #iterating over the number of clusters
                 tDT[tDT > TT] = tDT[tDT > TT] - TT + index_cluster[i] - 1
                 for tt in tUT:
                     model.constr.add(model.z[m,s,tt]>= model.delta_on[m,s,t])
-                    print('z index: ', m,s,tt)
-                print('delta_on index :', m,s,t)
                 for tt in tDT:
                     model.constr.add((1-model.z[m, s, tt]) >= model.delta_off[m, s, t])
 
@@ -448,7 +458,7 @@ model.Energy_balance_constr = Constraint(
 
 ## Solve PROBLEM
 model.solver=SolverFactory('gurobi')
-results = model.solver.solve(model, options={'mipgap':0.05},  tee=True) # tee=True to display solver output in console
+results = model.solver.solve(model, options={'mipgap':0.01},  tee=True) # tee=True to display solver output in console
 results.write() # display results summary in console
 #options={'mipgap':0.01},
 #model.pprint()
